@@ -23,30 +23,35 @@ const double radToDeg = 57.2958;
 const double degToRad = 1.0/57.2958;
 
 
-void crossover(Peptide& pep1, Peptide& pep2){
-    //srand (time(NULL));
-    int cross_point=rand() %20;
-
-    for (int i = 0; i < cross_point; i++) {
-        char temp = pep1.name[i];
-        pep1.name[i] = pep2.name[i];
-        pep2.name[i]= temp;
-
-    }
-}
-
-void mutation(vector<string>& newpopulation,  Peptide pep, Peptide resids){
+void mutation(vector<string>& newpopulation,  string name, Peptide resids){
 
     //srand (time(NULL));
     int mut_point=rand() %20;
 
     for (int i=0;i<resids.size();i++) {
-        pep.name[mut_point]=resids.name[i];
-        string newpeptide=pep.name;
-        newpopulation.push_back(newpeptide);
+        name[mut_point]=resids.name[i];
+        newpopulation.push_back(name);
     }
+}
+
+void crossover(Peptide pep1, Peptide pep2, vector<string>& population){
+    //srand (time(NULL));
+    Peptide new1, new2;
+    int cross_point=rand() %20;
+    new1.name =pep1.name;
+    new2.name=pep2.name;
+
+    for (int i = 0; i < cross_point; i++) {
+        char temp = new1.name[i];
+        new1.name[i] = new2.name[i];
+        new2.name[i]= temp;
+    }
+    population.push_back(new1.name);
+    population.push_back(new2.name);
 
 }
+
+
 
 void avg_charged(Energy_calculator calc, string input0, string inputCH, vector<vector<double>>& newEh){
         Peptide charged_res;
@@ -193,22 +198,30 @@ int main()
         }
     }
 
-
     string peptide =fittest_pep.name;
 
     //
     // Peptide evolution --> crossover + mutation
     //
 
-    crossover(fittest_pep,second_fittest);
-
     int rep=0;
     while(rep<100) {
 
         Peptide newpep;
 
-        mutation(newpep.population,fittest_pep, resids);
-        mutation(newpep.population,second_fittest, resids);
+        if(rep == 0){
+            crossover(fittest_pep,second_fittest, newpep.population);
+            mutation(newpep.population, newpep.population[0], resids);
+            mutation(newpep.population, newpep.population[1], resids);
+        }
+        if(rep == 50 && (fittest_pep.energy_h-fittest_pep.energy_b) < 10){
+            crossover(fittest_pep,second_fittest, newpep.population);
+            mutation(newpep.population, newpep.population[0], resids);
+            mutation(newpep.population, newpep.population[1], resids);
+        }
+
+        mutation(newpep.population,fittest_pep.name, resids);
+        mutation(newpep.population,second_fittest.name, resids);
 
 
         for (int i=0;i<newpep.population.size();i++) {
@@ -217,8 +230,6 @@ int main()
             newpep.seq.resize(20);
             newpep.initial_pos("init_pos20", resids, res_id);
             calc.get_energy_total(newpep, resids, res_id);
-
-            //cout<<newpep.name<<" "<< newpep.energy_h<<" "<<newpep.energy_b<<endl;
 
             // selectivity criteria
             double maximize=newpep.energy_h-newpep.energy_b;
@@ -231,9 +242,9 @@ int main()
                 max2dG=maximize;
                 second_fittest=newpep;
             }
+            //cout<<newpep.name<<" "<<newpep.energy_h<<" "<<newpep.energy_b<<" " <<newpep.energy_h-newpep.energy_b<<endl;
 
         }
-
 
         string peptide0=fittest_pep.name;
 
@@ -242,7 +253,10 @@ int main()
         }else{
             rep=0;
         }
-        cout<<peptide0<<" "<<rep<<" "<<fittest_pep.energy_h<<" "<<fittest_pep.depth_h<<endl;
+
+
+        cout<<peptide0<<" "<<rep<<" "<<fittest_pep.energy_h<<" "<<fittest_pep.energy_b<<" "<<fittest_pep.energy_h-fittest_pep.energy_b<<" "<<fittest_pep.depth_h<<" "<<fittest_pep.depth_b<<endl;
+
         peptide=peptide0;
         peptide0.clear();
 

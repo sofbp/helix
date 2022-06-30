@@ -248,17 +248,24 @@ public:
     void print_Gplot(Peptide& current, Peptide aa, map<char, int> res_id){
         Atom axis_y=Atom(0,1,0);
         Atom axis_x=Atom(1,0,0);
-        vector<vector<double>>energies;
-        energies.resize(depth, vector<double> (rot_deg*tilt_deg/5));
+        vector<vector<double>>energies_h;
+        energies_h.resize(depth, vector<double> (rot_deg*tilt_deg/5));
+        vector<vector<double>>energies_b;
+        energies_b.resize(depth, vector<double> (rot_deg*tilt_deg/5));
         vector<double>G_all;
+        vector<double>G_allB;
         //axis_x.normalise();
         //axis_y.normalise();
         double min=999999;
         double total_B_en=0;
+        double total_B_en_b=0;
         double prob_sum=0;
+        double prob_sumB=0;
         double shift=0;
+        double shiftB=0;
 
-        double total_en=0;
+        double total_en_h=0;
+        double total_en_b=0;
         for (int k=0;k<depth;++k) {
             double disp=k*0.1;
             for (int i=0;i<rot_deg;i=i+5) {
@@ -268,7 +275,8 @@ public:
                     double deg_tilt=j*degToRad;
                     //printf ("%d%03d ", j, i);
 
-                    total_en=0;
+                    total_en_h=0;
+                    total_en_b=0;
 
                     //
                     // Move rotates and get E under peptide class
@@ -292,77 +300,105 @@ public:
                         int inde=res_id[current.name[a]];
                         //cout<<i<<" "<<j<<" "<<k<<" "<<current.name[a]<<endl;
 
-                        double en=aa.seq[inde].get_E_human(positions.z);
+                        double en_h=aa.seq[inde].get_E_human(positions.z);
+                        double en_b=aa.seq[inde].get_E_bacteria(positions.z);
 
-                        total_en+=en;
+                        total_en_h+=en_h;
+                        total_en_b+=en_b;
                     }
-                    double B_en=pow(e,-total_en*cte);
-                    energies[k].push_back(B_en);
+                    double B_en=pow(e,-total_en_h*cte);
+                    energies_h[k].push_back(B_en);
+
+                    double B_en_b=pow(e,-total_en_b*cte);
+                    energies_b[k].push_back(B_en_b);
 
                     total_B_en+=B_en;
+                    total_B_en_b+=B_en_b;
 
                 }
             }
         }
 
 
-        double G;
+        double G, Gb;
         for (int q=0;q<depth;q++) {
 
-            for (int p=0;p<energies[q].size();p++) {
+            for (int p=0;p<energies_h[q].size();p++) {
 
-                double prob=energies[q][p]/total_B_en;
-                //cout<<energies.size()<<" "<<prob<<endl;
+                double prob=energies_h[q][p]/total_B_en;
+                double probB=energies_b[q][p]/total_B_en_b;
+
+                prob_sumB+=probB;
+
                 prob_sum+=prob;
 
             }
             G=-cte*log(prob_sum);
             G_all.push_back(G);
+            Gb=-cte*log(prob_sumB);
+            G_allB.push_back(Gb);
+
             if(q==(depth-1)){
                 shift=G;
+                shiftB=Gb;
             }
-
             prob_sum=0;
+            prob_sumB=0;
 
         }
 
         double z;
         ofstream myfile2;
-        myfile2.open ("Gplot");
+        myfile2.open ("GplotH");
+        ofstream myfile3;
+        myfile3.open ("GplotB");
 
         for (int r=0;r<depth;r++) {
             z=r*0.1;
             myfile2<<z<<" "<<(G_all[r]-shift)<<endl;
+            myfile3<<z<<" "<<(G_allB[r]-shiftB)<<endl;
 
         }
         myfile2.close();
+        myfile3.close();
     }
 
     void print_Emap(Peptide& current, Peptide aa, map<char, int> res_id){
         Atom axis_y=Atom(0,1,0);
         Atom axis_x=Atom(1,0,0);
-        vector<vector<double>>energies;
-        energies.resize(depth, vector<double> (rot_deg*tilt_deg/5));
+        vector<vector<double>>energies_h;
+        energies_h.resize(depth, vector<double> (rot_deg*tilt_deg/5));
+        vector<vector<double>>energies_b;
+        energies_b.resize(depth, vector<double> (rot_deg*tilt_deg/5));
         vector<double>G_all;
         //axis_x.normalise();
         //axis_y.normalise();
         double min=999999;
         double total_B_en=0;
-        ofstream myfile, myfile2;
-        myfile.open ("E_map");
-        myfile2.open ("P_map");
+        double total_B_en_b=0;
+        ofstream myfile, myfile2,myfile3, myfile4;
+        myfile.open ("E_mapH");
+        myfile2.open ("P_mapH");
+        myfile3.open ("E_mapB");
+        myfile4.open ("P_mapB");
 
         myfile<<depth<<" ";
         myfile2<<depth<<" ";
+        myfile3<<depth<<" ";
+        myfile4<<depth<<" ";
 
         for (int n=0;n<depth;++n) {
             myfile<<n<<" ";
             myfile2<<n<<" ";
+            myfile3<<n<<" ";
+            myfile4<<n<<" ";
         }
         myfile<<endl;
         myfile2<<endl;
-        double total_en=0;
-
+        myfile3<<endl;
+        myfile4<<endl;
+        double total_en_h=0;
+        double total_en_b=0;
             for (int i=0;i<rot_deg;i=i+5) {
                 double deg_rot=i*degToRad;
 
@@ -372,10 +408,13 @@ public:
 
                     myfile<<j<<i<<" ";
                     myfile2<<j<<i<<" ";
+                    myfile3<<j<<i<<" ";
+                    myfile4<<j<<i<<" ";
                     for (int k=0;k<depth;++k) {
                         double disp=k*0.1;
 
-                    total_en=0;
+                    total_en_h=0;
+                    total_en_b=0;
 
                     //
                     // Move rotates and get E under peptide class
@@ -399,25 +438,36 @@ public:
                         int inde=res_id[current.name[a]];
                         //cout<<i<<" "<<j<<" "<<k<<" "<<current.name[a]<<endl;
 
-                        double en=aa.seq[inde].get_E_human(positions.z);
+                        double en_h=aa.seq[inde].get_E_human(positions.z);
+                        double en_b=aa.seq[inde].get_E_bacteria(positions.z);
 
-                        total_en+=en;
+                        total_en_h+=en_h;
+                        total_en_b+=en_b;
                     }
-                    double B_en=pow(e,-total_en*cte);
-                    //cout<<total_en<<" "<<B_en<<endl;
-                    energies[k].push_back(B_en);
-                    total_B_en+=B_en;
+                    double B_en=pow(e,-total_en_h*cte);
+                    energies_h[k].push_back(B_en);
 
-                    myfile<<total_en<<" ";
+                    double B_en_b=pow(e,-total_en_b*cte);
+                    energies_b[k].push_back(B_en_b);
+
+                    total_B_en+=B_en;
+                    total_B_en_b+=B_en_b;
+                    myfile<<total_en_h<<" ";
                     myfile2<<B_en/current.totalP_h<<" ";
+                    myfile3<<total_en_b<<" ";
+                    myfile4<<B_en_b/current.totalP_b<<" ";
 
                 }
                     myfile<<endl;
                     myfile2<<endl;
+                    myfile3<<endl;
+                    myfile4<<endl;
             }
         }
             myfile.close();
             myfile2.close();
+            myfile3.close();
+            myfile4.close();
 
     }
 
