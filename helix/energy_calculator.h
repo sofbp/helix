@@ -116,13 +116,13 @@ public:
     }
 
     void get_energy_total(Peptide& current, Peptide aa, map<char, int> res_id){
-
+        int interval=5;
         Atom axis_y=Atom(0,1,0);
         Atom axis_x=Atom(1,0,0);
         vector<vector<double>>energies_h;
-        energies_h.resize(depth, vector<double> (rot_deg*tilt_deg/5));
+        energies_h.resize(depth, vector<double> (rot_deg*tilt_deg/interval));
         vector<vector<double>>energies_b;
-        energies_b.resize(depth, vector<double> (rot_deg*tilt_deg/5));
+        energies_b.resize(depth, vector<double> (rot_deg*tilt_deg/interval));
         vector<double>G_all;
         vector<double>G_all_b;
         //axis_x.normalise();
@@ -140,10 +140,10 @@ public:
         double total_en_b;
         for (int k=0;k<depth;++k) {
             double disp=k*0.1;
-            for (int i=0;i<rot_deg;i=i+5) {
+            for (int i=0;i<rot_deg;i=i+interval) {
                 double deg_rot=i*degToRad;
 
-                for (int j=0;j<tilt_deg;j=j+5) {
+                for (int j=0;j<tilt_deg;j=j+interval) {
                     double deg_tilt=j*degToRad;
                     //printf ("%d%03d ", j, i);
 
@@ -151,9 +151,9 @@ public:
                     total_en_b=0;
 
                     //
-                    // Move rotates and get E under peptide class
+                    // Move, rotate and get E under peptide class
                     //
-                    for (int a=0;a<current.size();++a) { //move all beads
+                    for (int a=0;a<current.size();++a) {
 
                         Atom positions;
                         positions.x=current.seq[a].pos.x;
@@ -167,10 +167,8 @@ public:
                         positions.z=positions.z+disp;
 
                         //calculate deltaG for new positions
-                        //double en=current.seq[a].get_E_human(positions.z, E[res_id[current.seq[a].type]]);
 
                         int inde=res_id[current.name[a]];
-                        //cout<<i<<" "<<j<<" "<<k<<" "<<current.name[a]<<endl;
 
                         double en_h=aa.seq[inde].get_E_human(positions.z);
                         double en_b=aa.seq[inde].get_E_bacteria(positions.z);
@@ -178,7 +176,10 @@ public:
                         total_en_h+=en_h;
                         total_en_b+=en_b;
                     }
-
+                    //
+                    // Boltzmann average --> average out degrees of freedom from tilt and rotation
+                    // Calculate P(x,y) = e^(-dG/kT)
+                    //
                     double B_en_h=pow(e,-total_en_h*cte);
                     energies_h[k].push_back(B_en_h);
                     total_B_en_h+=B_en_h;
@@ -192,6 +193,10 @@ public:
         current.totalP_h=total_B_en_h;
         current.totalP_b=total_B_en_b;
 
+        //
+        // P(x) = sum (P(x,y)/total_sum) --> For each z value
+        // G(x) = -kT*ln(P(x))
+        //
         double G, Gb;
         for (int q=0;q<depth;q++) {
 
@@ -219,6 +224,11 @@ public:
 
         }
 
+        //
+        // Shift G profile so that it is 0 at z=4 (outside the membrane)
+        // Store energy minima and depth
+        //
+
         vector<double> newG, newGb;
         double z, zb;
 
@@ -241,7 +251,6 @@ public:
                 current.depth_b=zb;
 
             }
-            //cout<<r*0.1<<" "<<" "<<G_all[r]-shift<<" "<<endl;
         }
     }
 

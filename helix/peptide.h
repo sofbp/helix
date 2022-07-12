@@ -62,8 +62,10 @@ public:
         }
 
         Atom cm=com();
-
-        //Move each bead so that it corresponds to the COM of the side chain and not the calfa
+        //
+        // Move each bead so that it corresponds to the COM of the side chain and not the c-alfa
+        // Maintain x position, but add y, z coordinates according to the position of com of the aa (calculated from com_aa)
+        //
         for (int j=0;j<seq.size();j++) {
 
             seq[j].pos = seq[j].pos-cm;
@@ -77,7 +79,7 @@ public:
         }
     }
 
-    void com_aa(string input, map<char, int> res_id) // sequence manipulation
+    void com_aa(string input, map<char, int> res_id) // COM of aa, later used in initial_pos
     {
         std::fstream init( input, std::fstream::in );
         char aa;
@@ -85,13 +87,12 @@ public:
         int n;
         double xpos,ypos,zpos;
 
-
         int i=0;
         char aa_prev='A';
         int count=0;
         Atom cm;
         Atom COM=com();
-        while( !init.eof() && i < 296 ) // Lines in input, For (steps), eof = end of file
+        while( !init.eof() && i < 296 )
         {
 
             init >> aa >> type >> n >> xpos >> ypos >> zpos;
@@ -114,6 +115,7 @@ public:
                     cm.y=0;
                     cm.z=0;
                 }
+
                 seq[res_id[aa]].com.x=cm.x-COM.x;
                 seq[res_id[aa]].com.y=cm.y-COM.y;
                 seq[res_id[aa]].com.z=cm.z-COM.z;

@@ -138,7 +138,9 @@ int main()
     resids.name="AEKWRCVLIMQFNDSTY";
     resids.seq.resize(resids.name.size());
     map<char, int> res_id{ { 'A', 0 }, { 'E', 1 }, { 'K', 2 },  { 'W', 3 }, { 'R', 4 }, { 'C', 5 }, { 'V', 6 }, { 'L', 7 }, { 'I', 8 },  { 'M', 9 }, { 'Q', 10 }, { 'F', 11 },  { 'N', 12 }, {'D', 13}, {'S', 14}, {'T', 15}, {'Y', 16}};
-
+    //
+    // Load energy files into resids.seq.E
+    //
     for (int j=0;j<resids.name.size();j++) {
         calc.load_EfilesH(resids.name[j], j);
         calc.load_EfilesB(resids.name[j], j);
@@ -147,10 +149,14 @@ int main()
         resids.seq[j].init(calc.E_B[res_id[resids.name[j]]], 2);
 
     }
-
+    //
+    // Load charged residues profile --> average between charged and neutral forms
+    //
     load_charged(calc, resids, res_id, 1);
     load_charged(calc, resids, res_id, 2);
-
+    //
+    // Load COM of each amino acid
+    //
     resids.com_aa("all.gro", res_id);
 
     pep.load_sequences("input");
@@ -161,31 +167,21 @@ int main()
     for (int i=0;i<pep.population.size();i++) {
         pep.seq.clear();
         pep.name=pep.population[i];
+        //
+        // Load amino acid coordinates --> alpha helix of 20 aa
+        //
         pep.seq.resize(20);
         pep.initial_pos("init_pos20", resids, res_id);
 
-        //exit(1);
+        //
+        // Calculate Emin for human and bacterial membrane --> stored in energy_h, energy_b
+        //
 
-        //cout<<i<<endl;
         calc.get_energy_total(pep, resids, res_id);
-
-        //calc.print_Emap(pep, resids, res_id);
-        //calc.print_Gplot(pep, resids, res_id);
-        //exit(0);
 
         cout<<pep.name<<" "<< pep.energy_h<<" "<<pep.energy_b<<endl;
 
-        // selectivity criteria
-        /*if(pep.energy_h>maxdG){
-            maxdG=pep.energy_h;
-            fittest_pep=pep;
-        }
-        if(pep.energy_h>max2dG && pep.energy_h < maxdG){
-            max2dG=pep.energy_h;
-            second_fittest=pep;
-        }*/
-
-        //Selectivity criteria with both membranes
+        //Selectivity criteria with both membranes --> maximize variable has to be max
         double maximize=pep.energy_h-pep.energy_b;
         if (maximize>maxdG){
             maxdG=maximize;
@@ -205,16 +201,11 @@ int main()
     //
 
     int rep=0;
-    while(rep<100) {
+    while(rep<100) {  // Mutate sequences until 100 loops happen without finding a better fit
 
         Peptide newpep;
 
-        if(rep == 0){
-            crossover(fittest_pep,second_fittest, newpep.population);
-            mutation(newpep.population, newpep.population[0], resids);
-            mutation(newpep.population, newpep.population[1], resids);
-        }
-        if(rep == 50 && (fittest_pep.energy_h-fittest_pep.energy_b) < 10){
+        if(rep == 0){ // First round, crossover between two fittest, and mutation
             crossover(fittest_pep,second_fittest, newpep.population);
             mutation(newpep.population, newpep.population[0], resids);
             mutation(newpep.population, newpep.population[1], resids);
@@ -248,12 +239,12 @@ int main()
 
         string peptide0=fittest_pep.name;
 
+        // Sequence comparison with the last round
         if(peptide0==peptide){
             rep++;
         }else{
             rep=0;
         }
-
 
         cout<<peptide0<<" "<<rep<<" "<<fittest_pep.energy_h<<" "<<fittest_pep.energy_b<<" "<<fittest_pep.energy_h-fittest_pep.energy_b<<" "<<fittest_pep.depth_h<<" "<<fittest_pep.depth_b<<endl;
 
@@ -261,6 +252,8 @@ int main()
         peptide0.clear();
 
     }
+
+    //Print final peptide energy map and G profile
     calc.print_Emap(fittest_pep, resids, res_id);
     calc.print_Gplot(fittest_pep, resids, res_id);
 
