@@ -6,3 +6,6 @@ Input files are:
  - init_pos20 are the coordinates for a 20 amino acid long alpha helix (used to set the initial coordinates)
  - all.gro contains the coordinates of the atoms of all amino acids --> used to calculate the center of mass of each amino acid
  
+ Output files:
+  - Emap and Gplot --> plots the energy map and dG profile of the final peptide sequence
+ 
