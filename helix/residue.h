@@ -48,6 +48,7 @@ public:
 
     void init(vector< vector<double>> Ehh, int type)
     {
+
         if(type==1){
             lower_bound=Ehh[199][0];
             upper_bound=Ehh[0][0];
@@ -68,39 +69,69 @@ public:
     }
 
 
-    void E_charged_init( Residue b, vector<vector<double>>& newEh)
+    void E_charged_init( Residue b, vector<vector<double>>& newEh, int type)
     {
-        double newE, Gch, Gn;
-        for (int i=0;i<200;i++) {
-            double z=i*factor_Eh;
-            if(z>upper_bound){
-                newE=0;
-            }else{
-                int convert0 = int ((upper_bound-z) * inv_factor_Eh);
-                int convert1 = int ((b.upper_bound-z) * b.inv_factor_Eh);
+        if(type==1){
+            double newE, Gch, Gn;
+            for (int i=0;i<200;i++) {
+                double z=(199-i)*factor_Eh;
+                if(z>upper_bound){
+                    newE=0;
+                }else{
+                    int convert0 = int ((upper_bound-z) * inv_factor_Eh);
+                    int convert1 = int ((b.upper_bound-z) * b.inv_factor_Eh);
 
 
-                double proportional_remainder0 = fmod(z, factor_Eh) * inv_factor_Eh;
-                double proportional_remainder1 = fmod(z, b.factor_Eh) * b.inv_factor_Eh;
+                    double proportional_remainder0 = fmod(z, factor_Eh) * inv_factor_Eh;
+                    double proportional_remainder1 = fmod(z, b.factor_Eh) * b.inv_factor_Eh;
 
-                Gch=(1.0-proportional_remainder1)*b.Eh[convert1] + proportional_remainder1*b.Eh[convert1+1];
-                Gn=(1.0-proportional_remainder0)*Eh[convert0] + proportional_remainder0*Eh[convert0+1];
+                    Gch=(1.0-proportional_remainder1)*b.Eh[convert1] + proportional_remainder1*b.Eh[convert1+1];
+                    Gn=(1.0-proportional_remainder0)*Eh[convert0] + proportional_remainder0*Eh[convert0+1];
 
-                double total=pow(e, -Gn*cte)+pow(e, -Gch*cte);
-                double prop=pow(e, -Gn*cte)/total;
+                    double total=pow(e, -Gn*cte)+pow(e, -Gch*cte);
+                    double prop=pow(e, -Gn*cte)/total;
 
-                newE = (1.0-prop)*Gch + prop*Gn;
+                    newE = (1.0-prop)*Gch + prop*Gn;
+                }
+                newEh.resize(200, vector<double> (2));
+                newEh[i][0]=z;
+                newEh[i][1]=newE;
+                //cout<<z<<" "<<Gch<<" "<<Gn<<" "<<newE<<endl;
             }
-        newEh.resize(200, vector<double> (2));
-        newEh[i][0]=z;
-        newEh[i][1]=newE;
-        //cout<<z<<" "<<Gch<<" "<<Gn<<" "<<newE<<endl;
+        }else {
+            double newE, Gch, Gn;
+            for (int i=0;i<200;i++) {
+                double z=(199-i)*factor_Eb;
+                if(z>upper_bound){
+                    newE=0;
+                }else{
+                    int convert0 = int ((upper_bound-z) * inv_factor_Eb);
+                    int convert1 = int ((b.upper_bound-z) * b.inv_factor_Eb);
+
+
+                    double proportional_remainder0 = fmod(z, factor_Eb) * inv_factor_Eb;
+                    double proportional_remainder1 = fmod(z, b.factor_Eb) * b.inv_factor_Eb;
+
+                    Gch=(1.0-proportional_remainder1)*b.Eb[convert1] + proportional_remainder1*b.Eb[convert1+1];
+                    Gn=(1.0-proportional_remainder0)*Eb[convert0] + proportional_remainder0*Eb[convert0+1];
+
+                    double total=pow(e, -Gn*cte)+pow(e, -Gch*cte);
+                    double prop=pow(e, -Gn*cte)/total;
+
+                    newE = (1.0-prop)*Gch + prop*Gn;
+                }
+                newEh.resize(200, vector<double> (2));
+                newEh[i][0]=z;
+                newEh[i][1]=newE;
+                //cout<<z<<" "<<Gch<<" "<<Gn<<" "<<newE<<endl;
+            }
 
         }
     }
 
     inline double get_E_human(double z)
     {
+
         if(z >= upper_bound) {
             return 0.0;
         }

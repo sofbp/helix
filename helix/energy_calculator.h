@@ -27,8 +27,8 @@ private:
 public:
     Energy_calculator() {}
 
-    int rot_deg=360;
-    int tilt_deg=360;
+    int rot_deg=15;
+    int tilt_deg=15;
     int depth=40;
     vector< vector< vector< double > > > E_H;
     vector< vector< vector< double > > > E_B;
@@ -254,7 +254,7 @@ public:
         }
     }
 
-    void print_Gplot(Peptide& current, Peptide aa, map<char, int> res_id){
+    void print_Gplot(Peptide& current, Peptide aa, map<char, int> res_id, string name){
         Atom axis_y=Atom(0,1,0);
         Atom axis_x=Atom(1,0,0);
         vector<vector<double>>energies_h;
@@ -272,6 +272,9 @@ public:
         double prob_sumB=0;
         double shift=0;
         double shiftB=0;
+
+        string fileH=name+"_GH";
+        string fileB=name+"_GB";
 
         double total_en_h=0;
         double total_en_b=0;
@@ -358,9 +361,9 @@ public:
 
         double z;
         ofstream myfile2;
-        myfile2.open ("GplotH");
+        myfile2.open (fileH);
         ofstream myfile3;
-        myfile3.open ("GplotB");
+        myfile3.open (fileB);
 
         for (int r=0;r<depth;r++) {
             z=r*0.1;
@@ -372,7 +375,7 @@ public:
         myfile3.close();
     }
 
-    void print_Emap(Peptide& current, Peptide aa, map<char, int> res_id){
+    void print_Emap(Peptide& current, Peptide aa, map<char, int> res_id, string name){
         Atom axis_y=Atom(0,1,0);
         Atom axis_x=Atom(1,0,0);
         vector<vector<double>>energies_h;
@@ -386,26 +389,28 @@ public:
         double total_B_en=0;
         double total_B_en_b=0;
         ofstream myfile, myfile2,myfile3, myfile4;
-        myfile.open ("E_mapH");
-        myfile2.open ("P_mapH");
-        myfile3.open ("E_mapB");
-        myfile4.open ("P_mapB");
+        string fileH = name + "_H";
+        string fileB = name + "_B";
+        myfile.open (fileH);
+        //myfile2.open ("P_mapH");
+        myfile3.open (fileB);
+        //myfile4.open ("P_mapB");
 
         myfile<<depth<<" ";
-        myfile2<<depth<<" ";
+        //myfile2<<depth<<" ";
         myfile3<<depth<<" ";
-        myfile4<<depth<<" ";
+        //myfile4<<depth<<" ";
 
         for (int n=0;n<depth;++n) {
             myfile<<n<<" ";
-            myfile2<<n<<" ";
+            //myfile2<<n<<" ";
             myfile3<<n<<" ";
-            myfile4<<n<<" ";
+            //myfile4<<n<<" ";
         }
         myfile<<endl;
-        myfile2<<endl;
+        //myfile2<<endl;
         myfile3<<endl;
-        myfile4<<endl;
+        //myfile4<<endl;
         double total_en_h=0;
         double total_en_b=0;
             for (int i=0;i<rot_deg;i=i+5) {
@@ -462,21 +467,21 @@ public:
                     total_B_en+=B_en;
                     total_B_en_b+=B_en_b;
                     myfile<<total_en_h<<" ";
-                    myfile2<<B_en/current.totalP_h<<" ";
+                   // myfile2<<B_en/current.totalP_h<<" ";
                     myfile3<<total_en_b<<" ";
-                    myfile4<<B_en_b/current.totalP_b<<" ";
+                    //myfile4<<B_en_b/current.totalP_b<<" ";
 
                 }
                     myfile<<endl;
-                    myfile2<<endl;
+                    //myfile2<<endl;
                     myfile3<<endl;
-                    myfile4<<endl;
+                   // myfile4<<endl;
             }
         }
             myfile.close();
-            myfile2.close();
+            //myfile2.close();
             myfile3.close();
-            myfile4.close();
+           // myfile4.close();
 
     }
 

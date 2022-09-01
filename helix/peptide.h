@@ -32,15 +32,15 @@ public:
     void load_sequences(string input)
     {
         std::fstream fs( input, std::fstream::in );
-
         string c1;
+
         while( !fs.eof() ) // Lines in input, eof = end of file
         {
             fs >> c1 ;
 
             population.push_back(c1);
         }
-        population.pop_back();
+        //population.pop_back();
     }
 
     void initial_pos(string input, Peptide resids, map<char, int> res_id) // sequence manipulation
