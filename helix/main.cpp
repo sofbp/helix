@@ -377,7 +377,7 @@ int main()
                     score=score*3;
                 }
                 if((newpep.depth_b>1 && newpep.depth_b<3) || (newpep.depth_h>1 && newpep.depth_h<3)){
-                    score=score*2;
+                    score=score*1.5;
                 }
                 if(newpep.depth_b>1 || newpep.depth_h>1 ){
                     score=score*2;
