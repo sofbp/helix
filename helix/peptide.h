@@ -21,6 +21,7 @@ public:
     double depth_b;
     double energy_h;
     double energy_b;
+    double dG;
     string name;
     double totalP_h, totalP_b;
 
@@ -76,6 +77,18 @@ public:
 
             seq[j].pos.y=seq[j].pos.y*(1+rest.y);
             seq[j].pos.z=seq[j].pos.z*(1+rest.z);
+        }
+    }
+
+    void linear_pos() // sequence manipulation
+    {
+        seq[0].pos.x=0;
+        seq[0].pos.y=0;
+        seq[0].pos.z=0;
+        for (int i=1;i<seq.size();++i) {
+            seq[i].pos.x=seq[i-1].pos.x + 0.2;
+            seq[i].pos.y=seq[0].pos.y;
+            seq[i].pos.z=seq[0].pos.z;
         }
     }
 
