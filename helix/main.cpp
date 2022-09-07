@@ -29,27 +29,84 @@ void mutation(vector<string>& newpopulation,  string name, Peptide resids){
     int mut_point=rand() %20;
     int before=mut_point-4;
     int after=mut_point+4;
-    if(name[before] == 'K' || name[before] == 'R' || name[after] == 'K' || name[after] == 'R'){
-        for (int i=0;i<resids.size();i++) {
-            name[mut_point]=resids.name[i];
-            if(i!=1 && i!=13){
-                newpopulation.push_back(name);
+    if(name[before] == 'K' || name[before] == 'R' ){
+        if(name[after] == 'D' || name [after] == 'E'){
+            for (int i=0;i<resids.size();i++) {
+                name[mut_point]=resids.name[i];
+                if(i!=1 && i!=13 && i!=2 && i!=4){
+                    newpopulation.push_back(name);
+                }
+                else{
+                    for (int i=0;i<resids.size();i++) {
+                        name[mut_point]=resids.name[i];
+                        if(i!=1 && i!=13){
+                            newpopulation.push_back(name);
+                        }
+                    }
+                }
             }
         }
-    }else if(name[before] == 'D' || name[before] == 'E' || name[after] == 'D' || name[after] == 'E'){
-        for (int i=0;i<resids.size();i++) {
-            name[mut_point]=resids.name[i];
-            if(i!=2 && i!=4){
-                newpopulation.push_back(name);
-            }
-        }
+        }else if(name[after] == 'K' || name[after] == 'R' ){
+                if(name[before] == 'D' || name [before] == 'E'){
+                    for (int i=0;i<resids.size();i++) {
+                        name[mut_point]=resids.name[i];
+                        if(i!=1 && i!=13 && i!=2 && i!=4){
+                            newpopulation.push_back(name);
+                        }
+                        else{
+                            for (int i=0;i<resids.size();i++) {
+                                name[mut_point]=resids.name[i];
+                                if(i!=1 && i!=13){
+                                    newpopulation.push_back(name);
+                                }
+                            }
+                        }
+                    }
+                }
+
+        }else if(name[after] == 'D' || name[after] == 'E' ){
+                if(name[before] == 'K' || name [before] == 'R'){
+                    for (int i=0;i<resids.size();i++) {
+                        name[mut_point]=resids.name[i];
+                        if(i!=1 && i!=13 && i!=2 && i!=4){
+                            newpopulation.push_back(name);
+                        }
+                        else{
+                            for (int i=0;i<resids.size();i++) {
+                                name[mut_point]=resids.name[i];
+                                if(i!=2 && i!=4){
+                                    newpopulation.push_back(name);
+                                }
+                            }
+                        }
+                    }
+                }
+        }else if(name[before] == 'D' || name[before] == 'E' ){
+                if(name[after] == 'K' || name [after] == 'R'){
+                    for (int i=0;i<resids.size();i++) {
+                        name[mut_point]=resids.name[i];
+                        if(i!=1 && i!=13 && i!=2 && i!=4){
+                            newpopulation.push_back(name);
+                        }
+                        else{
+                            for (int i=0;i<resids.size();i++) {
+                                name[mut_point]=resids.name[i];
+                                if(i!=2 && i!=4){
+                                    newpopulation.push_back(name);
+                                }
+                            }
+                        }
+                    }
+                }
     }else{
 
         for (int i=0;i<resids.size();i++) {
             name[mut_point]=resids.name[i];
             newpopulation.push_back(name);
+
         }
     }
+
 }
 
 void mutation_linear(vector<string>& newpopulation,  string name, Peptide resids){
