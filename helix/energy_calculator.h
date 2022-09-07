@@ -27,8 +27,8 @@ private:
 public:
     Energy_calculator() {}
 
-    int rot_deg=90;
-    int tilt_deg=90;
+    int rot_deg=360;
+    int tilt_deg=360;
     int depth=40;
     vector< vector< vector< double > > > E_H;
     vector< vector< vector< double > > > E_B;
