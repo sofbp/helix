@@ -28,15 +28,18 @@ void mutation(vector<string>& newpopulation,  string name, Peptide resids){
     srand (time(NULL));
     int mut_point=rand() %20;
     int before=mut_point-4;
+    int before1=mut_point-3;
     int after=mut_point+4;
-    if((name[before] == 'K' && name[after] == 'D') || (name[before] == 'K' && name[after] == 'E') || (name[before] == 'R' && name[after] == 'E') || (name[before] == 'R' && name[after] == 'D') || (name[before] == 'D' && name[after] == 'R') || (name[before] == 'D' && name[after] == 'K') || (name[before] == 'E' && name[after] == 'R') || (name[before] == 'E' && name[after] == 'K')){
+    int after1=mut_point+3;
+
+    if(((name[before] == 'K' || name[before1] == 'K') && (name[after] == 'D' || name[after1] == 'D' )) || ((name[before] == 'K' || name[before1] == 'K') && (name[after] == 'E' || name [after1] == 'E')) || ((name[before] == 'R' || name[before1] == 'R') && (name[after] == 'E' || name [after1] == 'E')) || ((name[before] == 'R' || name[before1] == 'R') && (name[after] == 'D' || name [after1] == 'D')) || ((name[before] == 'D' || name[before1]=='D') && (name[after] == 'R' || name[after1] == 'R')) || ((name[before] == 'D' || name[before1]=='D') && (name[after] == 'K' || name[after1]=='K')) || ((name[before] == 'E'||name[before1]=='E') && (name[after] == 'R' || name[after1]=='R')) || ((name[before] == 'E' || name[before1]=='E') && (name[after] == 'K' || name[after1]=='K'))){
         for (int i=0;i<resids.size();i++) {
             name[mut_point]=resids.name[i];
             if(i!=1 && i!=13 && i!=2 && i!=4){
                 newpopulation.push_back(name);
             }
         }
-    }else if((name[after] == 'K' || name[after] == 'R' ) && (name[before] != 'D' && name[before] != 'E' ) ){
+    }else if((name[after] == 'K' || name[after] == 'R' || name[after1]=='K' || name[after1]=='R') && (name[before] != 'D' && name[before] != 'E' && name[before1] != 'D' && name[before1] != 'E' ) ){
         for (int i=0;i<resids.size();i++) {
             name[mut_point]=resids.name[i];
             if(i!=1 && i!=13){
@@ -44,7 +47,7 @@ void mutation(vector<string>& newpopulation,  string name, Peptide resids){
             }
         }
 
-    }else if((name[before] == 'K' || name[before] == 'R' ) && (name[after] != 'D' && name[after] != 'E' ) ){
+    }else if((name[before] == 'K' || name[before] == 'R' || name[before1]=='K' || name[before1]=='R') && (name[after] != 'D' && name[after] != 'E' && name[after1] != 'D' && name[after1] != 'E') ){
         for (int i=0;i<resids.size();i++) {
             name[mut_point]=resids.name[i];
             if(i!=1 && i!=13){
@@ -52,21 +55,27 @@ void mutation(vector<string>& newpopulation,  string name, Peptide resids){
             }
         }
 
-    }else if((name[before] == 'D' || name[before] == 'E' ) && (name[after] != 'R' && name[after] != 'K' ) ){
+    }else if((name[before] == 'D' || name[before] == 'E' || name[before1]=='D' || name[before1]=='E') && (name[after] != 'R' && name[after] != 'K' && name[after1] != 'R' && name[after1] != 'K') ){
         for (int i=0;i<resids.size();i++) {
             name[mut_point]=resids.name[i];
             if(i!=2 && i!=4){
                 newpopulation.push_back(name);
             }
         }
-    }else if((name[after] == 'D' || name[after] == 'E' ) && (name[before] != 'R' && name[before] != 'K' ) ){
+    }else if((name[after] == 'D' || name[after] == 'E' || name[after1]=='D' || name[after1]=='E') && (name[before] != 'R' && name[before] != 'K' && name[before1] != 'R' && name[before1] != 'K' ) ){
         for (int i=0;i<resids.size();i++) {
             name[mut_point]=resids.name[i];
             if(i!=2 && i!=4){
                 newpopulation.push_back(name);
             }
         }
-
+    }else if(((name[before]=='K' || name[before]=='R') && (name[before1]=='D' || name[before1]=='E')) || ((name[after]=='K' || name[after]=='R') && (name[after1]=='D' || name[after1]=='E')) || ((name[before]=='D' || name[before]=='E') && (name[before1]=='K' || name[before1]=='R')) || ((name[after]=='D' || name[after]=='E') && (name[after1]=='K' || name[after1]=='R'))){
+        for (int i=0;i<resids.size();i++) {
+            name[mut_point]=resids.name[i];
+            if(i!=1 && i!=13 && i!=2 && i!=4){
+                newpopulation.push_back(name);
+            }
+        }
     }else{
 
         for (int i=0;i<resids.size();i++) {
