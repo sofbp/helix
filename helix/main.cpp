@@ -76,6 +76,13 @@ void mutation(vector<string>& newpopulation,  string name, Peptide resids){
                 newpopulation.push_back(name);
             }
         }
+    }else if(((name[before]=='K' || name[before]=='R') && (name[after1]=='D' || name[after1]=='E')) || ((name[after]=='K' || name[after]=='R') && (name[before1]=='D' || name[before1]=='E')) || ((name[before]=='D' || name[before]=='E') && (name[after1]=='K' || name[after1]=='R')) || ((name[after]=='D' || name[after]=='E') && (name[before1]=='K' || name[before1]=='R'))){
+        for (int i=0;i<resids.size();i++) {
+            name[mut_point]=resids.name[i];
+            if(i!=1 && i!=13 && i!=2 && i!=4){
+                newpopulation.push_back(name);
+            }
+        }
     }else{
 
         for (int i=0;i<resids.size();i++) {
