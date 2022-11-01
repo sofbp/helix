@@ -82,8 +82,10 @@ public:
                     int convert1 = int ((b.upper_bound-z) * b.inv_factor_Eh);
 
 
-                    double proportional_remainder0 = fmod(z, factor_Eh) * inv_factor_Eh;
-                    double proportional_remainder1 = fmod(z, b.factor_Eh) * b.inv_factor_Eh;
+                    //double proportional_remainder0 = fmod(z, factor_Eh) * inv_factor_Eh;
+                    double proportional_remainder0 = (z-(int(z*inv_factor_Eb) * factor_Eb))*inv_factor_Eb;
+                    //double proportional_remainder1 = fmod(z, b.factor_Eh) * b.inv_factor_Eh;
+                    double proportional_remainder1 = (z-(int(z*b.inv_factor_Eb) * b.factor_Eb))*b.inv_factor_Eb;
 
                     Gch=(1.0-proportional_remainder1)*b.Eh[convert1] + proportional_remainder1*b.Eh[convert1+1];
                     Gn=(1.0-proportional_remainder0)*Eh[convert0] + proportional_remainder0*Eh[convert0+1];
@@ -109,8 +111,10 @@ public:
                     int convert1 = int ((b.upper_bound-z) * b.inv_factor_Eb);
 
 
-                    double proportional_remainder0 = fmod(z, factor_Eb) * inv_factor_Eb;
-                    double proportional_remainder1 = fmod(z, b.factor_Eb) * b.inv_factor_Eb;
+                    //double proportional_remainder0 = fmod(z, factor_Eb) * inv_factor_Eb;
+                    double proportional_remainder0 = (z-(int(z*inv_factor_Eb) * factor_Eb))*inv_factor_Eb;
+                    //double proportional_remainder1 = fmod(z, b.factor_Eb) * b.inv_factor_Eb;
+                    double proportional_remainder1 = (z-(int(z*b.inv_factor_Eb) * b.factor_Eb))*b.inv_factor_Eb;
 
                     Gch=(1.0-proportional_remainder1)*b.Eb[convert1] + proportional_remainder1*b.Eb[convert1+1];
                     Gn=(1.0-proportional_remainder0)*Eb[convert0] + proportional_remainder0*Eb[convert0+1];
@@ -141,7 +145,10 @@ public:
         }
 
         int convert = int ((upper_bound-z) * inv_factor_Eh);
-        double proportional_remainder = fmod(z, factor_Eh) * inv_factor_Eh;
+        double proportional_remainder = (z-(int(z*inv_factor_Eh) * factor_Eh))*inv_factor_Eh;
+        //double proportional_remainder = fmod(z, factor_Eh) * inv_factor_Eh;
+        //cout<<" "<<new_rem<<" "<<proportional_remainder<<endl;
+        //exit(0);
 
         return  (1.0-proportional_remainder)*Eh[convert] + proportional_remainder*Eh[convert+1];
     }
@@ -157,7 +164,8 @@ public:
         }
 
         int convert = int ((upper_bound-z) * inv_factor_Eb);
-        double proportional_remainder = fmod(z, factor_Eb) * inv_factor_Eb;
+        double proportional_remainder = (z-(int(z*inv_factor_Eb) * factor_Eb))*inv_factor_Eb;
+        //double proportional_remainder = fmod(z, factor_Eb) * inv_factor_Eb;
 
         return  (1.0-proportional_remainder)*Eb[convert] + proportional_remainder*Eb[convert+1];
     }
