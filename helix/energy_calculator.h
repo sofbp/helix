@@ -9,6 +9,12 @@
 #include <sys/time.h>
 #include "map"
 
+/*
+ * std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+ * std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+ * std::cout << "Time difference = " << std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count() << "[ns]" << std::endl;
+*/
+
 using namespace std::chrono;
 
 class Ener
@@ -169,9 +175,14 @@ public:
                         //calculate deltaG for new positions
 
                         int inde=res_id[current.name[a]];
+                        std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+
 
                         double en_h=aa.seq[inde].get_E_human(positions.z);
+
                         double en_b=aa.seq[inde].get_E_bacteria(positions.z);
+                        std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+                        std::cout << "Time difference = " << std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count() << "[ns]" << std::endl;
 
                         total_en_h+=en_h;
                         total_en_b+=en_b;
