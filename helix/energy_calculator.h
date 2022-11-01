@@ -131,6 +131,7 @@ public:
         energies_b.resize(depth, vector<double> (rot_deg*tilt_deg/interval));
         vector<double>G_all;
         vector<double>G_all_b;
+        //cout<<energies_h[0].size()<<endl;
         //axis_x.normalise();
         //axis_y.normalise();
         double min=999999;
@@ -192,15 +193,20 @@ public:
                     // Calculate P(x,y) = e^(-dG/kT)
                     //
                     double B_en_h=pow(e,-total_en_h*cte);
-                    energies_h[k].push_back(B_en_h);
+                    energies_h[k][(i*j+j)/interval]=B_en_h;
+                    //energies_h[k].push_back(B_en_h);
+                    //cout<<k<<" "<<(i*j+j)/interval<<endl;
                     total_B_en_h+=B_en_h;
 
                     double B_en_b=pow(e,-total_en_b*cte);
-                    energies_b[k].push_back(B_en_b);
+                    energies_b[k][(i*j+j)/interval]=B_en_b;
                     total_B_en_b+=B_en_b;
                 }
+                //exit(1);
             }
         }
+        //cout<<energies_h[0].size()<<endl;
+
         current.totalP_h=total_B_en_h;
         current.totalP_b=total_B_en_b;
 
