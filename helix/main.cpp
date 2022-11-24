@@ -10,6 +10,7 @@
 #include <ostream>
 #include <chrono>
 #include <map>
+#include <algorithm>
 
 #include "peptide.h"
 #include "energy_calculator.h"
@@ -124,8 +125,9 @@ bool salt_bridges(Peptide pep){
     }
 }
 
-void population_SB( vector<int>&index1,vector<int>&index2, Peptide pep, vector<Peptide>&SB_all){
+void population_SB( std::vector<int>&index1,std::vector<int>&index2, Peptide pep, vector<Peptide>&SB_all){
     vector<char>SB_type;
+    //Detect salt-bridges, store their position and type
     for(int i=0;i<pep.name.size();++i){
         if((pep.name[i] == 'K' && pep.name[i+3] == 'D') || (pep.name[i] == 'D' && pep.name[i+3] == 'K')){
             index1.push_back(i);
@@ -149,13 +151,58 @@ void population_SB( vector<int>&index1,vector<int>&index2, Peptide pep, vector<P
         }
     }
 
+//Create batch of possible SB interactions and change the COM of the SB
+    vector<int>rmove_idx;
+    for(int s=0;s<index1.size();++s){
+        for(int t=0;t<index1.size();++t){
+            if(index1[s]==index2[t]){
+                rmove_idx.push_back(s);
+                rmove_idx.push_back(t);
+                //cout<<s<<" "<<t<<endl;
+            }
+        }
+    }
 
-    for(int j=0;j<index1.size();++j){
+    for(int i=0;i<rmove_idx.size();++i){
+        vector<int>new_idx1;
+        vector<int>new_idx2;
+
+        for(int j=0;j<index1.size();++j){
+                new_idx1.push_back(index1[j]);
+                new_idx2.push_back(index2[j]);
+                //cout<<index1[j]<<" "<<index2[j]<<endl;
+        }
+        new_idx1.erase(new_idx1.begin()+rmove_idx[i]);
+        new_idx2.erase(new_idx2.begin()+rmove_idx[i]);
+
         Peptide new_pep;
-        new_pep.seq.resize(20);
+        new_pep.seq.resize(20-new_idx1.size());
+        int count=0;
+        int p=0;
 
         for(int k=0;k<pep.name.size();++k){
-            if(k == index1[j]){ //here i should compare with all the elements of index1
+
+            if (std::find(new_idx1.begin(), new_idx1.end(), k) != new_idx1.end()) {
+                new_pep.name.push_back(SB_type[count]);
+                new_pep.seq[p].pos = (pep.seq[k].pos + pep.seq[k+3].pos)/2;
+                count+=1;
+                p+=1;
+
+            }
+            if((std::find(new_idx2.begin(), new_idx2.end(), k) != new_idx2.end()) || (std::find(new_idx1.begin(), new_idx1.end(), k) != new_idx1.end())){
+
+            }else{
+                new_pep.name.push_back(pep.name[k]);
+                new_pep.seq[p].pos=pep.seq[k].pos;
+                p+=1;
+            }
+
+    }
+        cout<<new_pep.name<<endl;
+
+//for(int j=0;j<index1.size();++j){
+
+           /* if(k == index1[j]){ //here i should compare with all the elements of index1
 
                 new_pep.name.push_back(SB_type[j]);
                 new_pep.seq[k].pos = (pep.seq[k].pos + pep.seq[k+3].pos)/2;
@@ -170,11 +217,13 @@ void population_SB( vector<int>&index1,vector<int>&index2, Peptide pep, vector<P
                     new_pep.seq[k].pos=pep.seq[k].pos;
                 }
 
-            }
-        }
-        //cout<<new_pep.seq[20].pos.x << " "<<new_pep.seq[20].pos.y<< " "<<new_pep.seq[20].pos.z << " "<<endl;
+            }*/
         SB_all.push_back(new_pep);
-    }
+        }
+
+        //cout<<new_pep.seq[20].pos.x << " "<<new_pep.seq[20].pos.y<< " "<<new_pep.seq[20].pos.z << " "<<endl;
+
+    //}
 
 }
 
@@ -426,14 +475,14 @@ int main()
         // Calculate Emin for human and bacterial membrane --> stored in energy_h, energy_b
         //
         if(salt_bridges(pep)){
-            vector<int>index1;
-            vector<int>index2;
+            std::vector<int>index1;
+            std::vector<int>index2;
             vector<Peptide>SB_all;
 
             population_SB( index1, index2, pep, SB_all);
-            for(int a=0;a<index1.size();++a){
+            /*for(int a=0;a<index1.size();++a){
                 cout<<index1[a]<<" "<<index2[a]<<endl;
-            }
+            }*/
             cout<<"SB"<<endl;
         }
 
