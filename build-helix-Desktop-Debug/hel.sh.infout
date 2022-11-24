@@ -1,0 +1,1780 @@
+
+################################################################################
+#                          *** INFINITY JOB ***                                #
+#                                                                              #
+###                  Beginning of the script execution                      ####
+#                                                                              #
+# # Date: Thu Jul 21 12:49:49 CEST 2022                                      # #
+#                                                                              #
+################################################################################
+
+Initial job information (recovered from transmitted environment):
+--------------------------------------------------------------------------------
+Job ID               : 482436.robox-pro.ceitec.muni.cz
+Job name             : hel.sh
+Job name suffix      : 
+Job input machine    : sof.ceitec.muni.cz
+Job input dir        : /home/sofbp/helix/build-helix-Desktop-Debug
+Job storage machine  : sof.ceitec.muni.cz
+Job storage path     : /home/sofbp/helix/build-helix-Desktop-Debug
+Job key              : e8dc4f4a-b0e1-6e48-1754-e9af96818846
+------------------------------------------------------
+Hostname             : robox3.ceitec.muni.cz
+AMS boot script      : /software/ncbr/softmods/8.0/etc/boot/bashrc.ncbr
+Site support         : linuxsupport@ics.muni.cz
+Site ID              : {ROBOX-PRO:8db503ce-c3c0-4a3e-93b2-b7a8fa7cbd34}
+ABS module version   : 3.770.4a34621
+ABS Root             : /software/ncbr/softrepo/core/abs/3.770.4a34621/x86_64/single
+
+#-------------------------------------------------------------------------------
+# LM: Sanity checks ...
+#-------------------------------------------------------------------------------
+CUDA_VISIBLE_DEVICES is set but without contents, unsetting the variable ...
+
+#-------------------------------------------------------------------------------
+# L0: Booting the AMS/ABS environments ...
+#-------------------------------------------------------------------------------
+
+# User identity ...
+uid=7546(sofbp)
+gid=10057(softmatter)
+groups=10057(softmatter),10000(meta),1092351570
+umask=0022
+
+# ams-host --nocache --verbose
+
+# ==============================================================================
+# ams-host (AMS utility) started at 2022-07-21 12:49:49
+# ==============================================================================
+
+Full host name      : robox3.ceitec.muni.cz
+Config key          : 0f5e5ca6-8a06-4292-b334-17b8fb038c7e
+Configuration realm : default
+Cache file name     : /tmp/ams_cache.sofbp.482436.robox-pro.ceitec.muni.cz
+No cache loaded ...   (New cache will be valid for  1d 00:00:00)
+===================================================================
+>>> default ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Enabled       : tokens/ncpus
+    Priority      : 1
+    Num of CPUs   : 1
+    Default tokens: x86_64, m64-deb10
+>>> desktop ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Status        : host is not a desktop
+>>> cpuinfo ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Enabled       : tokens
+    Priority      : 3
+    Num of cores  : 1
+    Num of threads: 1
+    Threads/Core  : 1
+    SMP CPU model : Intel(R) Xeon(R) CPU E3-1246 v3 @ 3.50GHz [Total memory: 7.7 GB]
+    CPU flags     : fpu, vme, de, pse, tsc, msr, pae, mce, cx8, apic,
+                    sep, mtrr, pge, mca, cmov, pat, pse36, clflush, dts,
+                    acpi, mmx, fxsr, sse, sse2, ss, ht, tm, pbe, syscall,
+                    nx, pdpe1gb, rdtscp, lm, constant_tsc, arch_perfmon,
+                    pebs, bts, rep_good, nopl, xtopology, nonstop_tsc,
+                    cpuid, aperfmperf, pni, pclmulqdq, dtes64, monitor,
+                    ds_cpl, vmx, smx, est, tm2, ssse3, sdbg, fma, cx16,
+                    xtpr, pdcm, pcid, sse4_1, sse4_2, x2apic, movbe,
+                    popcnt, aes, xsave, avx, f16c, rdrand, lahf_lm, abm,
+                    cpuid_fault, epb, invpcid_single, pti, tpr_shadow, vnmi,
+                    flexpriority, ept, vpid, ept_ad, fsgsbase, tsc_adjust,
+                    bmi1, avx2, smep, bmi2, erms, invpcid, xsaveopt,
+                    dtherm, ida, arat, pln, pts
+    CPU spec      : 15.00
+    CPU tokens    : avx, avx2, sse4_1, sse4_2
+>>> gpuinfo ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Enabled       : tokens if requested num of GPUs > 0
+    Priority      : 4
+    Requested GPUs: 0
+    Arch tokens   : -none-
+>>> cuda ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Enabled       : tokens/ngpus
+    Priority      : 5
+    Visible devs  : -none-
+    Host filter   : -none-
+    CUDA tokens   : -none-
+>>> network ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Priority      : 6
+    Net devices   : eno1,enp2s0,enp3s0,lo
+    Net filters   : -none-
+    Net tokens    : -none-
+>>> compatibility ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Arch tokens   : m64-ub18,m64-deb9,m64-centos7,i686,i386,noarch
+===================================================================
+>>> final
+    Num of CPUs   : 1
+    SMP CPU model : Intel(R) Xeon(R) CPU E3-1246 v3 @ 3.50GHz [Total memory: 7.7 GB]
+    Arch tokens   : avx, avx2, i386, i686, m64-centos7, m64-deb10, m64-deb9,
+                    m64-ub18, noarch, sse4_1, sse4_2, x86_64
+
+# ==============================================================================
+# ams-host (AMS utility) terminated at 2022-07-21 12:49:49
+# ==============================================================================
+
+# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+# Error and warning stack ...
+# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:684
+  unable to open: '/etc/lsb-release'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'PRETTY_NAME="Debian GNU/Linux 10 (buster)"' does not match distro name '*11 (bullseye)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'PRETTY_NAME="Debian GNU/Linux 10 (buster)"' does not match distro name '*Ubuntu 20.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'PRETTY_NAME="Debian GNU/Linux 10 (buster)"' does not match distro name '*Ubuntu 18.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'PRETTY_NAME="Debian GNU/Linux 10 (buster)"' does not match distro name '*9 (stretch)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'PRETTY_NAME="Debian GNU/Linux 10 (buster)"' does not match distro name '*CentOS Linux 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'PRETTY_NAME="Debian GNU/Linux 10 (buster)"' does not match distro name '*Red Hat Enterprise Linux ComputeNode release 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'PRETTY_NAME="Debian GNU/Linux 10 (buster)"' does not match distro arch '*x86-64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'PRETTY_NAME="Debian GNU/Linux 10 (buster)"' does not match distro arch '*x86_64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'PRETTY_NAME="Debian GNU/Linux 10 (buster)"' does not match distro arch '*amd64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'NAME="Debian GNU/Linux"' does not match distro name '*11 (bullseye)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'NAME="Debian GNU/Linux"' does not match distro name '*Ubuntu 20.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'NAME="Debian GNU/Linux"' does not match distro name '*10 (buster)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'NAME="Debian GNU/Linux"' does not match distro name '*Ubuntu 18.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'NAME="Debian GNU/Linux"' does not match distro name '*9 (stretch)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'NAME="Debian GNU/Linux"' does not match distro name '*CentOS Linux 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'NAME="Debian GNU/Linux"' does not match distro name '*Red Hat Enterprise Linux ComputeNode release 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'NAME="Debian GNU/Linux"' does not match distro arch '*x86-64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'NAME="Debian GNU/Linux"' does not match distro arch '*x86_64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'NAME="Debian GNU/Linux"' does not match distro arch '*amd64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION_ID="10"' does not match distro name '*11 (bullseye)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION_ID="10"' does not match distro name '*Ubuntu 20.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION_ID="10"' does not match distro name '*10 (buster)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION_ID="10"' does not match distro name '*Ubuntu 18.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION_ID="10"' does not match distro name '*9 (stretch)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION_ID="10"' does not match distro name '*CentOS Linux 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION_ID="10"' does not match distro name '*Red Hat Enterprise Linux ComputeNode release 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'VERSION_ID="10"' does not match distro arch '*x86-64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'VERSION_ID="10"' does not match distro arch '*x86_64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'VERSION_ID="10"' does not match distro arch '*amd64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION="10 (buster)"' does not match distro name '*11 (bullseye)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION="10 (buster)"' does not match distro name '*Ubuntu 20.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION="10 (buster)"' does not match distro name '*Ubuntu 18.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION="10 (buster)"' does not match distro name '*9 (stretch)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION="10 (buster)"' does not match distro name '*CentOS Linux 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION="10 (buster)"' does not match distro name '*Red Hat Enterprise Linux ComputeNode release 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'VERSION="10 (buster)"' does not match distro arch '*x86-64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'VERSION="10 (buster)"' does not match distro arch '*x86_64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'VERSION="10 (buster)"' does not match distro arch '*amd64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION_CODENAME=buster' does not match distro name '*11 (bullseye)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION_CODENAME=buster' does not match distro name '*Ubuntu 20.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION_CODENAME=buster' does not match distro name '*10 (buster)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION_CODENAME=buster' does not match distro name '*Ubuntu 18.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION_CODENAME=buster' does not match distro name '*9 (stretch)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION_CODENAME=buster' does not match distro name '*CentOS Linux 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION_CODENAME=buster' does not match distro name '*Red Hat Enterprise Linux ComputeNode release 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'VERSION_CODENAME=buster' does not match distro arch '*x86-64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'VERSION_CODENAME=buster' does not match distro arch '*x86_64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'VERSION_CODENAME=buster' does not match distro arch '*amd64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'ID=debian' does not match distro name '*11 (bullseye)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'ID=debian' does not match distro name '*Ubuntu 20.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'ID=debian' does not match distro name '*10 (buster)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'ID=debian' does not match distro name '*Ubuntu 18.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'ID=debian' does not match distro name '*9 (stretch)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'ID=debian' does not match distro name '*CentOS Linux 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'ID=debian' does not match distro name '*Red Hat Enterprise Linux ComputeNode release 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'ID=debian' does not match distro arch '*x86-64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'ID=debian' does not match distro arch '*x86_64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'ID=debian' does not match distro arch '*amd64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'HOME_URL="https://www.debian.org/"' does not match distro name '*11 (bullseye)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'HOME_URL="https://www.debian.org/"' does not match distro name '*Ubuntu 20.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'HOME_URL="https://www.debian.org/"' does not match distro name '*10 (buster)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'HOME_URL="https://www.debian.org/"' does not match distro name '*Ubuntu 18.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'HOME_URL="https://www.debian.org/"' does not match distro name '*9 (stretch)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'HOME_URL="https://www.debian.org/"' does not match distro name '*CentOS Linux 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'HOME_URL="https://www.debian.org/"' does not match distro name '*Red Hat Enterprise Linux ComputeNode release 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'HOME_URL="https://www.debian.org/"' does not match distro arch '*x86-64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'HOME_URL="https://www.debian.org/"' does not match distro arch '*x86_64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'HOME_URL="https://www.debian.org/"' does not match distro arch '*amd64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'SUPPORT_URL="https://www.debian.org/support"' does not match distro name '*11 (bullseye)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'SUPPORT_URL="https://www.debian.org/support"' does not match distro name '*Ubuntu 20.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'SUPPORT_URL="https://www.debian.org/support"' does not match distro name '*10 (buster)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'SUPPORT_URL="https://www.debian.org/support"' does not match distro name '*Ubuntu 18.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'SUPPORT_URL="https://www.debian.org/support"' does not match distro name '*9 (stretch)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'SUPPORT_URL="https://www.debian.org/support"' does not match distro name '*CentOS Linux 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'SUPPORT_URL="https://www.debian.org/support"' does not match distro name '*Red Hat Enterprise Linux ComputeNode release 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'SUPPORT_URL="https://www.debian.org/support"' does not match distro arch '*x86-64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'SUPPORT_URL="https://www.debian.org/support"' does not match distro arch '*x86_64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'SUPPORT_URL="https://www.debian.org/support"' does not match distro arch '*amd64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'BUG_REPORT_URL="https://bugs.debian.org/"' does not match distro name '*11 (bullseye)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'BUG_REPORT_URL="https://bugs.debian.org/"' does not match distro name '*Ubuntu 20.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'BUG_REPORT_URL="https://bugs.debian.org/"' does not match distro name '*10 (buster)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'BUG_REPORT_URL="https://bugs.debian.org/"' does not match distro name '*Ubuntu 18.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'BUG_REPORT_URL="https://bugs.debian.org/"' does not match distro name '*9 (stretch)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'BUG_REPORT_URL="https://bugs.debian.org/"' does not match distro name '*CentOS Linux 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'BUG_REPORT_URL="https://bugs.debian.org/"' does not match distro name '*Red Hat Enterprise Linux ComputeNode release 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'BUG_REPORT_URL="https://bugs.debian.org/"' does not match distro arch '*x86-64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'BUG_REPORT_URL="https://bugs.debian.org/"' does not match distro arch '*x86_64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'BUG_REPORT_URL="https://bugs.debian.org/"' does not match distro arch '*amd64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:684
+  unable to open: '/etc/centos-release'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:684
+  unable to open: '/etc/redhat-release'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:684
+  unable to open: '/etc/redhat-release'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'Linux version 4.19.0-9-amd64 (debian-kernel@lists.debian.org) (gcc version 8.3.0 (Debian 8.3.0-6)) #1 SMP Debian 4.19.118-2+deb10u1 (2020-06-07)' does not match distro name '*11 (bullseye)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'Linux version 4.19.0-9-amd64 (debian-kernel@lists.debian.org) (gcc version 8.3.0 (Debian 8.3.0-6)) #1 SMP Debian 4.19.118-2+deb10u1 (2020-06-07)' does not match distro name '*Ubuntu 20.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'Linux version 4.19.0-9-amd64 (debian-kernel@lists.debian.org) (gcc version 8.3.0 (Debian 8.3.0-6)) #1 SMP Debian 4.19.118-2+deb10u1 (2020-06-07)' does not match distro name '*10 (buster)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'Linux version 4.19.0-9-amd64 (debian-kernel@lists.debian.org) (gcc version 8.3.0 (Debian 8.3.0-6)) #1 SMP Debian 4.19.118-2+deb10u1 (2020-06-07)' does not match distro name '*Ubuntu 18.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'Linux version 4.19.0-9-amd64 (debian-kernel@lists.debian.org) (gcc version 8.3.0 (Debian 8.3.0-6)) #1 SMP Debian 4.19.118-2+deb10u1 (2020-06-07)' does not match distro name '*9 (stretch)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'Linux version 4.19.0-9-amd64 (debian-kernel@lists.debian.org) (gcc version 8.3.0 (Debian 8.3.0-6)) #1 SMP Debian 4.19.118-2+deb10u1 (2020-06-07)' does not match distro name '*CentOS Linux 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'Linux version 4.19.0-9-amd64 (debian-kernel@lists.debian.org) (gcc version 8.3.0 (Debian 8.3.0-6)) #1 SMP Debian 4.19.118-2+deb10u1 (2020-06-07)' does not match distro name '*Red Hat Enterprise Linux ComputeNode release 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'Linux version 4.19.0-9-amd64 (debian-kernel@lists.debian.org) (gcc version 8.3.0 (Debian 8.3.0-6)) #1 SMP Debian 4.19.118-2+deb10u1 (2020-06-07)' does not match distro arch '*x86-64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'Linux version 4.19.0-9-amd64 (debian-kernel@lists.debian.org) (gcc version 8.3.0 (Debian 8.3.0-6)) #1 SMP Debian 4.19.118-2+deb10u1 (2020-06-07)' does not match distro arch '*x86_64*'
+> W  2022-07-21 12:49:49 in InitDesktopTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:1071
+  desktop: host 'robox3.ceitec.muni.cz' does not match filter '*.ncbr.muni.cz'
+> W  2022-07-21 12:49:49 in InitCudaGPUTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:1170
+  cuda: host 'robox3.ceitec.muni.cz' does not have device '/dev/nvidia0'
+> W  2022-07-21 12:49:49 in InitNetworkTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:1296
+  net device eno1 does not match filter ib*
+> W  2022-07-21 12:49:49 in InitNetworkTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:1296
+  net device enp2s0 does not match filter ib*
+> W  2022-07-21 12:49:49 in InitNetworkTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:1296
+  net device enp3s0 does not match filter ib*
+> W  2022-07-21 12:49:49 in InitNetworkTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:1296
+  net device lo does not match filter ib*
+
+# site -v activate {ROBOX-PRO:8db503ce-c3c0-4a3e-93b2-b7a8fa7cbd34}
+
+# ==============================================================================
+# site (AMS utility) started at 2022-07-21 12:49:49
+# ==============================================================================
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [AMS 8.327.50de04b] ~~
+# Site info               ||| robox-pro [adaptive] |||
+# ~~~ User identification~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# User name  : sofbp
+# User group : softmatter [umask: 022 files: rw-r--r-- dirs: rwxr-xr-x]
+# ACL groups : compchem
+#
+# ~~~ Host info ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [cached] ~~
+# Full host name      : robox3.ceitec.muni.cz
+# Num of host CPUs    : 1    / Num of host threads : 1   
+# Host SMP CPU model  : Intel(R) Xeon(R) CPU E3-1246 v3 @ 3.50GHz [Total memory: 7.7 GB]
+# Host arch tokens    : avx, avx2, i386, i686, m64-centos7, m64-deb10,
+                        m64-deb9, m64-ub18, noarch, sse4_1, sse4_2, x86_64
+#
+# ~~~ Site documentation and support ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Documentation  : https://infinity.ncbr.muni.cz
+# Mailing list   : users@infinity.ncbr.muni.cz
+# Support e-mail : linuxsupport@ics.muni.cz
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+# ==============================================================================
+# site (AMS utility) terminated at 2022-07-21 12:49:49
+# ==============================================================================
+
+# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+# Error and warning stack ...
+# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:684
+  unable to open: '/etc/lsb-release'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'PRETTY_NAME="Debian GNU/Linux 10 (buster)"' does not match distro name '*11 (bullseye)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'PRETTY_NAME="Debian GNU/Linux 10 (buster)"' does not match distro name '*Ubuntu 20.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'PRETTY_NAME="Debian GNU/Linux 10 (buster)"' does not match distro name '*Ubuntu 18.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'PRETTY_NAME="Debian GNU/Linux 10 (buster)"' does not match distro name '*9 (stretch)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'PRETTY_NAME="Debian GNU/Linux 10 (buster)"' does not match distro name '*CentOS Linux 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'PRETTY_NAME="Debian GNU/Linux 10 (buster)"' does not match distro name '*Red Hat Enterprise Linux ComputeNode release 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'PRETTY_NAME="Debian GNU/Linux 10 (buster)"' does not match distro arch '*x86-64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'PRETTY_NAME="Debian GNU/Linux 10 (buster)"' does not match distro arch '*x86_64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'PRETTY_NAME="Debian GNU/Linux 10 (buster)"' does not match distro arch '*amd64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'NAME="Debian GNU/Linux"' does not match distro name '*11 (bullseye)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'NAME="Debian GNU/Linux"' does not match distro name '*Ubuntu 20.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'NAME="Debian GNU/Linux"' does not match distro name '*10 (buster)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'NAME="Debian GNU/Linux"' does not match distro name '*Ubuntu 18.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'NAME="Debian GNU/Linux"' does not match distro name '*9 (stretch)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'NAME="Debian GNU/Linux"' does not match distro name '*CentOS Linux 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'NAME="Debian GNU/Linux"' does not match distro name '*Red Hat Enterprise Linux ComputeNode release 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'NAME="Debian GNU/Linux"' does not match distro arch '*x86-64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'NAME="Debian GNU/Linux"' does not match distro arch '*x86_64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'NAME="Debian GNU/Linux"' does not match distro arch '*amd64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION_ID="10"' does not match distro name '*11 (bullseye)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION_ID="10"' does not match distro name '*Ubuntu 20.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION_ID="10"' does not match distro name '*10 (buster)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION_ID="10"' does not match distro name '*Ubuntu 18.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION_ID="10"' does not match distro name '*9 (stretch)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION_ID="10"' does not match distro name '*CentOS Linux 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION_ID="10"' does not match distro name '*Red Hat Enterprise Linux ComputeNode release 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'VERSION_ID="10"' does not match distro arch '*x86-64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'VERSION_ID="10"' does not match distro arch '*x86_64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'VERSION_ID="10"' does not match distro arch '*amd64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION="10 (buster)"' does not match distro name '*11 (bullseye)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION="10 (buster)"' does not match distro name '*Ubuntu 20.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION="10 (buster)"' does not match distro name '*Ubuntu 18.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION="10 (buster)"' does not match distro name '*9 (stretch)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION="10 (buster)"' does not match distro name '*CentOS Linux 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION="10 (buster)"' does not match distro name '*Red Hat Enterprise Linux ComputeNode release 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'VERSION="10 (buster)"' does not match distro arch '*x86-64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'VERSION="10 (buster)"' does not match distro arch '*x86_64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'VERSION="10 (buster)"' does not match distro arch '*amd64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION_CODENAME=buster' does not match distro name '*11 (bullseye)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION_CODENAME=buster' does not match distro name '*Ubuntu 20.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION_CODENAME=buster' does not match distro name '*10 (buster)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION_CODENAME=buster' does not match distro name '*Ubuntu 18.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION_CODENAME=buster' does not match distro name '*9 (stretch)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION_CODENAME=buster' does not match distro name '*CentOS Linux 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION_CODENAME=buster' does not match distro name '*Red Hat Enterprise Linux ComputeNode release 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'VERSION_CODENAME=buster' does not match distro arch '*x86-64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'VERSION_CODENAME=buster' does not match distro arch '*x86_64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'VERSION_CODENAME=buster' does not match distro arch '*amd64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'ID=debian' does not match distro name '*11 (bullseye)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'ID=debian' does not match distro name '*Ubuntu 20.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'ID=debian' does not match distro name '*10 (buster)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'ID=debian' does not match distro name '*Ubuntu 18.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'ID=debian' does not match distro name '*9 (stretch)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'ID=debian' does not match distro name '*CentOS Linux 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'ID=debian' does not match distro name '*Red Hat Enterprise Linux ComputeNode release 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'ID=debian' does not match distro arch '*x86-64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'ID=debian' does not match distro arch '*x86_64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'ID=debian' does not match distro arch '*amd64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'HOME_URL="https://www.debian.org/"' does not match distro name '*11 (bullseye)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'HOME_URL="https://www.debian.org/"' does not match distro name '*Ubuntu 20.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'HOME_URL="https://www.debian.org/"' does not match distro name '*10 (buster)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'HOME_URL="https://www.debian.org/"' does not match distro name '*Ubuntu 18.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'HOME_URL="https://www.debian.org/"' does not match distro name '*9 (stretch)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'HOME_URL="https://www.debian.org/"' does not match distro name '*CentOS Linux 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'HOME_URL="https://www.debian.org/"' does not match distro name '*Red Hat Enterprise Linux ComputeNode release 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'HOME_URL="https://www.debian.org/"' does not match distro arch '*x86-64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'HOME_URL="https://www.debian.org/"' does not match distro arch '*x86_64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'HOME_URL="https://www.debian.org/"' does not match distro arch '*amd64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'SUPPORT_URL="https://www.debian.org/support"' does not match distro name '*11 (bullseye)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'SUPPORT_URL="https://www.debian.org/support"' does not match distro name '*Ubuntu 20.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'SUPPORT_URL="https://www.debian.org/support"' does not match distro name '*10 (buster)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'SUPPORT_URL="https://www.debian.org/support"' does not match distro name '*Ubuntu 18.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'SUPPORT_URL="https://www.debian.org/support"' does not match distro name '*9 (stretch)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'SUPPORT_URL="https://www.debian.org/support"' does not match distro name '*CentOS Linux 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'SUPPORT_URL="https://www.debian.org/support"' does not match distro name '*Red Hat Enterprise Linux ComputeNode release 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'SUPPORT_URL="https://www.debian.org/support"' does not match distro arch '*x86-64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'SUPPORT_URL="https://www.debian.org/support"' does not match distro arch '*x86_64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'SUPPORT_URL="https://www.debian.org/support"' does not match distro arch '*amd64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'BUG_REPORT_URL="https://bugs.debian.org/"' does not match distro name '*11 (bullseye)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'BUG_REPORT_URL="https://bugs.debian.org/"' does not match distro name '*Ubuntu 20.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'BUG_REPORT_URL="https://bugs.debian.org/"' does not match distro name '*10 (buster)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'BUG_REPORT_URL="https://bugs.debian.org/"' does not match distro name '*Ubuntu 18.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'BUG_REPORT_URL="https://bugs.debian.org/"' does not match distro name '*9 (stretch)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'BUG_REPORT_URL="https://bugs.debian.org/"' does not match distro name '*CentOS Linux 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'BUG_REPORT_URL="https://bugs.debian.org/"' does not match distro name '*Red Hat Enterprise Linux ComputeNode release 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'BUG_REPORT_URL="https://bugs.debian.org/"' does not match distro arch '*x86-64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'BUG_REPORT_URL="https://bugs.debian.org/"' does not match distro arch '*x86_64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'BUG_REPORT_URL="https://bugs.debian.org/"' does not match distro arch '*amd64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:684
+  unable to open: '/etc/centos-release'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:684
+  unable to open: '/etc/redhat-release'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:684
+  unable to open: '/etc/redhat-release'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'Linux version 4.19.0-9-amd64 (debian-kernel@lists.debian.org) (gcc version 8.3.0 (Debian 8.3.0-6)) #1 SMP Debian 4.19.118-2+deb10u1 (2020-06-07)' does not match distro name '*11 (bullseye)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'Linux version 4.19.0-9-amd64 (debian-kernel@lists.debian.org) (gcc version 8.3.0 (Debian 8.3.0-6)) #1 SMP Debian 4.19.118-2+deb10u1 (2020-06-07)' does not match distro name '*Ubuntu 20.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'Linux version 4.19.0-9-amd64 (debian-kernel@lists.debian.org) (gcc version 8.3.0 (Debian 8.3.0-6)) #1 SMP Debian 4.19.118-2+deb10u1 (2020-06-07)' does not match distro name '*10 (buster)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'Linux version 4.19.0-9-amd64 (debian-kernel@lists.debian.org) (gcc version 8.3.0 (Debian 8.3.0-6)) #1 SMP Debian 4.19.118-2+deb10u1 (2020-06-07)' does not match distro name '*Ubuntu 18.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'Linux version 4.19.0-9-amd64 (debian-kernel@lists.debian.org) (gcc version 8.3.0 (Debian 8.3.0-6)) #1 SMP Debian 4.19.118-2+deb10u1 (2020-06-07)' does not match distro name '*9 (stretch)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'Linux version 4.19.0-9-amd64 (debian-kernel@lists.debian.org) (gcc version 8.3.0 (Debian 8.3.0-6)) #1 SMP Debian 4.19.118-2+deb10u1 (2020-06-07)' does not match distro name '*CentOS Linux 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'Linux version 4.19.0-9-amd64 (debian-kernel@lists.debian.org) (gcc version 8.3.0 (Debian 8.3.0-6)) #1 SMP Debian 4.19.118-2+deb10u1 (2020-06-07)' does not match distro name '*Red Hat Enterprise Linux ComputeNode release 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'Linux version 4.19.0-9-amd64 (debian-kernel@lists.debian.org) (gcc version 8.3.0 (Debian 8.3.0-6)) #1 SMP Debian 4.19.118-2+deb10u1 (2020-06-07)' does not match distro arch '*x86-64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'Linux version 4.19.0-9-amd64 (debian-kernel@lists.debian.org) (gcc version 8.3.0 (Debian 8.3.0-6)) #1 SMP Debian 4.19.118-2+deb10u1 (2020-06-07)' does not match distro arch '*x86_64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:684
+  unable to open: '/etc/lsb-release'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'PRETTY_NAME="Debian GNU/Linux 10 (buster)"' does not match distro name '*11 (bullseye)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'PRETTY_NAME="Debian GNU/Linux 10 (buster)"' does not match distro name '*Ubuntu 20.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'PRETTY_NAME="Debian GNU/Linux 10 (buster)"' does not match distro name '*Ubuntu 18.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'PRETTY_NAME="Debian GNU/Linux 10 (buster)"' does not match distro name '*9 (stretch)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'PRETTY_NAME="Debian GNU/Linux 10 (buster)"' does not match distro name '*CentOS Linux 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'PRETTY_NAME="Debian GNU/Linux 10 (buster)"' does not match distro name '*Red Hat Enterprise Linux ComputeNode release 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'PRETTY_NAME="Debian GNU/Linux 10 (buster)"' does not match distro arch '*x86-64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'PRETTY_NAME="Debian GNU/Linux 10 (buster)"' does not match distro arch '*x86_64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'PRETTY_NAME="Debian GNU/Linux 10 (buster)"' does not match distro arch '*amd64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'NAME="Debian GNU/Linux"' does not match distro name '*11 (bullseye)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'NAME="Debian GNU/Linux"' does not match distro name '*Ubuntu 20.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'NAME="Debian GNU/Linux"' does not match distro name '*10 (buster)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'NAME="Debian GNU/Linux"' does not match distro name '*Ubuntu 18.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'NAME="Debian GNU/Linux"' does not match distro name '*9 (stretch)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'NAME="Debian GNU/Linux"' does not match distro name '*CentOS Linux 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'NAME="Debian GNU/Linux"' does not match distro name '*Red Hat Enterprise Linux ComputeNode release 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'NAME="Debian GNU/Linux"' does not match distro arch '*x86-64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'NAME="Debian GNU/Linux"' does not match distro arch '*x86_64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'NAME="Debian GNU/Linux"' does not match distro arch '*amd64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION_ID="10"' does not match distro name '*11 (bullseye)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION_ID="10"' does not match distro name '*Ubuntu 20.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION_ID="10"' does not match distro name '*10 (buster)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION_ID="10"' does not match distro name '*Ubuntu 18.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION_ID="10"' does not match distro name '*9 (stretch)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION_ID="10"' does not match distro name '*CentOS Linux 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION_ID="10"' does not match distro name '*Red Hat Enterprise Linux ComputeNode release 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'VERSION_ID="10"' does not match distro arch '*x86-64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'VERSION_ID="10"' does not match distro arch '*x86_64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'VERSION_ID="10"' does not match distro arch '*amd64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION="10 (buster)"' does not match distro name '*11 (bullseye)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION="10 (buster)"' does not match distro name '*Ubuntu 20.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION="10 (buster)"' does not match distro name '*Ubuntu 18.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION="10 (buster)"' does not match distro name '*9 (stretch)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION="10 (buster)"' does not match distro name '*CentOS Linux 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION="10 (buster)"' does not match distro name '*Red Hat Enterprise Linux ComputeNode release 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'VERSION="10 (buster)"' does not match distro arch '*x86-64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'VERSION="10 (buster)"' does not match distro arch '*x86_64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'VERSION="10 (buster)"' does not match distro arch '*amd64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION_CODENAME=buster' does not match distro name '*11 (bullseye)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION_CODENAME=buster' does not match distro name '*Ubuntu 20.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION_CODENAME=buster' does not match distro name '*10 (buster)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION_CODENAME=buster' does not match distro name '*Ubuntu 18.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION_CODENAME=buster' does not match distro name '*9 (stretch)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION_CODENAME=buster' does not match distro name '*CentOS Linux 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'VERSION_CODENAME=buster' does not match distro name '*Red Hat Enterprise Linux ComputeNode release 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'VERSION_CODENAME=buster' does not match distro arch '*x86-64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'VERSION_CODENAME=buster' does not match distro arch '*x86_64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'VERSION_CODENAME=buster' does not match distro arch '*amd64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'ID=debian' does not match distro name '*11 (bullseye)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'ID=debian' does not match distro name '*Ubuntu 20.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'ID=debian' does not match distro name '*10 (buster)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'ID=debian' does not match distro name '*Ubuntu 18.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'ID=debian' does not match distro name '*9 (stretch)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'ID=debian' does not match distro name '*CentOS Linux 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'ID=debian' does not match distro name '*Red Hat Enterprise Linux ComputeNode release 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'ID=debian' does not match distro arch '*x86-64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'ID=debian' does not match distro arch '*x86_64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'ID=debian' does not match distro arch '*amd64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'HOME_URL="https://www.debian.org/"' does not match distro name '*11 (bullseye)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'HOME_URL="https://www.debian.org/"' does not match distro name '*Ubuntu 20.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'HOME_URL="https://www.debian.org/"' does not match distro name '*10 (buster)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'HOME_URL="https://www.debian.org/"' does not match distro name '*Ubuntu 18.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'HOME_URL="https://www.debian.org/"' does not match distro name '*9 (stretch)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'HOME_URL="https://www.debian.org/"' does not match distro name '*CentOS Linux 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'HOME_URL="https://www.debian.org/"' does not match distro name '*Red Hat Enterprise Linux ComputeNode release 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'HOME_URL="https://www.debian.org/"' does not match distro arch '*x86-64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'HOME_URL="https://www.debian.org/"' does not match distro arch '*x86_64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'HOME_URL="https://www.debian.org/"' does not match distro arch '*amd64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'SUPPORT_URL="https://www.debian.org/support"' does not match distro name '*11 (bullseye)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'SUPPORT_URL="https://www.debian.org/support"' does not match distro name '*Ubuntu 20.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'SUPPORT_URL="https://www.debian.org/support"' does not match distro name '*10 (buster)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'SUPPORT_URL="https://www.debian.org/support"' does not match distro name '*Ubuntu 18.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'SUPPORT_URL="https://www.debian.org/support"' does not match distro name '*9 (stretch)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'SUPPORT_URL="https://www.debian.org/support"' does not match distro name '*CentOS Linux 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'SUPPORT_URL="https://www.debian.org/support"' does not match distro name '*Red Hat Enterprise Linux ComputeNode release 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'SUPPORT_URL="https://www.debian.org/support"' does not match distro arch '*x86-64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'SUPPORT_URL="https://www.debian.org/support"' does not match distro arch '*x86_64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'SUPPORT_URL="https://www.debian.org/support"' does not match distro arch '*amd64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'BUG_REPORT_URL="https://bugs.debian.org/"' does not match distro name '*11 (bullseye)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'BUG_REPORT_URL="https://bugs.debian.org/"' does not match distro name '*Ubuntu 20.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'BUG_REPORT_URL="https://bugs.debian.org/"' does not match distro name '*10 (buster)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'BUG_REPORT_URL="https://bugs.debian.org/"' does not match distro name '*Ubuntu 18.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'BUG_REPORT_URL="https://bugs.debian.org/"' does not match distro name '*9 (stretch)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'BUG_REPORT_URL="https://bugs.debian.org/"' does not match distro name '*CentOS Linux 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'BUG_REPORT_URL="https://bugs.debian.org/"' does not match distro name '*Red Hat Enterprise Linux ComputeNode release 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'BUG_REPORT_URL="https://bugs.debian.org/"' does not match distro arch '*x86-64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'BUG_REPORT_URL="https://bugs.debian.org/"' does not match distro arch '*x86_64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'BUG_REPORT_URL="https://bugs.debian.org/"' does not match distro arch '*amd64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:684
+  unable to open: '/etc/centos-release'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:684
+  unable to open: '/etc/redhat-release'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:684
+  unable to open: '/etc/redhat-release'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'Linux version 4.19.0-9-amd64 (debian-kernel@lists.debian.org) (gcc version 8.3.0 (Debian 8.3.0-6)) #1 SMP Debian 4.19.118-2+deb10u1 (2020-06-07)' does not match distro name '*11 (bullseye)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'Linux version 4.19.0-9-amd64 (debian-kernel@lists.debian.org) (gcc version 8.3.0 (Debian 8.3.0-6)) #1 SMP Debian 4.19.118-2+deb10u1 (2020-06-07)' does not match distro name '*Ubuntu 20.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'Linux version 4.19.0-9-amd64 (debian-kernel@lists.debian.org) (gcc version 8.3.0 (Debian 8.3.0-6)) #1 SMP Debian 4.19.118-2+deb10u1 (2020-06-07)' does not match distro name '*10 (buster)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'Linux version 4.19.0-9-amd64 (debian-kernel@lists.debian.org) (gcc version 8.3.0 (Debian 8.3.0-6)) #1 SMP Debian 4.19.118-2+deb10u1 (2020-06-07)' does not match distro name '*Ubuntu 18.04*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'Linux version 4.19.0-9-amd64 (debian-kernel@lists.debian.org) (gcc version 8.3.0 (Debian 8.3.0-6)) #1 SMP Debian 4.19.118-2+deb10u1 (2020-06-07)' does not match distro name '*9 (stretch)*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'Linux version 4.19.0-9-amd64 (debian-kernel@lists.debian.org) (gcc version 8.3.0 (Debian 8.3.0-6)) #1 SMP Debian 4.19.118-2+deb10u1 (2020-06-07)' does not match distro name '*CentOS Linux 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:645
+  distro: hostnamectl 'Linux version 4.19.0-9-amd64 (debian-kernel@lists.debian.org) (gcc version 8.3.0 (Debian 8.3.0-6)) #1 SMP Debian 4.19.118-2+deb10u1 (2020-06-07)' does not match distro name '*Red Hat Enterprise Linux ComputeNode release 7*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'Linux version 4.19.0-9-amd64 (debian-kernel@lists.debian.org) (gcc version 8.3.0 (Debian 8.3.0-6)) #1 SMP Debian 4.19.118-2+deb10u1 (2020-06-07)' does not match distro arch '*x86-64*'
+> W  2022-07-21 12:49:49 in InitDefaultTokens
+  /ams/8.0/src/lib/ams/soft/Host.cpp:673
+  arch: hostnamectl 'Linux version 4.19.0-9-amd64 (debian-kernel@lists.debian.org) (gcc version 8.3.0 (Debian 8.3.0-6)) #1 SMP Debian 4.19.118-2+deb10u1 (2020-06-07)' does not match distro arch '*x86_64*'
+
+# amsmodule --system add abs:3.770.4a34621
+
+# Module specification: abs:3.770.4a34621 (add action)
+# =============================================================
+  INFO:    Module is active, reactivating .. 
+           Unload module : abs:3.770.4a34621:x86_64:single
+  Requested CPUs     :   1  Requested GPUs     :   0
+  Num of host CPUs   :   1  Num of host GPUs   :   0
+  Requested nodes    :   1
+  Host arch tokens   : avx,avx2,i386,i686,m64-centos7,m64-deb10,m64-deb9,m64-ub18,noarch,sse4_1,sse4_2,x86_64
+  Host SMP CPU model : Intel(R) Xeon(R) CPU E3-1246 v3 @ 3.50GHz [Total memory: 7.7 GB]
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Exported module    : abs:3.770.4a34621
+  Module build       : abs:3.770.4a34621:x86_64:single
+
+# amsmodule --system add abs-rsync
+
+# Module specification: abs-rsync (add action)
+# =============================================================
+  Requested CPUs     :   1  Requested GPUs     :   0
+  Num of host CPUs   :   1  Num of host GPUs   :   0
+  Requested nodes    :   1
+  Host arch tokens   : avx,avx2,i386,i686,m64-centos7,m64-deb10,m64-deb9,m64-ub18,noarch,sse4_1,sse4_2,x86_64
+  Host SMP CPU model : Intel(R) Xeon(R) CPU E3-1246 v3 @ 3.50GHz [Total memory: 7.7 GB]
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Exported module    : abs-rsync:3.1.2
+  Module build       : abs-rsync:3.1.2:x86_64:single
+
+rsync  version 3.1.2  protocol version 31
+Copyright (C) 1996-2015 by Andrew Tridgell, Wayne Davison, and others.
+Web site: http://rsync.samba.org/
+Capabilities:
+    64-bit files, 64-bit inums, 64-bit timestamps, 64-bit long ints,
+    socketpairs, hardlinks, symlinks, IPv6, batchfiles, inplace,
+    append, no ACLs, xattrs, iconv, symtimes, prealloc
+
+rsync comes with ABSOLUTELY NO WARRANTY.  This is free software, and you
+are welcome to redistribute it under certain conditions.  See the GNU
+General Public Licence for details.
+
+# ------------------------------------------------------------------------------
+# L1: Restore job environment ...
+# ------------------------------------------------------------------------------
+# Temporary directory : /tmp
+# SSH Options         : -o StrictHostKeyChecking=no
+# Retry count         : 3
+# Retry time          : 600
+# Current directory   : /home/sofbp
+# Input directory     : sof.ceitec.muni.cz:/home/sofbp/helix/build-helix-Desktop-Debug
+# Storage directory   : sof.ceitec.muni.cz:/home/sofbp/helix/build-helix-Desktop-Debug
+
+# Is the input directory local?
+  > the input dir is on the remote storage or input machine!
+
+# Coping the job info file to the temporary directory ...
+# ------------------------------------------------------------------------------
+= inf-copy-from-inputdir:
+  > rsyncing the data from the storage machine via scp ... 
+    --chown=:softmatter sof.ceitec.muni.cz:/home/sofbp/helix/build-helix-Desktop-Debug/hel.sh.info -> /tmp/965.sofbp.info
+
+receiving incremental file list
+hel.sh.info
+
+sent 43 bytes  received 4,085 bytes  8,256.00 bytes/sec
+total size is 3,969  speedup is 0.96
+# ------------------------------------------------------------------------------
+
+# Restoring the job environment variables ...
+# Exported modules   : -none-
+
+
+# ------------------------------------------------------------------------------
+# L2.0: Cross-host user group translation rules for rsync ...
+# ------------------------------------------------------------------------------
+# Legend: I - input machine; S - storage machine; L - local input directory;
+          W - working directory; FST - file system type
+
+I->W : --chown=:softmatter
+W->I : --chown=:softmatter
+S->W : --chown=:softmatter
+W->S : --chown=:softmatter
+L->W : 
+W->L : 
+L FST: n.a.
+
+# Input machine enabled for data : NO (input machine is the same as the storage machine)
+# Input machine enabled for exec : YES
+# Surrogate machines for exec    : robox.ceitec.muni.cz
+
+# ------------------------------------------------------------------------------
+# L2.1: Prepare the working directory ...
+# ------------------------------------------------------------------------------
+
+# Job ID             : 482436.robox-pro.ceitec.muni.cz
+# Main working node  : robox3.ceitec.muni.cz
+# Work directory type: scratch-local
+# Data IN copy mode  : copy-master
+# Working directory  : $SCRATCHDIR/main
+# Working directory  : /scratch/sofbp/job_482436.robox-pro.ceitec.muni.cz/main
+
+# Creating working directories on the working nodes ...
+  >>> robox3.ceitec.muni.cz:/scratch/sofbp/job_482436.robox-pro.ceitec.muni.cz/main ---
+
+# Changing the current directory to the working directory ...
+
+# Tmp directory      : $SCRATCHDIR/tmp
+# Tmp directory      : /scratch/sofbp/job_482436.robox-pro.ceitec.muni.cz/tmp
+
+# Creating TMP directories on the working nodes ...
+  >>> robox3.ceitec.muni.cz:/scratch/sofbp/job_482436.robox-pro.ceitec.muni.cz/tmp ---
+
+# ------------------------------------------------------------------------------
+# L2.2: Pre-init working directory ...
+# ------------------------------------------------------------------------------
+
+# Preinit script     : -nothing to setup-
+
+# ------------------------------------------------------------------------------
+# L2.3: Filesystem states  ...
+# ------------------------------------------------------------------------------
+
+>>> robox3.ceitec.muni.cz ---
+Filesystem                                Size  Used Avail Use% Mounted on
+udev                                      3.9G     0  3.9G   0% /dev
+tmpfs                                     787M   36M  752M   5% /run
+/dev/sda2                                  28G  7.8G   19G  30% /
+tmpfs                                     3.9G   56K  3.9G   1% /dev/shm
+tmpfs                                     5.0M     0  5.0M   0% /run/lock
+tmpfs                                     3.9G     0  3.9G   0% /sys/fs/cgroup
+/dev/sda1                                  93M  3.3M   90M   4% /boot/efi
+/dev/sda5                                  30G   46M   28G   1% /home
+/dev/sda6                                 852G  110M  809G   1% /scratch
+AFS                                       2.0T     0  2.0T   0% /afs
+storage-brno3-cerit.metacentrum.cz:/      932T  931T  1.3T 100% /mnt/storage-brno3-cerit
+storage-brno1-cerit.metacentrum.cz:/      1.8P  1.6P  144T  92% /mnt/storage-brno1-cerit
+cvmfs2                                    4.0G  784M  3.2G  20% /cvmfs/software.metacentrum.cz
+storage-ceitec1.ceitec.muni.cz:/          5.9P  3.0P  3.0P  50% /mnt/storage-brno14-ceitec
+tmpfs                                     787M     0  787M   0% /run/user/0
+cvmfs2                                    4.0G  784M  3.2G  20% /cvmfs/singularity.metacentrum.cz
+storage-brno2.metacentrum.cz:/           1014M   48M  966M   5% /mnt/storage-brno2
+storage-plzen1.metacentrum.cz:/            10G  121M  9.9G   2% /mnt/storage-plzen1
+storage-praha2-natur.metacentrum.cz:/      88T  2.4T   85T   3% /mnt/storage-praha2-natur
+storage-pruhonice1-ibot.metacentrum.cz:/  179T   70T  109T  39% /mnt/storage-pruhonice1-ibot
+storage-vestec1-elixir.metacentrum.cz:/  1014M   45M  969M   5% /mnt/storage-vestec1-elixir
+storage-brno12-cerit.metacentrum.cz:/     9.5P  3.3P  6.3P  35% /mnt/storage-brno12-cerit
+
+# ------------------------------------------------------------------------------
+# L2.4: Resources files ...
+# ------------------------------------------------------------------------------
+
+# PBS_NODEFILE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# File: /var/spool/pbs/aux/482436.robox-pro.ceitec.muni.cz
+robox3.ceitec.muni.cz
+
+# INF_MPIFILE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# File: /scratch/sofbp/job_482436.robox-pro.ceitec.muni.cz/main/hel.sh.mpinodes
+robox3.ceitec.muni.cz slots=1
+
+# Write the job start and update the info file in the input directory ...
+# ------------------------------------------------------------------------------
+= inf-copy-to-inputdir:
+  > rsyncing the data to the storage machine via scp ... 
+    --chown=:softmatter /scratch/sofbp/job_482436.robox-pro.ceitec.muni.cz/main/hel.sh.info -> sof.ceitec.muni.cz:/home/sofbp/helix/build-helix-Desktop-Debug/hel.sh.info
+
+sending incremental file list
+hel.sh.info
+
+sent 1,125 bytes  received 71 bytes  797.33 bytes/sec
+total size is 4,489  speedup is 3.75
+# ------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
+# L2.5: Current node utilizations ...
+# ------------------------------------------------------------------------------
+
+>>> robox3.ceitec.muni.cz ----------------------------------
+top - 12:49:50 up 586 days, 16:27,  0 users,  load average: 0.29, 0.08, 0.03
+Tasks: 193 total,   1 running, 192 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  1.6 us,  1.6 sy,  0.0 ni, 96.9 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+MiB Mem :   7865.6 total,   1037.5 free,   2042.2 used,   4785.9 buff/cache
+MiB Swap:   7629.0 total,   7233.4 free,    395.6 used.   4446.8 avail Mem 
+
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND
+
+# ------------------------------------------------------------------------------
+# L2.6: Machine hardware info ...
+# ------------------------------------------------------------------------------
+
+# CPU info (All CPUs)
+# =============================================================================
+
+>>> robox3.ceitec.muni.cz ---
+Architecture:        x86_64
+CPU op-mode(s):      32-bit, 64-bit
+Byte Order:          Little Endian
+Address sizes:       39 bits physical, 48 bits virtual
+CPU(s):              8
+On-line CPU(s) list: 0-7
+Thread(s) per core:  2
+Core(s) per socket:  4
+Socket(s):           1
+NUMA node(s):        1
+Vendor ID:           GenuineIntel
+CPU family:          6
+Model:               60
+Model name:          Intel(R) Xeon(R) CPU E3-1246 v3 @ 3.50GHz
+Stepping:            3
+CPU MHz:             2071.686
+CPU max MHz:         3900.0000
+CPU min MHz:         800.0000
+BogoMIPS:            6983.42
+Virtualization:      VT-x
+L1d cache:           32K
+L1i cache:           32K
+L2 cache:            256K
+L3 cache:            8192K
+NUMA node0 CPU(s):   0-7
+Flags:               fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt aes xsave avx f16c rdrand lahf_lm abm cpuid_fault epb invpcid_single pti tpr_shadow vnmi flexpriority ept vpid ept_ad fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt dtherm ida arat pln pts
+
+# GPU info (ALL GPUs)
+# =============================================================================
+>>> INFO: the nvidia-smi command is not available ... skipping
+
+# infiniband (fast interconnect)
+# =============================================================================
+>>> INFO: the ibv_devinfo command is not available ... skipping
+
+# ------------------------------------------------------------------------------
+# L2.7: Machine software info ...
+# ------------------------------------------------------------------------------
+
+# ulimit (main process via pbs_mom)
+# =============================================================================
+
+>>> robox3.ceitec.muni.cz ---
+core file size          (blocks, -c) 0
+data seg size           (kbytes, -d) unlimited
+scheduling priority             (-e) 0
+file size               (blocks, -f) unlimited
+pending signals                 (-i) 30569
+max locked memory       (kbytes, -l) unlimited
+max memory size         (kbytes, -m) 1048576
+open files                      (-n) 200000
+pipe size            (512 bytes, -p) 8
+POSIX message queues     (bytes, -q) 819200
+real-time priority              (-r) 0
+stack size              (kbytes, -s) unlimited
+cpu time               (seconds, -t) unlimited
+max user processes              (-u) 30569
+virtual memory          (kbytes, -v) unlimited
+file locks                      (-x) unlimited
+
+# ulimit (computational nodes via pam_limits)
+# =============================================================================
+
+>>> robox3.ceitec.muni.cz ---
+core file size          (blocks, -c) 0
+data seg size           (kbytes, -d) unlimited
+scheduling priority             (-e) 0
+file size               (blocks, -f) unlimited
+pending signals                 (-i) 30569
+max locked memory       (kbytes, -l) unlimited
+max memory size         (kbytes, -m) 1048576
+open files                      (-n) 200000
+pipe size            (512 bytes, -p) 8
+POSIX message queues     (bytes, -q) 819200
+real-time priority              (-r) 0
+stack size              (kbytes, -s) unlimited
+cpu time               (seconds, -t) unlimited
+max user processes              (-u) 30569
+virtual memory          (kbytes, -v) unlimited
+file locks                      (-x) unlimited
+
+# IPCs
+# =============================================================================
+
+>>> robox3.ceitec.muni.cz ---
+
+------ Message Queues --------
+key        msqid      owner      perms      used-bytes   messages    
+
+------ Shared Memory Segments --------
+key        shmid      owner      perms      bytes      nattch     status      
+0x00000000 0          zabbix     600        576        5          dest         
+0x00000000 32769      zabbix     600        657056     5          dest         
+
+------ Semaphore Arrays --------
+key        semid      owner      perms      nsems     
+0x00105b6b 0          root       600        1         
+0x00105b6c 32769      root       666        1         
+
+
+# ------------------------------------------------------------------------------
+# L2.8a: Current NUMA settings on the master node ...
+# ------------------------------------------------------------------------------
+
+# Module specification: hwloc (add action)
+# =============================================================
+  Requested CPUs     :   1  Requested GPUs     :   0
+  Num of host CPUs   :   1  Num of host GPUs   :   0
+  Requested nodes    :   1
+  Host arch tokens   : avx,avx2,i386,i686,m64-centos7,m64-deb10,m64-deb9,m64-ub18,noarch,sse4_1,sse4_2,x86_64
+  Host SMP CPU model : Intel(R) Xeon(R) CPU E3-1246 v3 @ 3.50GHz [Total memory: 7.7 GB]
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Exported module    : hwloc:2.6.0
+  Module build       : hwloc:2.6.0:x86_64:single
+
+policy: default
+preferred node: current
+physcpubind: 0 
+cpubind: 0 
+nodebind: 0 
+membind: 0 
+
+Machine (7866MB total)
+  Package L#0
+    NUMANode L#0 (P#0 7866MB)
+    L3 L#0 (8192KB) + L2 L#0 (256KB) + L1d L#0 (32KB) + L1i L#0 (32KB) + Core L#0 + PU L#0 (P#0)
+  HostBridge
+    PCIBridge
+      PCI 02:00.0 (Ethernet)
+        Net "enp2s0"
+    PCIBridge
+      PCI 03:00.0 (Ethernet)
+        Net "enp3s0"
+    PCI 00:02.0 (VGA)
+    PCI 00:19.0 (Ethernet)
+      Net "eno1"
+    PCI 00:1f.2 (SATA)
+      Block(Removable Media Device) "sr0"
+      Block(Disk) "sda"
+
+# ------------------------------------------------------------------------------
+# L2.8b: Current NUMA settings on all nodes ...
+# ------------------------------------------------------------------------------
+# Scanning node : robox3.ceitec.muni.cz
+# INF_HWTOPO ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# File: /scratch/sofbp/job_482436.robox-pro.ceitec.muni.cz/main/hel.sh.hwtopo
+# == robox3.ceitec.muni.cz
+>>>> CPU set: /pbspro.slice/pbspro-482436.robox\x2dpro.ceitec.muni.cz.slice
+>>>> CPU Info ...
+Architecture:        x86_64
+CPU op-mode(s):      32-bit, 64-bit
+Byte Order:          Little Endian
+Address sizes:       39 bits physical, 48 bits virtual
+CPU(s):              8
+On-line CPU(s) list: 0-7
+Thread(s) per core:  2
+Core(s) per socket:  4
+Socket(s):           1
+NUMA node(s):        1
+Vendor ID:           GenuineIntel
+CPU family:          6
+Model:               60
+Model name:          Intel(R) Xeon(R) CPU E3-1246 v3 @ 3.50GHz
+Stepping:            3
+CPU MHz:             3202.852
+CPU max MHz:         3900.0000
+CPU min MHz:         800.0000
+BogoMIPS:            6983.42
+Virtualization:      VT-x
+L1d cache:           32K
+L1i cache:           32K
+L2 cache:            256K
+L3 cache:            8192K
+NUMA node0 CPU(s):   0-7
+Flags:               fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt aes xsave avx f16c rdrand lahf_lm abm cpuid_fault epb invpcid_single pti tpr_shadow vnmi flexpriority ept vpid ept_ad fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt dtherm ida arat pln pts
+>>>> NUMA topology ...
+policy: default
+preferred node: current
+physcpubind: 0 
+cpubind: 0 
+nodebind: 0 
+membind: 0 
+>>>> HWLOC topology ...
+Machine (7866MB total)
+  Package L#0
+    NUMANode L#0 (P#0 7866MB)
+    L3 L#0 (8192KB) + L2 L#0 (256KB) + L1d L#0 (32KB) + L1i L#0 (32KB) + Core L#0 + PU L#0 (P#0)
+  HostBridge
+    PCIBridge
+      PCI 02:00.0 (Ethernet)
+        Net "enp2s0"
+    PCIBridge
+      PCI 03:00.0 (Ethernet)
+        Net "enp3s0"
+    PCI 00:02.0 (VGA)
+    PCI 00:19.0 (Ethernet)
+      Net "eno1"
+    PCI 00:1f.2 (SATA)
+      Block(Removable Media Device) "sr0"
+      Block(Disk) "sda"
+# ------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
+# L2.9: Determining type of executive environment ...
+#       Supported types: raw, cpuset, exclusive
+# ------------------------------------------------------------------------------
+
+# Summary of execution nodes with assigned slots ...
+# pnodes -j 482436.robox-pro.ceitec.muni.cz --jobs
+
+# Node Group   : various nodes
+# ---------------------------------------------------------------------------------------------
+# Common properties: cl_robox scratch_shm
+# ------------------------------------------------------------------------------
+#  Node name   S   CPUs   GPUs    Memory   Local Share  SSD  Extra properties   
+# ------------ - ---/--- --/-- -----/----- ----- ----- ----- -------------------
+R robox3       O   3/  4  0/ 0    6G/   7G  809G    0K    0K 
+++> 482436.robox-pro.ceitec.muni.cz(ncpus=1,slots=0)
+# ---------------------------------------------------------------------------------------------
+# Total number of nodes:     1
+# Total number of CPUs :     4    Total number of GPUs :     0
+# Free CPUs            :     3    Free GPUs            :     0
+
+# All properties
+# ---------------------------------------------------------------------------------------------
+# cl_robox scratch_shm
+# ---------------------------------------------------------------------------------------------
+# Total number of nodes:     1
+# Total number of CPUs :     4    Total number of GPUs :     0
+# Free CPUs            :     3    Free GPUs            :     0
+
+
+# Maximum of available resources  ...
+# pnodes -j 482436.robox-pro.ceitec.muni.cz --stat
+nnodes    1
+ntotcpus  4
+ntotgpus  0
+nfreecpus 3
+nfreegpus 0
+
+INF_NNODES             = 1
+INF_MAX_NCPUS          = 4
+INF_NCPUS              = 1
+INF_MAX_NGPUS          = 0
+INF_NGPUS              = 0
+INF_MPI_SLOTS_PER_NODE = 
+INF_MPI_NCPUS          = 1
+INF_CPUSET             = /pbspro.slice/pbspro-482436.roboxx2dpro.ceitec.muni.cz.slice
+INF_EXEC_TYPE          = cpuset
+INF_OPENMPI1_SPEC      = -report-bindings -bind-to-core
+INF_OPENMPI2_SPEC      = -display-allocation -display-map -rank-by core -map-by core -bind-to core
+INF_OPENMPI3_SPEC      = -display-allocation -display-map -rank-by core -map-by core -bind-to core
+
+# ------------------------------------------------------------------------------
+# L2.10: Check HW resources oversubscription ...
+# ------------------------------------------------------------------------------
+# Requested CPUs:   1 <= All available CPUs:   4
+# Requested GPUs:   0 <= All available GPUs:   0
+
+# ------------------------------------------------------------------------------
+# L2.11: Job environment summary ...
+# ------------------------------------------------------------------------------
+# Variable                     Value                                            
+# ---------------------------- -------------------------------------------------
+INF_ABS_VERSION                3.770.4a34621
+INF_ALIAS                     
+INF_APPMEM                    
+INF_ARG_DESTINATION            default
+INF_ARG_JOB                    hel.sh
+INF_ARG_RESOURCES              ncpus=1,,walltime=1w
+INF_AW_RSYNCOPTS               --chown=:softmatter
+INF_BACKUP_UMASK               022
+INF_BACKUP_USTORAGEGROUP       softmatter
+INF_BATCH_SERVER_GROUPNS       uvt
+INF_BOOT_SCRIPT                /software/ncbr/softmods/8.0/etc/boot/bashrc.ncbr
+INF_CPUSET                     /pbspro.slice/pbspro-482436.roboxx2dpro.ceitec.muni.cz.slice
+INF_DATAIN                     copy-master
+INF_DATAOUT                    copy-master
+INF_DEFAULT_RESOURCES          mempercpu=1gb,worksizepercpu=1gb,workdir=scratch-local
+INF_EXCLUDED_FILES            
+INF_EXEC_TYPE                  cpuset
+INF_EXPORTED_MODULES          
+INF_EXTERNAL_FLAGS            
+INF_EXTERNAL_NAME_SUFFIX      
+INF_EXTERNAL_START_AFTER      
+INF_EXTERNAL_VARIABLES        
+INF_FIXPERMS                  
+INF_HWTOPO                     /scratch/sofbp/job_482436.robox-pro.ceitec.muni.cz/main/hel.sh.hwtopo
+INF_INPUT_DIR                  /home/sofbp/helix/build-helix-Desktop-Debug
+INF_INPUT_MACHINE              sof.ceitec.muni.cz
+INF_INPUT_MACHINE_ENABLED_FOR_DATA NO
+INF_INPUT_MACHINE_ENABLED_FOR_EXEC YES
+INF_INPUT_MACHINE_GROUPNS      uvt
+INF_INPUT_PATH_FSTYPE          ext4
+INF_IW_RSYNCOPTS               --chown=:softmatter
+INF_JOB_ID                     482436.robox-pro.ceitec.muni.cz
+INF_JOB_KEY                    e8dc4f4a-b0e1-6e48-1754-e9af96818846
+INF_JOB_NAME                   hel.sh
+INF_JOB_NAME_SUFFIX           
+INF_JOB_OWNER                  sofbp
+INF_JOB_PROJECT               
+INF_JOB_PROJECT_RESOURCES     
+INF_JOB_TITLE                  hel.sh
+INF_JOB_TYPE                   generic
+INF_LOCAL_INPUT_DATA           NO
+INF_L_FSTYPE                   n.a.
+INF_MAIN_NODE                  robox3.ceitec.muni.cz
+INF_MAX_NCPUS                  4
+INF_MAX_NGPUS                  0
+INF_MAX_WALLTIME               604800
+INF_MEMORY                     1gb
+INF_MPIFILE                    /scratch/sofbp/job_482436.robox-pro.ceitec.muni.cz/main/hel.sh.mpinodes
+INF_MPI_NCPUS                  1
+INF_MPI_SLOTS_PER_NODE        
+INF_NCPUS                      1
+INF_NGPUS                      0
+INF_NNODES                     1
+INF_NODEFILE                   /scratch/sofbp/job_482436.robox-pro.ceitec.muni.cz/main/hel.sh.nodes
+INF_OPENMPI1_SPEC              '-report-bindings -bind-to-core'
+INF_OPENMPI2_SPEC              '-display-allocation -display-map -rank-by core -map-by core -bind-to core'
+INF_OPENMPI3_SPEC              '-display-allocation -display-map -rank-by core -map-by core -bind-to core'
+INF_QUEUE                      default
+INF_RESOURCES                  umask=022,storagegroup=softmatter,mempercpu=1gb,worksizepercpu=1gb,workdir=scratch-local,batchgroup=softmatter,ncpus=1,walltime=168:00:00,nnodes=1,datain=copy-master,dataout=copy-master,mem=1gb,worksize=1gb,select=1:ncpus=1:mpiprocs=1:mem=1gb:scratch_local=1gb
+INF_RETRY_COUNT                3
+INF_RETRY_TIME                 600
+INF_SERVER                     robox-pro.ceitec.muni.cz
+INF_SERVER_SHORT               R
+INF_SITE_ID                    '{ROBOX-PRO:8db503ce-c3c0-4a3e-93b2-b7a8fa7cbd34}'
+INF_SSH_OPTIONS                '-o StrictHostKeyChecking=no'
+INF_STORAGE_DIR                /home/sofbp/helix/build-helix-Desktop-Debug
+INF_STORAGE_MACHINE            sof.ceitec.muni.cz
+INF_STORAGE_MACHINE_GROUPNS    uvt
+INF_STORAGE_MACHINE_REALM      UVT
+INF_STORAGE_MACHINE_REALM_FOR_INPUT_MACHINE
+INF_SURROGATE_MACHINES         robox.ceitec.muni.cz
+INF_SW_RSYNCOPTS               --chown=:softmatter
+INF_TMP_DIR                    /scratch/sofbp/job_482436.robox-pro.ceitec.muni.cz/tmp
+INF_UBATCHGROUP                softmatter
+INF_UMASK                      022
+INF_USTORAGEGROUP              softmatter
+INF_WALLTIME                   168:00:00
+INF_WHOLE_NAME                 hel.sh
+INF_WI_RSYNCOPTS               --chown=:softmatter
+INF_WORK_DIR                   /scratch/sofbp/job_482436.robox-pro.ceitec.muni.cz/main
+INF_WORK_DIR_TYPE              scratch-local
+INF_WORK_PREINIT              
+INF_WORK_SIZE                  1gb
+INF_WS_RSYNCOPTS               --chown=:softmatter
+INF_W_GROUP                    softmatter
+AMS_ACTIVE_MODULES             'mc:4.8.26:m64-centos7:single|infinity-env:1.0:noarch:single|meta-storages:1.0:noarch:single|module-ams:1.0:noarch:single|sysmodule:3.2.10:noarch:single|ssh-ams:2.0:noarch:single|opengl-mux:2.0:x86_64:single|abs:3.770.4a34621:x86_64:single|abs-rsync:3.1.2:x86_64:single|hwloc:2.6.0:x86_64:single'
+AMS_BASHVERSION                5.0
+AMS_EXIT_CODE                  0
+AMS_EXPORTED_MODULES           'abs:3.770.4a34621|abs-rsync:3.1.2|hwloc:2.6.0'
+AMS_GROUPNS                    uvt
+AMS_HOST_CACHE                 /tmp/ams_cache.sofbp.482436.robox-pro.ceitec.muni.cz
+AMS_NCPUS                      1
+AMS_NGPUS                      0
+AMS_NHOSTCPUS                  1
+AMS_NHOSTGPUS                  0
+AMS_NNODES                     1
+AMS_NODEFILE                   /var/spool/pbs/aux/482436.robox-pro.ceitec.muni.cz
+AMS_ROOT                       /software/ncbr/softmods/8.0
+AMS_SITE                       '{ROBOX-PRO:8db503ce-c3c0-4a3e-93b2-b7a8fa7cbd34}'
+AMS_SITE_SUPPORT               linuxsupport@ics.muni.cz
+AMS_WORDBREAKS                 $' \t\n"\'@><=;|&(:'
+PBS_ENVIRONMENT                PBS_BATCH
+PBS_JOBCOOKIE                  18117C571B05377C6521C65F260C5076
+PBS_JOBDIR                     /home/sofbp
+PBS_JOBID                      482436.robox-pro.ceitec.muni.cz
+PBS_JOBNAME                    hel.sh
+PBS_MOMPORT                    15003
+PBS_NCPUS                      1
+PBS_NGPUS                      0
+PBS_NODEFILE                   /var/spool/pbs/aux/482436.robox-pro.ceitec.muni.cz
+PBS_NODENUM                    0
+PBS_NUM_NODES                  1
+PBS_NUM_PPN                    1
+PBS_O_HOST                     sof.ceitec.muni.cz
+PBS_O_LOGNAME                  sofbp
+PBS_O_QUEUE                    default
+PBS_QUEUE                      q_2w
+PBS_RESC_MEM                   1073741824
+PBS_RESC_SCRATCH_LOCAL         1073741824
+PBS_RESC_SCRATCH_VOLUME        1073741824
+PBS_RESC_TOTAL_MEM             1073741824
+PBS_RESC_TOTAL_PROCS           1
+PBS_RESC_TOTAL_SCRATCH_VOLUME  1073741824
+PBS_RESC_TOTAL_WALLTIME        604800
+PBS_TASKNUM                    1
+TORQUE_RESC_MEM                1073741824
+TORQUE_RESC_PROC               1
+TORQUE_RESC_SCRATCH_LOCAL      1073741824
+TORQUE_RESC_SCRATCH_VOLUME     1073741824
+TORQUE_RESC_TOTAL_MEM          1073741824
+TORQUE_RESC_TOTAL_PROCS        1
+TORQUE_RESC_TOTAL_SCRATCH_VOLUME 1073741824
+TORQUE_RESC_TOTAL_WALLTIME     604800
+
+# ------------------------------------------------------------------------------
+# L3: Coping the input data to the working directory ...
+# ------------------------------------------------------------------------------
+
+# Input directory    : sof.ceitec.muni.cz:/home/sofbp/helix/build-helix-Desktop-Debug
+# Storage directory  : sof.ceitec.muni.cz:/home/sofbp/helix/build-helix-Desktop-Debug
+# Working directory  : /scratch/sofbp/job_482436.robox-pro.ceitec.muni.cz/main
+# Data IN copy mode  : copy-master
+# Excluded files     : -none-
+
+# Data are copied to the main working node only ...
+# ------------------------------------------------------------------------------
+= inf-rsync-from-inputdir:
+  > Final exclusion list:
+    hel.sh.infout
+    hel.sh.infex
+    hel.sh.info
+    hel.sh.nodes
+    hel.sh.mpinodes
+    hel.sh.gpus
+    hel.sh.kill
+    hel.sh.hwtopo
+    hel.sh.stdout
+    *#[0-9][0-9][0-9].*
+    *+[0-9][0-9][0-9].*
+    *-[0-9][0-9][0-9].*
+    pjob[0-9][0-9][0-9]
+    .collinfo
+
+  > rsyncing from the storage machine via scp ... 
+    --chown=:softmatter sof.ceitec.muni.cz:/home/sofbp/helix/build-helix-Desktop-Debug/ -> /scratch/sofbp/job_482436.robox-pro.ceitec.muni.cz/main/
+
+receiving incremental file list
+.qmake.stash
+Ab
+Ah
+Cb
+Ch
+D-b
+D-h
+D0b
+D0h
+E-b
+E-h
+E0b
+E0h
+E_mapB
+E_mapH
+Eh
+Fb
+Fh
+GplotB
+GplotH
+Ib
+Ih
+K+b
+K+h
+K0b
+K0h
+Kh
+Lb
+Lh
+Makefile
+Mb
+Mh
+Nb
+Nh
+P_mapB
+P_mapH
+Qb
+Qh
+R+b
+R+h
+R0b
+R0h
+Rh
+Sb
+Sh
+Tb
+Th
+Vb
+Vh
+Wb
+Wh
+Yb
+Yh
+all.gro
+core
+dG
+hel.sh
+hel.sh.infkey
+helix
+init_pos
+init_pos20
+input
+main.o
+output
+
+sent 1,520 bytes  received 35,182,414 bytes  23,455,956.00 bytes/sec
+total size is 35,169,849  speedup is 1.00
+# ------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
+# L4: Starting the job ...
+# ------------------------------------------------------------------------------
+
+====================== Begining of the script execution ========================
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ Started at    : Thu Jul 21 12:49:51 CEST 2022
+ Script name   : hel.sh
+ Script output : hel.sh.stdout
+=>> PBS: job killed: walltime 604802 exceeded limit 604800

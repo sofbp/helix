@@ -38,7 +38,6 @@ public:
         while( !fs.eof() ) // Lines in input, eof = end of file
         {
             fs >> c1 ;
-
             population.push_back(c1);
         }
         //population.pop_back();

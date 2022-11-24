@@ -199,6 +199,7 @@ public:
                     total_B_en_h+=B_en_h;
 
                     double B_en_b=pow(e,-total_en_b*cte);
+                    //energies_b[k].push_back(B_en_b);
                     energies_b[k][(i*j+j)/interval]=B_en_b;
                     total_B_en_b+=B_en_b;
                 }

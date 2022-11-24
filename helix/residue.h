@@ -7,6 +7,7 @@
 #include <iostream>
 #include <cmath>
 #include "atom.h"
+#include <cassert>
 
 
 using namespace std;
@@ -83,9 +84,11 @@ public:
 
 
                     //double proportional_remainder0 = fmod(z, factor_Eh) * inv_factor_Eh;
-                    double proportional_remainder0 = (z-(int(z*inv_factor_Eb) * factor_Eb))*inv_factor_Eb;
+                    //double proportional_remainder0 = (z-(int(z*inv_factor_Eb) * factor_Eb))*inv_factor_Eb;
+                    double proportional_remainder0 = (z * inv_factor_Eh) - int(z *inv_factor_Eh);
                     //double proportional_remainder1 = fmod(z, b.factor_Eh) * b.inv_factor_Eh;
-                    double proportional_remainder1 = (z-(int(z*b.inv_factor_Eb) * b.factor_Eb))*b.inv_factor_Eb;
+                    //double proportional_remainder1 = (z-(int(z*b.inv_factor_Eb) * b.factor_Eb))*b.inv_factor_Eb;
+                    double proportional_remainder1 = (z * inv_factor_Eh) - int(z *inv_factor_Eh);
 
                     Gch=(1.0-proportional_remainder1)*b.Eh[convert1] + proportional_remainder1*b.Eh[convert1+1];
                     Gn=(1.0-proportional_remainder0)*Eh[convert0] + proportional_remainder0*Eh[convert0+1];
@@ -112,9 +115,10 @@ public:
 
 
                     //double proportional_remainder0 = fmod(z, factor_Eb) * inv_factor_Eb;
-                    double proportional_remainder0 = (z-(int(z*inv_factor_Eb) * factor_Eb))*inv_factor_Eb;
+                    double proportional_remainder0 = (z * inv_factor_Eb) - int(z *inv_factor_Eb);
                     //double proportional_remainder1 = fmod(z, b.factor_Eb) * b.inv_factor_Eb;
-                    double proportional_remainder1 = (z-(int(z*b.inv_factor_Eb) * b.factor_Eb))*b.inv_factor_Eb;
+                    //double proportional_remainder1 = (z-(int(z*b.inv_factor_Eb) * b.factor_Eb))*b.inv_factor_Eb;
+                    double proportional_remainder1 = (z * inv_factor_Eb) - int(z *inv_factor_Eb);
 
                     Gch=(1.0-proportional_remainder1)*b.Eb[convert1] + proportional_remainder1*b.Eb[convert1+1];
                     Gn=(1.0-proportional_remainder0)*Eb[convert0] + proportional_remainder0*Eb[convert0+1];
@@ -144,13 +148,23 @@ public:
             z=z*-1;
         }
 
+
         int convert = int ((upper_bound-z) * inv_factor_Eh);
-        double proportional_remainder = (z-(int(z*inv_factor_Eh) * factor_Eh))*inv_factor_Eh;
+        //cout<<upper_bound<<" "<<lower_bound<< " "<<convert<<" "<<z<< " "<< int ((upper_bound-0) * inv_factor_Eh)<<endl;
+        //assert(convert <= 198);
+        //double proportional_remainder = (z-(int(z*inv_factor_Eh) * factor_Eh))*inv_factor_Eh;
+        double proportional_remainder = (z * inv_factor_Eh) - int(z *inv_factor_Eh);
         //double proportional_remainder = fmod(z, factor_Eh) * inv_factor_Eh;
         //cout<<" "<<new_rem<<" "<<proportional_remainder<<endl;
         //exit(0);
+        if(convert >= 199){
+            //cout<<"here"<<endl;
+            return (Eh[convert]);
+        }else{
+            //assert(convert <= 198);
+            return  (1.0-proportional_remainder)*Eh[convert] + proportional_remainder*Eh[convert+1];
 
-        return  (1.0-proportional_remainder)*Eh[convert] + proportional_remainder*Eh[convert+1];
+        }
     }
 
     inline double get_E_bacteria(double z)
@@ -164,10 +178,18 @@ public:
         }
 
         int convert = int ((upper_bound-z) * inv_factor_Eb);
-        double proportional_remainder = (z-(int(z*inv_factor_Eb) * factor_Eb))*inv_factor_Eb;
+        //assert(convert <= 198);
+        //double proportional_remainder = (z-(int(z*inv_factor_Eb) * factor_Eb))*inv_factor_Eb;
+        double proportional_remainder = (z * inv_factor_Eb) - int(z *inv_factor_Eb);
         //double proportional_remainder = fmod(z, factor_Eb) * inv_factor_Eb;
+        if(convert >= 199){
+            //cout<<"here"<<endl;
+            return (Eb[convert]);
+        }else{
+            //assert(convert <= 198);
+            return  (1.0-proportional_remainder)*Eb[convert] + proportional_remainder*Eb[convert+1];
 
-        return  (1.0-proportional_remainder)*Eb[convert] + proportional_remainder*Eb[convert+1];
+        }
     }
 
     inline double get_E_human(double z, vector< vector<double>>& Eh)
@@ -184,6 +206,7 @@ public:
         if(z < lower_bound) {
             z=z*-1;
         }
+
         int convert = int ((upper_bound-z)/factor_Eh);
         double proportional_remainder = fmod(z, factor_Eh) / factor_Eh;
         //cout<<convert<<" "<<z<<" "<<Eh[convert][0]<<" "<<Eh[convert+1][0]<<endl;

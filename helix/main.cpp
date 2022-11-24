@@ -23,7 +23,7 @@ const double radToDeg = 57.2958;
 const double degToRad = 1.0/57.2958;
 
 
-void mutation(vector<string>& newpopulation,  string name, Peptide resids){
+void mutation_23SB(vector<string>& newpopulation,  string name, Peptide resids){
 
     srand (time(NULL));
     int mut_point=rand() %20;
@@ -104,73 +104,77 @@ void mutation(vector<string>& newpopulation,  string name, Peptide resids){
         }
     }
 
+}
 
-    /*if(((name[before] == 'K' || name[before1] == 'K') && (name[after] == 'D' || name[after1] == 'D' )) || ((name[before] == 'K' || name[before1] == 'K') && (name[after] == 'E' || name [after1] == 'E')) || ((name[before] == 'R' || name[before1] == 'R') && (name[after] == 'E' || name [after1] == 'E')) || ((name[before] == 'R' || name[before1] == 'R') && (name[after] == 'D' || name [after1] == 'D')) || ((name[before] == 'D' || name[before1]=='D') && (name[after] == 'R' || name[after1] == 'R')) || ((name[before] == 'D' || name[before1]=='D') && (name[after] == 'K' || name[after1]=='K')) || ((name[before] == 'E'||name[before1]=='E') && (name[after] == 'R' || name[after1]=='R')) || ((name[before] == 'E' || name[before1]=='E') && (name[after] == 'K' || name[after1]=='K'))){
-        for (int i=0;i<resids.size();i++) {
-            name[mut_point]=resids.name[i];
-            if(i!=1 && i!=13 && i!=2 && i!=4){
-                newpopulation.push_back(name);
-            }
+bool salt_bridges(Peptide pep){
+    int SB=0;
+    for (int i=0;i<pep.seq.size()-3;++i){
+        if((pep.name[i] == 'K' || pep.name[i] == 'R') && (pep.name[i+3] == 'D' || pep.name[i+3] == 'E')){
+            SB=SB+1;
+        }else if((pep.name[i] == 'D' || pep.name[i] == 'E') && (pep.name[i+3] == 'K' || pep.name[i+3] == 'R')){
+            SB=SB+1;
+        }else{
+            SB=SB+0;
         }
-    }else if((name[after] == 'K' || name[after] == 'R' || name[after1]=='K' || name[after1]=='R') && (name[before] != 'D' && name[before] != 'E' && name[before1] != 'D' && name[before1] != 'E' ) ){
-        for (int i=0;i<resids.size();i++) {
-            name[mut_point]=resids.name[i];
-            if(i!=1 && i!=13){
-                newpopulation.push_back(name);
-            }
-        }
-
-    }else if((name[before] == 'K' || name[before] == 'R' || name[before1]=='K' || name[before1]=='R') && (name[after] != 'D' && name[after] != 'E' && name[after1] != 'D' && name[after1] != 'E') ){
-        for (int i=0;i<resids.size();i++) {
-            name[mut_point]=resids.name[i];
-            if(i!=1 && i!=13){
-                newpopulation.push_back(name);
-            }
-        }
-
-    }else if((name[before] == 'D' || name[before] == 'E' || name[before1]=='D' || name[before1]=='E') && (name[after] != 'R' && name[after] != 'K' && name[after1] != 'R' && name[after1] != 'K') ){
-        for (int i=0;i<resids.size();i++) {
-            name[mut_point]=resids.name[i];
-            if(i!=2 && i!=4){
-                newpopulation.push_back(name);
-            }
-        }
-    }else if((name[after] == 'D' || name[after] == 'E' || name[after1]=='D' || name[after1]=='E') && (name[before] != 'R' && name[before] != 'K' && name[before1] != 'R' && name[before1] != 'K' ) ){
-        for (int i=0;i<resids.size();i++) {
-            name[mut_point]=resids.name[i];
-            if(i!=2 && i!=4){
-                newpopulation.push_back(name);
-            }
-        }
-    }else if(((name[before]=='K' || name[before]=='R') && (name[before1]=='D' || name[before1]=='E')) || ((name[after]=='K' || name[after]=='R') && (name[after1]=='D' || name[after1]=='E')) || ((name[before]=='D' || name[before]=='E') && (name[before1]=='K' || name[before1]=='R')) || ((name[after]=='D' || name[after]=='E') && (name[after1]=='K' || name[after1]=='R'))){
-        for (int i=0;i<resids.size();i++) {
-            name[mut_point]=resids.name[i];
-            if(i!=1 && i!=13 && i!=2 && i!=4){
-                newpopulation.push_back(name);
-            }
-        }
-    }else if(((name[before]=='K' || name[before]=='R') && (name[after1]=='D' || name[after1]=='E')) || ((name[after]=='K' || name[after]=='R') && (name[before1]=='D' || name[before1]=='E')) || ((name[before]=='D' || name[before]=='E') && (name[after1]=='K' || name[after1]=='R')) || ((name[after]=='D' || name[after]=='E') && (name[before1]=='K' || name[before1]=='R'))){
-        for (int i=0;i<resids.size();i++) {
-            name[mut_point]=resids.name[i];
-            if(i!=1 && i!=13 && i!=2 && i!=4){
-                newpopulation.push_back(name);
-            }
-        }
-    }else if(((name[before]=='K' || name[before]=='R') && (name[before1]=='D' || name[before1]=='E')) || ((name[after]=='K' || name[after]=='R') && (name[after1]=='D' || name[after1]=='E')) || ((name[before]=='D' || name[before]=='E') && (name[before1]=='K' || name[before1]=='R')) || ((name[after]=='D' || name[after]=='E') && (name[after1]=='K' || name[after1]=='R'))){
-        for (int i=0;i<resids.size();i++) {
-            name[mut_point]=resids.name[i];
-            if(i!=1 && i!=13 && i!=2 && i!=4){
-                newpopulation.push_back(name);
-            }
-        }
+    }
+    if(SB>0){
+        return true;
     }else{
+        return false;
+    }
+}
 
-        for (int i=0;i<resids.size();i++) {
-            name[mut_point]=resids.name[i];
-            newpopulation.push_back(name);
-
+void population_SB( vector<int>&index1,vector<int>&index2, Peptide pep, vector<Peptide>&SB_all){
+    vector<char>SB_type;
+    for(int i=0;i<pep.name.size();++i){
+        if((pep.name[i] == 'K' && pep.name[i+3] == 'D') || (pep.name[i] == 'D' && pep.name[i+3] == 'K')){
+            index1.push_back(i);
+            index2.push_back(i+3);
+            SB_type.push_back('1');
         }
-    }*/
+        if((pep.name[i] == 'K' &&  pep.name[i+3] == 'E') || (pep.name[i] == 'E' && pep.name[i+3] == 'K')){
+            index1.push_back(i);
+            index2.push_back(i+3);
+            SB_type.push_back('2');
+        }
+        if((pep.name[i] == 'R' && pep.name[i+3] == 'D' ) || (pep.name[i] == 'D' && pep.name[i+3] == 'R')){
+            index1.push_back(i);
+            index2.push_back(i+3);
+            SB_type.push_back('3');
+        }
+        if(( pep.name[i] == 'R' &&  pep.name[i+3] == 'E') || (pep.name[i] == 'E' && pep.name[i+3] == 'R')){
+            index1.push_back(i);
+            index2.push_back(i+3);
+            SB_type.push_back('4');
+        }
+    }
+
+
+    for(int j=0;j<index1.size();++j){
+        Peptide new_pep;
+        new_pep.seq.resize(20);
+
+        for(int k=0;k<pep.name.size();++k){
+            if(k == index1[j]){ //here i should compare with all the elements of index1
+
+                new_pep.name.push_back(SB_type[j]);
+                new_pep.seq[k].pos = (pep.seq[k].pos + pep.seq[k+3].pos)/2;
+
+            }
+            if(k != index1[j] && k != index2[j]){
+
+                new_pep.name.push_back(pep.name[k]);
+                if(k>index2[j]){
+                    new_pep.seq[k].pos=pep.seq[k+1].pos;
+                }else{
+                    new_pep.seq[k].pos=pep.seq[k].pos;
+                }
+
+            }
+        }
+        //cout<<new_pep.seq[20].pos.x << " "<<new_pep.seq[20].pos.y<< " "<<new_pep.seq[20].pos.z << " "<<endl;
+        SB_all.push_back(new_pep);
+    }
 
 }
 
@@ -201,6 +205,15 @@ void mutation_linear(vector<string>& newpopulation,  string name, Peptide resids
             newpopulation.push_back(name);
         }
     }
+}
+
+void mutation_NR(vector<string>& newpopulation,  string name, Peptide resids){
+    srand (time(NULL));
+    int mut_point=rand() %20;
+        for (int i=0;i<resids.size();i++) {
+            name[mut_point]=resids.name[i];
+            newpopulation.push_back(name);
+        }
 }
 
 void crossover(Peptide pep1, Peptide pep2, vector<string>& population){
@@ -393,7 +406,8 @@ int main()
     exit(0);*/
 
     for (int k=0;k<start;++k) {
-        mutation(pep.population, pep.population[k], resids);
+        mutation_NR(pep.population, pep.population[k], resids);
+        //mutation_23SB(pep.population, pep.population[k], resids);
         //mutation_linear(pep.population, pep.population[k], resids);
     }
 
@@ -411,10 +425,21 @@ int main()
         //
         // Calculate Emin for human and bacterial membrane --> stored in energy_h, energy_b
         //
+        if(salt_bridges(pep)){
+            vector<int>index1;
+            vector<int>index2;
+            vector<Peptide>SB_all;
+
+            population_SB( index1, index2, pep, SB_all);
+            for(int a=0;a<index1.size();++a){
+                cout<<index1[a]<<" "<<index2[a]<<endl;
+            }
+            cout<<"SB"<<endl;
+        }
 
         calc.get_energy_total(pep, resids, res_id);
 
-        cout<<pep.name<<" "<< pep.energy_h<<" "<<pep.energy_b<<endl;
+        cout<<pep.name<<" "<< pep.energy_h<<" "<<pep.energy_b<<" "<<pep.energy_h-pep.energy_b<<" "<<pep.depth_h<<" "<<pep.depth_b<<endl;
 
         //Selectivity criteria with both membranes --> maximize variable has to be max
 
@@ -464,20 +489,20 @@ int main()
 
         Peptide newpep;
 
-            //crossover(fittest_pep,second_fittest, newpep.population);
-            //crossover(third_fittest,fourth_fittest, newpep.population);
+            crossover(fittest_pep,second_fittest, newpep.population);
+            crossover(third_fittest,fourth_fittest, newpep.population);
         newpep.population.push_back(fittest_pep.name);
         newpep.population.push_back(second_fittest.name);
         newpep.population.push_back(third_fittest.name);
         newpep.population.push_back(fourth_fittest.name);
-            mutation(newpep.population, newpep.population[0], resids);
-            mutation(newpep.population, newpep.population[1], resids);
-            mutation(newpep.population, newpep.population[2], resids);
-            mutation(newpep.population, newpep.population[3], resids);
-            /*mutation_linear(newpep.population, newpep.population[0], resids);
-            mutation_linear(newpep.population, newpep.population[1], resids);
-            mutation_linear(newpep.population, newpep.population[2], resids);
-            mutation_linear(newpep.population, newpep.population[3], resids);*/
+            /*mutation_23SB(newpep.population, newpep.population[0], resids);
+            mutation_23SB(newpep.population, newpep.population[1], resids);
+            mutation_23SB(newpep.population, newpep.population[2], resids);
+            mutation_23SB(newpep.population, newpep.population[3], resids);*/
+        mutation_NR(newpep.population, newpep.population[0], resids);
+        mutation_NR(newpep.population, newpep.population[1], resids);
+        mutation_NR(newpep.population, newpep.population[2], resids);
+        mutation_NR(newpep.population, newpep.population[3], resids);
 
 
         for (int i=0;i<newpep.population.size();i++) {
@@ -495,7 +520,7 @@ int main()
                 double maximize=newpep.energy_h-newpep.energy_b;
 
                 double score=maximize;
-                if(newpep.depth_b>1 && newpep.depth_b<3 && newpep.depth_h>1 && newpep.depth_h<3){
+                /*if(newpep.depth_b>1 && newpep.depth_b<3 && newpep.depth_h>1 && newpep.depth_h<3){
                     score=score*3;
                 }
                 if((newpep.depth_b>1 && newpep.depth_b<3) || (newpep.depth_h>1 && newpep.depth_h<3)){
@@ -503,7 +528,7 @@ int main()
                 }
                 if(newpep.depth_b>1 || newpep.depth_h>1 ){
                     score=score*2;
-                }
+                }*/
                 if (score>maxdG){
                     maxdG=score;
                     fittest_pep=newpep;
