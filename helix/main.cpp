@@ -125,7 +125,7 @@ bool salt_bridges(Peptide pep){
     }
 }
 
-void population_SB( std::vector<int>&index1,std::vector<int>&index2, Peptide pep, vector<Peptide>&SB_all){
+void population_SB( std::vector<int>&index1,std::vector<int>&index2, Peptide pep, vector<string>&SB_name, vector<Atom>&SB_pos){
     vector<char>SB_type;
     //Detect salt-bridges, store their position and type
     for(int i=0;i<pep.name.size();++i){
@@ -151,7 +151,7 @@ void population_SB( std::vector<int>&index1,std::vector<int>&index2, Peptide pep
         }
     }
 
-//Create batch of possible SB interactions and change the COM of the SB
+    //Create batch of possible SB interactions and change the COM of the SB
     vector<int>rmove_idx;
     for(int s=0;s<index1.size();++s){
         for(int t=0;t<index1.size();++t){
@@ -168,9 +168,9 @@ void population_SB( std::vector<int>&index1,std::vector<int>&index2, Peptide pep
         vector<int>new_idx2;
 
         for(int j=0;j<index1.size();++j){
-                new_idx1.push_back(index1[j]);
-                new_idx2.push_back(index2[j]);
-                //cout<<index1[j]<<" "<<index2[j]<<endl;
+            new_idx1.push_back(index1[j]);
+            new_idx2.push_back(index2[j]);
+            //cout<<index1[j]<<" "<<index2[j]<<endl;
         }
         new_idx1.erase(new_idx1.begin()+rmove_idx[i]);
         new_idx2.erase(new_idx2.begin()+rmove_idx[i]);
@@ -197,34 +197,14 @@ void population_SB( std::vector<int>&index1,std::vector<int>&index2, Peptide pep
                 p+=1;
             }
 
-    }
+        }
         cout<<new_pep.name<<endl;
 
-//for(int j=0;j<index1.size();++j){
+        SB_name.push_back(new_pep.name);
+        //SB_pos.push_back(new_pep.seq);
 
-           /* if(k == index1[j]){ //here i should compare with all the elements of index1
 
-                new_pep.name.push_back(SB_type[j]);
-                new_pep.seq[k].pos = (pep.seq[k].pos + pep.seq[k+3].pos)/2;
-
-            }
-            if(k != index1[j] && k != index2[j]){
-
-                new_pep.name.push_back(pep.name[k]);
-                if(k>index2[j]){
-                    new_pep.seq[k].pos=pep.seq[k+1].pos;
-                }else{
-                    new_pep.seq[k].pos=pep.seq[k].pos;
-                }
-
-            }*/
-        SB_all.push_back(new_pep);
-        }
-
-        //cout<<new_pep.seq[20].pos.x << " "<<new_pep.seq[20].pos.y<< " "<<new_pep.seq[20].pos.z << " "<<endl;
-
-    //}
-
+    }
 }
 
 void mutation_linear(vector<string>& newpopulation,  string name, Peptide resids){
@@ -477,12 +457,10 @@ int main()
         if(salt_bridges(pep)){
             std::vector<int>index1;
             std::vector<int>index2;
-            vector<Peptide>SB_all;
+            vector<string>SB_name;
 
-            population_SB( index1, index2, pep, SB_all);
-            /*for(int a=0;a<index1.size();++a){
-                cout<<index1[a]<<" "<<index2[a]<<endl;
-            }*/
+            population_SB( index1, index2, pep, SB_name);
+
             cout<<"SB"<<endl;
         }
 
