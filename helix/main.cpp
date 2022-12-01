@@ -125,7 +125,7 @@ bool salt_bridges(Peptide pep){
     }
 }
 
-void population_SB( std::vector<int>&index1,std::vector<int>&index2, Peptide pep, vector<string>&SB_name, vector<Atom>&SB_pos){
+void population_SB( std::vector<int>&index1,std::vector<int>&index2, Peptide pep, vector<Peptide>&SB_all){
     vector<char>SB_type;
     //Detect salt-bridges, store their position and type
     for(int i=0;i<pep.name.size();++i){
@@ -198,9 +198,9 @@ void population_SB( std::vector<int>&index1,std::vector<int>&index2, Peptide pep
             }
 
         }
-        cout<<new_pep.name<<endl;
+        //cout<<new_pep.name<<endl;
 
-        SB_name.push_back(new_pep.name);
+        SB_all.push_back(new_pep);
         //SB_pos.push_back(new_pep.seq);
 
 
@@ -386,12 +386,13 @@ int main()
 {
     Peptide pep;
     Energy_calculator calc;
-    calc.init_grid(20, 200, 2 );
 
     Peptide resids;
-    resids.name="AEKWRCVLIMQFNDSTY";
+    resids.name="AEKWRCVLIMQFNDSTY1234";
     resids.seq.resize(resids.name.size());
-    map<char, int> res_id{ { 'A', 0 }, { 'E', 1 }, { 'K', 2 },  { 'W', 3 }, { 'R', 4 }, { 'C', 5 }, { 'V', 6 }, { 'L', 7 }, { 'I', 8 },  { 'M', 9 }, { 'Q', 10 }, { 'F', 11 },  { 'N', 12 }, {'D', 13}, {'S', 14}, {'T', 15}, {'Y', 16}};
+    map<char, int> res_id{ { 'A', 0 }, { 'E', 1 }, { 'K', 2 },  { 'W', 3 }, { 'R', 4 }, { 'C', 5 }, { 'V', 6 }, { 'L', 7 }, { 'I', 8 },  { 'M', 9 }, { 'Q', 10 }, { 'F', 11 },  { 'N', 12 }, {'D', 13}, {'S', 14}, {'T', 15}, {'Y', 16},{'1',17},{'2',18},{'3',19},{'4',20}};
+
+    calc.init_grid(resids.name.size(), 200, 2 );
     //
     // Load energy files into resids.seq.E
     //
@@ -457,13 +458,20 @@ int main()
         if(salt_bridges(pep)){
             std::vector<int>index1;
             std::vector<int>index2;
-            vector<string>SB_name;
+            vector<Peptide>SB_all;
 
-            population_SB( index1, index2, pep, SB_name);
+            population_SB( index1, index2, pep, SB_all);
+            for(int i=0;i<SB_all.size();++i){
+                //calculate energy of each of the peptides and do the avg along the z depth.
+                Peptide sb_pep=SB_all[i];
+                calc.get_energy_total(sb_pep,resids,res_id);
+                cout<<sb_pep.name<<" "<<sb_pep.energy_h<<" "<<sb_pep.energy_b<<endl;
+
+            } 
 
             cout<<"SB"<<endl;
-        }
 
+        }
         calc.get_energy_total(pep, resids, res_id);
 
         cout<<pep.name<<" "<< pep.energy_h<<" "<<pep.energy_b<<" "<<pep.energy_h-pep.energy_b<<" "<<pep.depth_h<<" "<<pep.depth_b<<endl;
