@@ -272,6 +272,194 @@ public:
         }
     }
 
+    void get_energy_SB(vector<Peptide>& all_sb, Peptide aa, map<char, int> res_id, Peptide& final_pep){
+        int interval=5;
+        Atom axis_y=Atom(0,1,0);
+        Atom axis_x=Atom(1,0,0);
+        vector<vector<double>>energies_h;
+        energies_h.resize(depth, vector<double> (rot_deg*tilt_deg/interval));
+        vector<vector<double>>energies_b;
+        energies_b.resize(depth, vector<double> (rot_deg*tilt_deg/interval));
+        vector<double>G_all;
+        vector<double>G_all_b;
+        //axis_x.normalise();
+        //axis_y.normalise();
+        double min=999999;
+        double minB=999999;
+        double total_B_en_h=0;
+        double total_B_en_b=0;
+        double prob_sum=0;
+        double prob_sumB=0;
+        double shift=0;
+        double shiftB=0;
+
+        double total_en_h;
+        double total_en_b;
+
+        vector<vector<double>>newG_all;
+        vector<vector<double>>newGb_all;
+
+        for(int p=0;p<all_sb.size();++p){
+            Peptide current = all_sb[p];
+
+            for (int k=0;k<depth;++k) {
+                double disp=k*0.1;
+                for (int i=0;i<rot_deg;i=i+interval) {
+                    double deg_rot=i*degToRad;
+
+                    for (int j=0;j<tilt_deg;j=j+interval) {
+                        double deg_tilt=j*degToRad;
+                        //printf ("%d%03d ", j, i);
+
+                        total_en_h=0;
+                        total_en_b=0;
+
+                        //
+                        // Move, rotate and get E under peptide class
+                        //
+                        for (int a=0;a<current.name.size();++a) {
+                            //cout<<a<<endl;
+
+                            Atom positions;
+                            positions.x=current.seq[a].pos.x;
+                            positions.y=current.seq[a].pos.y;
+                            positions.z=current.seq[a].pos.z;
+
+                            //Rotate, tilt, translate -->traslations must be the last because rotations are done relative to 0,0,0.
+
+                            positions.rotate(axis_y, deg_rot);
+                            positions.rotate(axis_x, deg_tilt);
+                            positions.z=positions.z+disp;
+
+                            //calculate deltaG for new positions
+
+                            int inde=res_id[current.name[a]];
+                            //std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+
+
+                            double en_h=aa.seq[inde].get_E_human(positions.z);
+
+                            double en_b=aa.seq[inde].get_E_bacteria(positions.z);
+                            //std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+                            //std::cout << "Time difference = " << std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count() << "[ns]" << std::endl;
+
+                            total_en_h+=en_h;
+                            total_en_b+=en_b;
+                        }
+                        //
+                        // Boltzmann average --> average out degrees of freedom from tilt and rotation
+                        // Calculate P(x,y) = e^(-dG/kT)
+                        //
+                        double B_en_h=pow(e,-total_en_h*cte);
+                        energies_h[k][(i*j+j)/interval]=B_en_h;
+                        //energies_h[k].push_back(B_en_h);
+                        //cout<<k<<" "<<(i*j+j)/interval<<endl;
+                        total_B_en_h+=B_en_h;
+
+                        double B_en_b=pow(e,-total_en_b*cte);
+                        //energies_b[k].push_back(B_en_b);
+                        energies_b[k][(i*j+j)/interval]=B_en_b;
+                        total_B_en_b+=B_en_b;
+                    }
+                    //exit(1);
+                }
+            }
+
+            current.totalP_h=total_B_en_h;
+            current.totalP_b=total_B_en_b;
+
+            //cout<<energies_h[0].size()<<endl;
+
+            //
+            // P(x) = sum (P(x,y)/total_sum) --> For each z value
+            // G(x) = -kT*ln(P(x))
+            //
+            double G, Gb;
+            for (int q=0;q<depth;q++) {
+
+                for (int p=0;p<energies_h[q].size();p++) {
+
+                    double prob=energies_h[q][p]/total_B_en_h;
+                    double probB=energies_b[q][p]/total_B_en_b;
+
+                    prob_sumB+=probB;
+
+                    prob_sum+=prob;
+
+                }
+                G=-cte*log(prob_sum);
+                G_all.push_back(G);
+                Gb=-cte*log(prob_sumB);
+                G_all_b.push_back(Gb);
+
+                if(q==(depth-1)){
+                    shift=G;
+                    shiftB=Gb;
+                }
+                prob_sum=0;
+                prob_sumB=0;
+
+            }
+
+            //
+            // Shift G profile so that it is 0 at z=4 (outside the membrane)
+            // Store energy minima and depth
+            //
+
+            vector<double> newG, newGb;
+
+            for (int r=0;r<depth;r++) {
+                newG.push_back(G_all[r]-shift);
+                newGb.push_back(G_all_b[r]-shiftB);
+            }
+            newG_all.push_back(newG);
+            newGb_all.push_back(newGb);
+        }
+            vector<double>finalG, finalGb;
+
+            for (int d=0;d<depth;++d){
+                double total=0;
+                double totalb=0;
+                double prop=0;
+                double propb=0;
+                double newE=0;
+                double newEb=0;
+                for(int p=0;p<newG_all.size();++p){
+                    total=total + pow(e, -newG_all[p][d]*cte);
+                    totalb=totalb + pow(e, -newGb_all[p][d]*cte);
+                }
+                for(int p=0;p<newG_all.size();++p){
+                    prop=pow(e, -newG_all[p][d]*cte)/total;
+                    newE=newE+prop*newG_all[p][d];
+                    propb=pow(e, -newGb_all[p][d]*cte)/totalb;
+                    newEb=newEb+propb*newGb_all[p][d];
+                }
+                finalG.push_back(newE);
+                finalGb.push_back(newEb);
+            }
+
+            double z, zb;
+            for (int r=0;r<depth;++r){
+
+                z=r*0.1;
+                zb=r*0.1;
+                if(finalG[r]<min){
+                    min=finalG[r];
+
+                    final_pep.energy_h=min;
+                    final_pep.depth_h=z;
+                }
+
+                if(finalGb[r]<minB){
+                    minB=finalGb[r];
+
+                    final_pep.energy_b=minB;
+                    final_pep.depth_b=zb;
+
+                }
+            }
+    }
+
     void print_Gplot(Peptide& current, Peptide aa, map<char, int> res_id, string name){
         Atom axis_y=Atom(0,1,0);
         Atom axis_x=Atom(1,0,0);

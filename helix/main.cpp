@@ -35,14 +35,14 @@ void mutation_23SB(vector<string>& newpopulation,  string name, Peptide resids){
 
     if(name[before]=='K'||name[before]=='R'||name[before1]=='K'||name[before1]=='R'){
         if(name[after]=='D'||name[after]=='E'||name[after1]=='D'||name[after1]=='E'||name[before]=='E'||name[before]=='D'||name[before1]=='D'||name[before1]=='E'){
-            for (int i=0;i<resids.size();i++) {
+            for (int i=0;i<resids.size()-4;i++) {
                 name[mut_point]=resids.name[i];
                 if(i!=1 && i!=13 && i!=2 && i!=4){
                     newpopulation.push_back(name);
                 }
             }
         }else{
-                for (int i=0;i<resids.size();i++) {
+                for (int i=0;i<resids.size()-4;i++) {
                     name[mut_point]=resids.name[i];
                     if(i!=1 && i!=13){
                         newpopulation.push_back(name);
@@ -51,14 +51,14 @@ void mutation_23SB(vector<string>& newpopulation,  string name, Peptide resids){
             }
     }else if(name[before]=='E'||name[before]=='D'||name[before1]=='E'||name[before1]=='D'){
         if(name[after]=='R'||name[after]=='K'||name[after1]=='R'||name[after1]=='K'||name[before]=='R'||name[before]=='K'||name[before1]=='R'||name[before1]=='K'){
-            for (int i=0;i<resids.size();i++) {
+            for (int i=0;i<resids.size()-4;i++) {
                 name[mut_point]=resids.name[i];
                 if(i!=1 && i!=13 && i!=2 && i!=4){
                     newpopulation.push_back(name);
                 }
             }
         }else{
-                for (int i=0;i<resids.size();i++) {
+                for (int i=0;i<resids.size()-4;i++) {
                     name[mut_point]=resids.name[i];
                     if(i!=2 && i!=4){
                         newpopulation.push_back(name);
@@ -67,14 +67,14 @@ void mutation_23SB(vector<string>& newpopulation,  string name, Peptide resids){
             }
     }else if(name[after]=='K'||name[after]=='R'||name[after1]=='K'||name[after1]=='R'){
         if(name[after]=='D'||name[after]=='E'||name[after1]=='D'||name[after1]=='E'||name[before]=='E'||name[before]=='D'||name[before1]=='D'||name[before1]=='E'){
-            for (int i=0;i<resids.size();i++) {
+            for (int i=0;i<resids.size()-4;i++) {
                 name[mut_point]=resids.name[i];
                 if(i!=1 && i!=13 && i!=2 && i!=4){
                     newpopulation.push_back(name);
                 }
             }
         }else{
-                for (int i=0;i<resids.size();i++) {
+                for (int i=0;i<resids.size()-4;i++) {
                     name[mut_point]=resids.name[i];
                     if(i!=1 && i!=13){
                         newpopulation.push_back(name);
@@ -83,14 +83,14 @@ void mutation_23SB(vector<string>& newpopulation,  string name, Peptide resids){
             }
     }else if(name[after]=='E'||name[after]=='D'||name[after1]=='E'||name[after1]=='D'){
         if(name[after]=='R'||name[after]=='K'||name[after1]=='R'||name[after1]=='K'||name[before]=='R'||name[before]=='K'||name[before1]=='R'||name[before1]=='K'){
-            for (int i=0;i<resids.size();i++) {
+            for (int i=0;i<resids.size()-4;i++) {
                 name[mut_point]=resids.name[i];
                 if(i!=1 && i!=13 && i!=2 && i!=4){
                     newpopulation.push_back(name);
                 }
             }
         }else{
-                for (int i=0;i<resids.size();i++) {
+                for (int i=0;i<resids.size()-4;i++) {
                     name[mut_point]=resids.name[i];
                     if(i!=2 && i!=4){
                         newpopulation.push_back(name);
@@ -98,7 +98,7 @@ void mutation_23SB(vector<string>& newpopulation,  string name, Peptide resids){
                 }
             }
     }else{
-        for (int i=0;i<resids.size();i++) {
+        for (int i=0;i<resids.size()-4;i++) {
             name[mut_point]=resids.name[i];
             newpopulation.push_back(name);
 
@@ -161,35 +161,24 @@ void population_SB( std::vector<int>&index1,std::vector<int>&index2, Peptide pep
                 //cout<<s<<" "<<t<<endl;
             }
         }
+        cout<<index1[s]<<" "<<index2[s]<<endl;
     }
-
-    for(int i=0;i<rmove_idx.size();++i){
-        vector<int>new_idx1;
-        vector<int>new_idx2;
-
-        for(int j=0;j<index1.size();++j){
-            new_idx1.push_back(index1[j]);
-            new_idx2.push_back(index2[j]);
-            //cout<<index1[j]<<" "<<index2[j]<<endl;
-        }
-        new_idx1.erase(new_idx1.begin()+rmove_idx[i]);
-        new_idx2.erase(new_idx2.begin()+rmove_idx[i]);
-
+    if( rmove_idx.size() == 0 ){
         Peptide new_pep;
-        new_pep.seq.resize(20-new_idx1.size());
+        new_pep.seq.resize(20-index1.size());
         int count=0;
         int p=0;
 
         for(int k=0;k<pep.name.size();++k){
 
-            if (std::find(new_idx1.begin(), new_idx1.end(), k) != new_idx1.end()) {
+            if (std::find(index1.begin(), index1.end(), k) != index1.end()) {
                 new_pep.name.push_back(SB_type[count]);
                 new_pep.seq[p].pos = (pep.seq[k].pos + pep.seq[k+3].pos)/2;
                 count+=1;
                 p+=1;
 
             }
-            if((std::find(new_idx2.begin(), new_idx2.end(), k) != new_idx2.end()) || (std::find(new_idx1.begin(), new_idx1.end(), k) != new_idx1.end())){
+            if((std::find(index2.begin(), index2.end(), k) != index2.end()) || (std::find(index1.begin(), index1.end(), k) != index1.end())){
 
             }else{
                 new_pep.name.push_back(pep.name[k]);
@@ -201,8 +190,48 @@ void population_SB( std::vector<int>&index1,std::vector<int>&index2, Peptide pep
         //cout<<new_pep.name<<endl;
 
         SB_all.push_back(new_pep);
-        //SB_pos.push_back(new_pep.seq);
+    }else{
 
+        for(int i=0;i<rmove_idx.size();++i){
+            vector<int>new_idx1;
+            vector<int>new_idx2;
+
+            for(int j=0;j<index1.size();++j){
+                new_idx1.push_back(index1[j]);
+                new_idx2.push_back(index2[j]);
+                //cout<<index1[j]<<" "<<index2[j]<<endl;
+            }
+            new_idx1.erase(new_idx1.begin()+rmove_idx[i]);
+            new_idx2.erase(new_idx2.begin()+rmove_idx[i]);
+
+            Peptide new_pep;
+            new_pep.seq.resize(20-new_idx1.size());
+            int count=0;
+            int p=0;
+
+            for(int k=0;k<pep.name.size();++k){
+
+                if (std::find(new_idx1.begin(), new_idx1.end(), k) != new_idx1.end()) {
+                    new_pep.name.push_back(SB_type[count]);
+                    new_pep.seq[p].pos = (pep.seq[k].pos + pep.seq[k+3].pos)/2;
+                    count+=1;
+                    p+=1;
+
+                }
+                if((std::find(new_idx2.begin(), new_idx2.end(), k) != new_idx2.end()) || (std::find(new_idx1.begin(), new_idx1.end(), k) != new_idx1.end())){
+
+                }else{
+                    new_pep.name.push_back(pep.name[k]);
+                    new_pep.seq[p].pos=pep.seq[k].pos;
+                    p+=1;
+                }
+
+            }
+            //cout<<new_pep.name<<endl;
+
+            SB_all.push_back(new_pep);
+            //SB_pos.push_back(new_pep.seq);
+        }
 
     }
 }
@@ -214,14 +243,14 @@ void mutation_linear(vector<string>& newpopulation,  string name, Peptide resids
     int before=mut_point-1;
     int after=mut_point+1;
     if(name[before] == 'K' || name[before] == 'R' || name[after] == 'K' || name[after] == 'R'){
-        for (int i=0;i<resids.size();i++) {
+        for (int i=0;i<resids.size()-4;i++) {
             name[mut_point]=resids.name[i];
             if(i!=1 && i!=13){
                 newpopulation.push_back(name);
             }
         }
     }else if(name[before] == 'D' || name[before] == 'E' || name[after] == 'D' || name[after] == 'E'){
-        for (int i=0;i<resids.size();i++) {
+        for (int i=0;i<resids.size()-4;i++) {
             name[mut_point]=resids.name[i];
             if(i!=2 && i!=4){
                 newpopulation.push_back(name);
@@ -229,7 +258,7 @@ void mutation_linear(vector<string>& newpopulation,  string name, Peptide resids
         }
     }else{
 
-        for (int i=0;i<resids.size();i++) {
+        for (int i=0;i<resids.size()-4;i++) {
             name[mut_point]=resids.name[i];
             newpopulation.push_back(name);
         }
@@ -239,7 +268,7 @@ void mutation_linear(vector<string>& newpopulation,  string name, Peptide resids
 void mutation_NR(vector<string>& newpopulation,  string name, Peptide resids){
     srand (time(NULL));
     int mut_point=rand() %20;
-        for (int i=0;i<resids.size();i++) {
+        for (int i=0;i<resids.size()-4;i++) {
             name[mut_point]=resids.name[i];
             newpopulation.push_back(name);
         }
@@ -461,20 +490,20 @@ int main()
             vector<Peptide>SB_all;
 
             population_SB( index1, index2, pep, SB_all);
-            for(int i=0;i<SB_all.size();++i){
-                //calculate energy of each of the peptides and do the avg along the z depth.
-                Peptide sb_pep=SB_all[i];
-                calc.get_energy_total(sb_pep,resids,res_id);
-                cout<<sb_pep.name<<" "<<sb_pep.energy_h<<" "<<sb_pep.energy_b<<endl;
 
-            } 
+            //calculate energy of each of the peptides and do the avg along the z depth.
+            //cout<<SB_all[0].name<<" "<<SB_all[1].name<<endl;
 
-            cout<<"SB"<<endl;
+            calc.get_energy_SB(SB_all,resids,res_id, pep);
+            cout<<"SB "<<pep.name<<" "<<pep.energy_h<<" "<<pep.energy_b<<" "<<pep.energy_h-pep.energy_b<<" "<<pep.depth_h<<" "<<pep.depth_b<<endl;
 
+            //exit(0);
+        }else{
+
+            calc.get_energy_total(pep, resids, res_id);
+
+            cout<<pep.name<<" "<< pep.energy_h<<" "<<pep.energy_b<<" "<<pep.energy_h-pep.energy_b<<" "<<pep.depth_h<<" "<<pep.depth_b<<endl;
         }
-        calc.get_energy_total(pep, resids, res_id);
-
-        cout<<pep.name<<" "<< pep.energy_h<<" "<<pep.energy_b<<" "<<pep.energy_h-pep.energy_b<<" "<<pep.depth_h<<" "<<pep.depth_b<<endl;
 
         //Selectivity criteria with both membranes --> maximize variable has to be max
 
@@ -547,8 +576,23 @@ int main()
             newpep.seq.resize(20);
             newpep.initial_pos("init_pos20", resids, res_id);
             //newpep.linear_pos();
+            if(salt_bridges(pep)){
+                std::vector<int>index1;
+                std::vector<int>index2;
+                vector<Peptide>SB_all;
 
-            calc.get_energy_total(newpep, resids, res_id);
+                population_SB( index1, index2, pep, SB_all);
+
+                //calculate energy of each of the peptides and do the avg along the z depth.
+
+                calc.get_energy_SB(SB_all,resids,res_id, pep);
+                cout<<"SB "<<pep.name<<" "<<pep.energy_h<<" "<<pep.energy_b<<" "<<pep.energy_h-pep.energy_b<<" "<<pep.depth_h<<" "<<pep.depth_b<<endl;
+
+                //exit(0);
+            }else{
+
+                calc.get_energy_total(newpep, resids, res_id);
+            }
 
             // selectivity criteria
 
