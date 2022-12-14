@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <string>
 #include <cmath>
 #include <vector>
@@ -161,8 +161,9 @@ void population_SB( std::vector<int>&index1,std::vector<int>&index2, Peptide pep
                 //cout<<s<<" "<<t<<endl;
             }
         }
-        cout<<index1[s]<<" "<<index2[s]<<endl;
+        //cout<<index1[s]<<" "<<index2[s]<<endl;
     }
+
     if( rmove_idx.size() == 0 ){
         Peptide new_pep;
         new_pep.seq.resize(20-index1.size());
@@ -191,18 +192,42 @@ void population_SB( std::vector<int>&index1,std::vector<int>&index2, Peptide pep
 
         SB_all.push_back(new_pep);
     }else{
+        //cout<<"aqui"<<endl;
 
         for(int i=0;i<rmove_idx.size();++i){
+            //cout<<rmove_idx.size()<<" "<<rmove_idx[i]<<endl;
             vector<int>new_idx1;
             vector<int>new_idx2;
 
             for(int j=0;j<index1.size();++j){
                 new_idx1.push_back(index1[j]);
                 new_idx2.push_back(index2[j]);
-                //cout<<index1[j]<<" "<<index2[j]<<endl;
+                //cout<<j<<" "<<index1[j]<<" "<<index2[j]<<endl;
             }
             new_idx1.erase(new_idx1.begin()+rmove_idx[i]);
             new_idx2.erase(new_idx2.begin()+rmove_idx[i]);
+            for(int l=0;l<new_idx2.size();++l){
+                cout<<l<<" "<<new_idx1[l]<<" "<<new_idx2[l]<<endl;
+            }
+            if (std::find(index1.begin(), index1.end(), index1[rmove_idx[i]]+6) != index1.end()){
+                int n;
+                for(int j=0;j<rmove_idx.size();++j){
+                    if(index1[rmove_idx[i]]+6 == index1[rmove_idx[j]]){
+                        n=j;
+
+                        cout<<j<<" "<<rmove_idx[j]<<endl;
+                    }
+                }
+                //cout<<"found: "<<index1[rmove_idx[i]]+6<<endl;
+                new_idx1.erase(new_idx1.begin()+rmove_idx[n]-1);
+                new_idx2.erase(new_idx2.begin()+rmove_idx[n]-1);
+                //rmove_idx.erase(rmove_idx.begin()+rmove_idx[n]);
+            }
+
+            for(int l=0;l<new_idx2.size();++l){
+                cout<<l<<" "<<new_idx1[l]<<" "<<new_idx2[l]<<endl;
+            }
+
 
             Peptide new_pep;
             new_pep.seq.resize(20-new_idx1.size());
@@ -218,6 +243,7 @@ void population_SB( std::vector<int>&index1,std::vector<int>&index2, Peptide pep
                     p+=1;
 
                 }
+
                 if((std::find(new_idx2.begin(), new_idx2.end(), k) != new_idx2.end()) || (std::find(new_idx1.begin(), new_idx1.end(), k) != new_idx1.end())){
 
                 }else{
@@ -226,14 +252,30 @@ void population_SB( std::vector<int>&index1,std::vector<int>&index2, Peptide pep
                     p+=1;
                 }
 
+
             }
             //cout<<new_pep.name<<endl;
 
             SB_all.push_back(new_pep);
+
+            cout<<new_pep.name<<endl;
+            int test;
+            for(int j=0;j<index1.size();++j){
+                if(index1[rmove_idx[i+1]]-6 == index1[j]){
+                    test=j;
+                }
+            }
+            if(std::find(rmove_idx.begin(), rmove_idx.end(), test) != rmove_idx.end()){
+                break;
+
+            }
+
+
             //SB_pos.push_back(new_pep.seq);
         }
 
     }
+    cout<<"here"<<endl;
 }
 
 void mutation_linear(vector<string>& newpopulation,  string name, Peptide resids){
@@ -492,7 +534,7 @@ int main()
             population_SB( index1, index2, pep, SB_all);
 
             //calculate energy of each of the peptides and do the avg along the z depth.
-            //cout<<SB_all[0].name<<" "<<SB_all[1].name<<endl;
+            cout<<SB_all[0].name<<" "<<SB_all[1].name<<endl;
 
             calc.get_energy_SB(SB_all,resids,res_id, pep);
             cout<<"SB "<<pep.name<<" "<<pep.energy_h<<" "<<pep.energy_b<<" "<<pep.energy_h-pep.energy_b<<" "<<pep.depth_h<<" "<<pep.depth_b<<endl;
