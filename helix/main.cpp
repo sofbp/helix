@@ -153,16 +153,45 @@ void population_SB( std::vector<int>&index1,std::vector<int>&index2, Peptide pep
 
     //Create batch of possible SB interactions and change the COM of the SB
     vector<int>rmove_idx;
+    vector<int>rmove_idx2;
     for(int s=0;s<index1.size();++s){
         for(int t=0;t<index1.size();++t){
             if(index1[s]==index2[t]){
                 rmove_idx.push_back(s);
-                rmove_idx.push_back(t);
-                cout<<s<<" "<<t<<endl;
+                rmove_idx2.push_back(t);
+                cout<<"rmove_idx: "<<s<<" "<<t<<endl;
             }
         }
         //cout<<index1[s]<<" "<<index2[s]<<endl;
     }
+
+    vector<int>conc_sb;
+
+    for(int i=0;i<rmove_idx.size();++i){
+        int count=0;
+        for(int j=0;j<rmove_idx.size();++j){
+            if(rmove_idx[i]==rmove_idx2[j]){
+                count=count+1;
+            }
+            //cout<<index1[s]<<" "<<index2[s]<<endl;
+        }
+        if ( std::find(rmove_idx.begin(), rmove_idx.end(), rmove_idx2[i]) != rmove_idx.end()){
+            //conc_sb.push_back(rmove_idx[i]);
+            int new_count=conc_sb.back() + 1;
+            conc_sb.pop_back();
+            conc_sb.push_back(new_count);
+        }else{
+            conc_sb.push_back(rmove_idx[i]);
+            conc_sb.push_back(count);
+        }
+
+    }
+    /*for(int i=0;i<conc_sb.size();++i){
+
+        cout<<conc_sb[i]<<endl;
+    }*/
+
+
 
     if( rmove_idx.size() == 0 ){
         Peptide new_pep;
@@ -192,24 +221,38 @@ void population_SB( std::vector<int>&index1,std::vector<int>&index2, Peptide pep
 
         SB_all.push_back(new_pep);
     }else{
+        vector<int>new_idx1;
+        vector<int>new_idx2;
 
+        for (int i=0;i<conc_sb.size();i=i+2){
+            cout<<conc_sb[i]<<" "<<conc_sb[i+1]<<endl;
+            if (conc_sb[i+1] == 0){
 
-        for(int i=0;i<rmove_idx.size();++i){
-            //cout<<rmove_idx.size()<<" "<<rmove_idx[i]<<endl;
-            vector<int>new_idx1;
-            vector<int>new_idx2;
-
-            for(int j=0;j<index1.size();++j){
-                new_idx1.push_back(index1[j]);
-                new_idx2.push_back(index2[j]);
-                cout<<j<<" "<<index1[j]<<" "<<index2[j]<<endl;
             }
+
+        }
+
+
+
+        /*for(int j=0;j<index1.size();++j){
+                //cout<<rmove_idx[i] <<" "<<j<<endl;
+                if ( ! (std::find(rmove_idx.begin(), rmove_idx.end(), j) != rmove_idx.end())){
+                    new_idx1.push_back(index1[j]);
+                    new_idx2.push_back(index2[j]);
+                }
+
+
+        cout<<j<<" "<<index1[j]<<" "<<index2[j]<<endl;
+            //cout<<rmove_idx.size()<<" "<<rmove_idx[i]<<endl;
+cout<<"he"<<endl;
             new_idx1.erase(new_idx1.begin()+rmove_idx[i]);
             new_idx2.erase(new_idx2.begin()+rmove_idx[i]);
+
+        }*/
             /*for(int l=0;l<new_idx2.size();++l){
                 cout<<l<<" "<<new_idx1[l]<<" "<<new_idx2[l]<<endl;
             }*/
-            if (std::find(index1.begin(), index1.end(), index1[rmove_idx[i]]+6) != index1.end()){
+            /*if (std::find(index1.begin(), index1.end(), index1[rmove_idx[i]]+6) != index1.end()){
                 int n;
                 for(int j=0;j<rmove_idx.size();++j){
                     if(index1[rmove_idx[i]]+6 == index1[rmove_idx[j]]){
@@ -222,7 +265,7 @@ void population_SB( std::vector<int>&index1,std::vector<int>&index2, Peptide pep
                 new_idx1.erase(new_idx1.begin()+rmove_idx[n]-1);
                 new_idx2.erase(new_idx2.begin()+rmove_idx[n]-1);
                 //rmove_idx.erase(rmove_idx.begin()+rmove_idx[n]);
-            }
+            }*/
 
             for(int l=0;l<new_idx2.size();++l){
                 cout<<l<<" "<<new_idx1[l]<<" "<<new_idx2[l]<<endl;
@@ -259,7 +302,7 @@ void population_SB( std::vector<int>&index1,std::vector<int>&index2, Peptide pep
             SB_all.push_back(new_pep);
 
             //cout<<new_pep.name<<endl;
-            int test;
+            /*int test;
             for(int j=0;j<index1.size();++j){
                 if(index1[rmove_idx[i+1]]-6 == index1[j]){
                     test=j;
@@ -269,11 +312,11 @@ void population_SB( std::vector<int>&index1,std::vector<int>&index2, Peptide pep
                 cout<<"end"<<endl;
                 break;
 
-            }
+            }*/
 
 
             //SB_pos.push_back(new_pep.seq);
-        }
+        //}
 
     }
     //cout<<"here"<<endl;
