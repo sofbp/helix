@@ -107,6 +107,68 @@ void mutation_23SB(vector<string>& newpopulation,  string name, Peptide resids){
 
 }
 
+void mutation_3SB_avoid_overlap(vector<string>& newpopulation,  string name, Peptide resids){
+
+    srand (time(NULL));
+    int mut_point=rand() %20;
+    int before=mut_point-3;
+    int before1=mut_point-6;
+    int after=mut_point+3;
+    int after1=mut_point+6;
+
+    if((name[before]=='K'||name[before]=='R') && (name[before1]=='E'||name[before1]=='D')){
+            for (int i=0;i<resids.size()-4;i++) {
+                name[mut_point]=resids.name[i];
+                if(i!=1 && i!=13 ){
+                    newpopulation.push_back(name);
+                }
+            }
+
+    }else if((name[before]=='E'||name[before]=='D') && (name[before1]=='K'||name[before1]=='R')){
+            for (int i=0;i<resids.size()-4;i++) {
+                name[mut_point]=resids.name[i];
+                if( i!=2 && i!=4){
+                    newpopulation.push_back(name);
+                }
+            }
+    }else if((name[after]=='K'||name[after]=='R') && (name[after1]=='E'||name[after1]=='D')){
+            for (int i=0;i<resids.size()-4;i++) {
+                name[mut_point]=resids.name[i];
+                if(i!=1 && i!=13 ){
+                    newpopulation.push_back(name);
+                }
+            }
+    }else if((name[after]=='D'||name[after]=='E') && (name[after1]=='K'||name[after1]=='R')){
+            for (int i=0;i<resids.size()-4;i++) {
+                name[mut_point]=resids.name[i];
+                if(i!=2 && i!=4){
+                    newpopulation.push_back(name);
+                }
+            }
+    }else if((name[after]=='D'||name[after]=='E') && (name[before]=='D'||name[before]=='E')){
+            for (int i=0;i<resids.size()-4;i++) {
+                name[mut_point]=resids.name[i];
+                if(i!=2 && i!=4){
+                    newpopulation.push_back(name);
+                }
+            }
+    }else if((name[after]=='K'||name[after]=='R') && (name[before]=='K'||name[before]=='R')){
+            for (int i=0;i<resids.size()-4;i++) {
+                name[mut_point]=resids.name[i];
+                if(i!=1 && i!=13){
+                    newpopulation.push_back(name);
+                }
+            }
+    }else{
+        for (int i=0;i<resids.size()-4;i++) {
+            name[mut_point]=resids.name[i];
+            newpopulation.push_back(name);
+
+        }
+    }
+
+}
+
 bool salt_bridges(Peptide pep){
     int SB=0;
     for (int i=0;i<pep.seq.size()-3;++i){
@@ -221,6 +283,8 @@ void population_SB( std::vector<int>&index1,std::vector<int>&index2, Peptide pep
 
         SB_all.push_back(new_pep);
     }else{
+        cout<<"overlapping salt bridges: "<< pep.name<<endl;
+        exit(1);
         vector<int>new_idx1;
         vector<int>new_idx2;
 
@@ -551,7 +615,8 @@ int main()
     exit(0);*/
 
     for (int k=0;k<start;++k) {
-        mutation_NR(pep.population, pep.population[k], resids);
+        //mutation_NR(pep.population, pep.population[k], resids);
+        mutation_3SB_avoid_overlap(pep.population, pep.population[k], resids);
         //mutation_23SB(pep.population, pep.population[k], resids);
         //mutation_linear(pep.population, pep.population[k], resids);
     }
@@ -645,14 +710,14 @@ int main()
         newpep.population.push_back(second_fittest.name);
         newpep.population.push_back(third_fittest.name);
         newpep.population.push_back(fourth_fittest.name);
-            /*mutation_23SB(newpep.population, newpep.population[0], resids);
-            mutation_23SB(newpep.population, newpep.population[1], resids);
-            mutation_23SB(newpep.population, newpep.population[2], resids);
-            mutation_23SB(newpep.population, newpep.population[3], resids);*/
-        mutation_NR(newpep.population, newpep.population[0], resids);
+            mutation_3SB_avoid_overlap(newpep.population, newpep.population[0], resids);
+            mutation_3SB_avoid_overlap(newpep.population, newpep.population[1], resids);
+            mutation_3SB_avoid_overlap(newpep.population, newpep.population[2], resids);
+            mutation_3SB_avoid_overlap(newpep.population, newpep.population[3], resids);
+        /*mutation_NR(newpep.population, newpep.population[0], resids);
         mutation_NR(newpep.population, newpep.population[1], resids);
         mutation_NR(newpep.population, newpep.population[2], resids);
-        mutation_NR(newpep.population, newpep.population[3], resids);
+        mutation_NR(newpep.population, newpep.population[3], resids);*/
 
 
         for (int i=0;i<newpep.population.size();i++) {
@@ -662,22 +727,24 @@ int main()
             newpep.seq.resize(20);
             newpep.initial_pos("init_pos20", resids, res_id);
             //newpep.linear_pos();
-            if(salt_bridges(pep)){
+            if(salt_bridges(newpep)){
                 std::vector<int>index1;
                 std::vector<int>index2;
                 vector<Peptide>SB_all;
 
-                population_SB( index1, index2, pep, SB_all);
+                population_SB( index1, index2, newpep, SB_all);
 
                 //calculate energy of each of the peptides and do the avg along the z depth.
 
-                calc.get_energy_SB(SB_all,resids,res_id, pep);
-                //cout<<"SB "<<pep.name<<" "<<pep.energy_h<<" "<<pep.energy_b<<" "<<pep.energy_h-pep.energy_b<<" "<<pep.depth_h<<" "<<pep.depth_b<<endl;
+                calc.get_energy_SB(SB_all,resids,res_id, newpep);
+                //cout<<"SB "<<newpep.name<<" "<<newpep.energy_h<<" "<<newpep.energy_b<<" "<<newpep.energy_h-newpep.energy_b<<" "<<newpep.depth_h<<" "<<newpep.depth_b<<endl;
 
                 //exit(0);
             }else{
 
                 calc.get_energy_total(newpep, resids, res_id);
+                //cout<<newpep.name<<" "<<newpep.energy_h<<" "<<newpep.energy_b<<" "<<newpep.energy_h-newpep.energy_b<<" "<<newpep.depth_h<<" "<<newpep.depth_b<<endl;
+
             }
 
             // selectivity criteria
