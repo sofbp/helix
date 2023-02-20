@@ -689,7 +689,7 @@ int main()
             population_SB( index1, index2, pep, SB_all);
             calc.print_Gplot_SB(SB_all,resids,res_id, pep);
             //calc.print_Gplot(pep, resids, res_id, pep.name);
-            //calc.print_Emap(pep, resids, res_id, pep.name);
+            calc.print_Emap(SB_all[0], resids, res_id, SB_all[0].name);
         }else{
             calc.print_Emap(pep, resids, res_id, pep.name);
             calc.print_Gplot(pep, resids, res_id, pep.name);
@@ -745,15 +745,15 @@ int main()
         double maximize=pep.energy_h-pep.energy_b;
 
         double score=maximize;
-        /*if(pep.depth_b>1 && pep.depth_b<3 && pep.depth_h>1 && pep.depth_h<3){
-            score=score*3;
+        if(pep.depth_b>1 && pep.depth_b<3 && pep.depth_h>1 && pep.depth_h<3){
+            score=score*4;
         }
         if((pep.depth_b>1 && pep.depth_b<3) || (pep.depth_h>1 && pep.depth_h<3)){
-            score=score*2;
+            score=score*3;
         }
         if(pep.depth_b>1 || pep.depth_h>1 ){
-            score=score*2;
-        }*/
+            score=score*3;
+        }
         if (score>maxdG){
             maxdG=score;
             fittest_pep=pep;
@@ -836,15 +836,15 @@ int main()
                 double maximize=newpep.energy_h-newpep.energy_b;
 
                 double score=maximize;
-               /* if(newpep.depth_b>1.5 && newpep.depth_b<3 && newpep.depth_h>1.5 && newpep.depth_h<3 && score > 0){
-                    score=score*3.5;
+                if(pep.depth_b>1 && pep.depth_b<3 && pep.depth_h>1 && pep.depth_h<3){
+                    score=score*4;
                 }
-                if(newpep.depth_b>0.7 && newpep.depth_b<3 && newpep.depth_h>0.7 && newpep.depth_h<3 && score > 0){
+                if((pep.depth_b>1 && pep.depth_b<3) || (pep.depth_h>1 && pep.depth_h<3)){
                     score=score*3;
                 }
-                if(((newpep.depth_b>0.7 && newpep.depth_b<3) || (newpep.depth_h>0.7 && newpep.depth_h<3)) && score > 0){
-                    score=score*2;
-                }*/
+                if(pep.depth_b>1 || pep.depth_h>1 ){
+                    score=score*3;
+                }
 
                 if (score>maxdG){
                     maxdG=score;

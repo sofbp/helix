@@ -902,6 +902,141 @@ public:
 
     }
 
+    void print_Emap_SB(vector<Peptide>& all_sb, Peptide aa, map<char, int> res_id, Peptide& final_pep){
+        int interval=5;
+        Atom axis_y=Atom(0,1,0);
+        Atom axis_x=Atom(1,0,0);
+        vector<vector<double>>energies_h;
+        energies_h.resize(depth, vector<double> (rot_deg*tilt_deg/interval));
+        vector<vector<double>>energies_b;
+        energies_b.resize(depth, vector<double> (rot_deg*tilt_deg/interval));
+        vector<double>G_all;
+        vector<double>G_all_b;
+        //axis_x.normalise();
+        //axis_y.normalise();
+        double min=999999;
+        double minB=999999;
+        double total_B_en_h=0;
+        double total_B_en_b=0;
+        double prob_sum=0;
+        double prob_sumB=0;
+        double shift=0;
+        double shiftB=0;
+
+        ofstream myfile, myfile3;
+        string fileH = final_pep.name + "_H";
+        string fileB = final_pep.name + "_B";
+        myfile.open (fileH);
+        myfile3.open (fileB);
+
+        myfile<<depth<<" ";
+        myfile3<<depth<<" ";
+
+        for (int n=0;n<depth;++n) {
+            myfile<<n<<" ";
+            myfile3<<n<<" ";
+        }
+        myfile<<endl;
+        myfile3<<endl;
+
+        double total_en_h;
+        double total_en_b;
+
+        vector<vector<double>>newG_all;
+        vector<vector<double>>newGb_all;
+
+
+
+                for (int i=0;i<rot_deg;i=i+interval) {
+                    double deg_rot=i*degToRad;
+
+                    for (int j=0;j<tilt_deg;j=j+interval) {
+                        double deg_tilt=j*degToRad;
+                        //printf ("%d%03d ", j, i);
+                        myfile<<j<<i<<" ";
+                        myfile3<<j<<i<<" ";
+
+                        for (int k=0;k<depth;++k) {
+                            double disp=k*0.1;
+                            vector<double>all_total_en_h;
+                            for(int p=0;p<all_sb.size();++p){
+                                Peptide current = all_sb[p];
+
+
+                        total_en_h=0;
+                        total_en_b=0;
+
+                        //
+                        // Move, rotate and get E under peptide class
+                        //
+                        for (int a=0;a<current.name.size();++a) {
+                            //cout<<a<<endl;
+
+                            Atom positions;
+                            positions.x=current.seq[a].pos.x;
+                            positions.y=current.seq[a].pos.y;
+                            positions.z=current.seq[a].pos.z;
+
+                            //Rotate, tilt, translate -->traslations must be the last because rotations are done relative to 0,0,0.
+
+                            positions.rotate(axis_y, deg_rot);
+                            positions.rotate(axis_x, deg_tilt);
+                            positions.z=positions.z+disp;
+
+                            //calculate deltaG for new positions
+
+                            int inde=res_id[current.name[a]];
+                            //std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+
+
+                            double en_h=aa.seq[inde].get_E_human(positions.z);
+
+                            double en_b=aa.seq[inde].get_E_bacteria(positions.z);
+                            //std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+                            //std::cout << "Time difference = " << std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count() << "[ns]" << std::endl;
+
+                            total_en_h+=en_h;
+                            total_en_b+=en_b;
+                        }
+
+                        all_total_en_h.push_back(total_en_h);
+                        cout<<current.name<<" "<<total_en_h<<endl;
+                        //
+                        // Boltzmann average --> average out degrees of freedom from tilt and rotation
+                        // Calculate P(x,y) = e^(-dG/kT)
+                        //
+                        double B_en_h=pow(e,-total_en_h*cte);
+                        energies_h[k][(i*j+j)/interval]=B_en_h;
+                        //energies_h[k].push_back(B_en_h);
+                        //cout<<k<<" "<<(i*j+j)/interval<<endl;
+                        total_B_en_h+=B_en_h;
+
+                        double B_en_b=pow(e,-total_en_b*cte);
+                        //energies_b[k].push_back(B_en_b);
+                        energies_b[k][(i*j+j)/interval]=B_en_b;
+                        total_B_en_b+=B_en_b;
+                    }
+
+                    for (int e=0;e<all_total_en_h.size();++e){
+                        double prob=pow(e,-all_total_en_h[e]*cte)/total_B_en_h;
+                        prob_sum+=prob;
+
+                    }
+                    double G=-cte*log(prob_sum);
+                    myfile<<G<<" ";
+                    //myfile3<<total_en_b<<" ";
+
+                }
+                        myfile<<endl;
+                        myfile3<<endl;
+            }
+
+        }
+                myfile.close();
+                //myfile2.close();
+                myfile3.close();
+    }
+
 
 
 };
