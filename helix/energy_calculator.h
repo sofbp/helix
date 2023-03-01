@@ -318,7 +318,7 @@ public:
                         //
                         // Move, rotate and get E under peptide class
                         //
-                        for (int a=0;a<current.name.size();++a) {
+                        for (int a=0;a<current.seq.size();++a) {
                             //cout<<a<<endl;
 
                             Atom positions;
