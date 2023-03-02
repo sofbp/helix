@@ -117,7 +117,7 @@ void mutation_3SB_avoid_overlap(vector<string>& newpopulation,  string name, Pep
     int after1=mut_point+6;
 
     if((name[before]=='K'||name[before]=='R') && (name[before1]=='E'||name[before1]=='D')){
-            for (int i=0;i<resids.size()-5;i++) {
+            for (int i=0;i<resids.size()-11;i++) {
                 name[mut_point]=resids.name[i];
                 if(i!=1 && i!=13 ){
                     newpopulation.push_back(name);
@@ -125,63 +125,63 @@ void mutation_3SB_avoid_overlap(vector<string>& newpopulation,  string name, Pep
             }
 
     }else if((name[before]=='E'||name[before]=='D') && (name[before1]=='K'||name[before1]=='R')){
-            for (int i=0;i<resids.size()-5;i++) {
+            for (int i=0;i<resids.size()-11;i++) {
                 name[mut_point]=resids.name[i];
                 if( i!=2 && i!=4){
                     newpopulation.push_back(name);
                 }
             }
     }else if((name[after]=='K'||name[after]=='R') && (name[after1]=='E'||name[after1]=='D')){
-            for (int i=0;i<resids.size()-5;i++) {
+            for (int i=0;i<resids.size()-11;i++) {
                 name[mut_point]=resids.name[i];
                 if(i!=1 && i!=13 ){
                     newpopulation.push_back(name);
                 }
             }
     }else if((name[after]=='D'||name[after]=='E') && (name[after1]=='K'||name[after1]=='R')){
-            for (int i=0;i<resids.size()-5;i++) {
+            for (int i=0;i<resids.size()-11;i++) {
                 name[mut_point]=resids.name[i];
                 if(i!=2 && i!=4){
                     newpopulation.push_back(name);
                 }
             }
     }else if((name[after]=='D'||name[after]=='E') && (name[before]=='D'||name[before]=='E')){
-        for (int i=0;i<resids.size()-5;i++) {
+        for (int i=0;i<resids.size()-11;i++) {
             name[mut_point]=resids.name[i];
             if(i!=2 && i!=4){
                 newpopulation.push_back(name);
             }
         }
     }else if((name[after]=='K'||name[after]=='R') && (name[before]=='K'||name[before]=='R')){
-        for (int i=0;i<resids.size()-5;i++) {
+        for (int i=0;i<resids.size()-11;i++) {
             name[mut_point]=resids.name[i];
             if(i!=1 && i!=13){
                 newpopulation.push_back(name);
             }
         }
     }else if((name[after]=='W'|| name[after]=='Y' || name[after]=='F') && (name[before]=='W'||name[before]=='Y' || name[before]=='F')){
-        for (int i=0;i<resids.size()-5;i++) {
+        for (int i=0;i<resids.size()-11;i++) {
             name[mut_point]=resids.name[i];
             if(i!=3 && i!=11 && i!=16){
                 newpopulation.push_back(name);
             }
         }
     }else if((name[after]=='W'|| name[after]=='Y' || name[after]=='F') && (name[after1]=='W'||name[after1]=='Y' || name[after1]=='F')){
-        for (int i=0;i<resids.size()-5;i++) {
+        for (int i=0;i<resids.size()-11;i++) {
             name[mut_point]=resids.name[i];
             if(i!=3 && i!=11 && i!=16){
                 newpopulation.push_back(name);
             }
         }
     }else if((name[before]=='W'|| name[before]=='Y' || name[before]=='F') && (name[before1]=='W'||name[before1]=='Y' || name[before1]=='F')){
-        for (int i=0;i<resids.size()-5;i++) {
+        for (int i=0;i<resids.size()-11;i++) {
             name[mut_point]=resids.name[i];
             if(i!=3 && i!=11 && i!=16){
                 newpopulation.push_back(name);
             }
         }
     }else{
-        for (int i=0;i<resids.size()-5;i++) {
+        for (int i=0;i<resids.size()-11;i++) {
             name[mut_point]=resids.name[i];
             newpopulation.push_back(name);
 
@@ -768,9 +768,9 @@ int main()
     Energy_calculator calc;
 
     Peptide resids;
-    resids.name="AEKWRCVLIMQFNDSTY1234567890";
+    resids.name="AEKWRCVLIMQFNDSTY1234567890O";
     resids.seq.resize(resids.name.size());
-    map<char, int> res_id{ { 'A', 0 }, { 'E', 1 }, { 'K', 2 },  { 'W', 3 }, { 'R', 4 }, { 'C', 5 }, { 'V', 6 }, { 'L', 7 }, { 'I', 8 },  { 'M', 9 }, { 'Q', 10 }, { 'F', 11 },  { 'N', 12 }, {'D', 13}, {'S', 14}, {'T', 15}, {'Y', 16},{'1',17},{'2',18},{'3',19},{'4',20},{'5',21},{'6',22},{'7',23},{'8',24},{'9',25},{'0',26}};
+    map<char, int> res_id{ { 'A', 0 }, { 'E', 1 }, { 'K', 2 },  { 'W', 3 }, { 'R', 4 }, { 'C', 5 }, { 'V', 6 }, { 'L', 7 }, { 'I', 8 },  { 'M', 9 }, { 'Q', 10 }, { 'F', 11 },  { 'N', 12 }, {'D', 13}, {'S', 14}, {'T', 15}, {'Y', 16},{'1',17},{'2',18},{'3',19},{'4',20},{'5',21},{'6',22},{'7',23},{'8',24},{'9',25},{'0',26},{'O',27}};
 
     calc.init_grid(resids.name.size(), 200, 2 );
     //
@@ -803,7 +803,7 @@ int main()
     Peptide fittest_pep, second_fittest, third_fittest, fourth_fittest;
     int start=pep.population.size();
 
-    for (int a=0;a<pep.population.size();a++) {
+    /*for (int a=0;a<pep.population.size();a++) {
         pep.seq.clear();
         pep.name=pep.population[a];
 
@@ -824,7 +824,7 @@ int main()
         }
 
     }
-    exit(0);
+    exit(0);*/
 
     for (int k=0;k<start;++k) {
         //mutation_NR(pep.population, pep.population[k], resids);

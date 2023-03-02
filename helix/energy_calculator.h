@@ -145,6 +145,8 @@ public:
 
         double total_en_h;
         double total_en_b;
+
+        //ofstream new_file("xyz_check");
         for (int k=0;k<depth;++k) {
             double disp=k*0.1;
             for (int i=0;i<rot_deg;i=i+interval) {
@@ -157,10 +159,13 @@ public:
                     total_en_h=0;
                     total_en_b=0;
 
+//new_file<<current.seq.size()<<endl;
+//new_file<<" "<<endl;
                     //
                     // Move, rotate and get E under peptide class
                     //
-                    for (int a=0;a<current.size();++a) {
+                    for (int a=0;a<current.seq.size();++a) {
+
 
                         Atom positions;
                         positions.x=current.seq[a].pos.x;
@@ -173,6 +178,9 @@ public:
                         positions.rotate(axis_x, deg_tilt);
                         positions.z=positions.z+disp;
 
+                        //if (a == 10){
+                            //new_file<<current.name[a]<<" "<<positions.x<<" "<<positions.y<<" "<<positions.z<<endl;
+                        //}
                         //calculate deltaG for new positions
 
                         int inde=res_id[current.name[a]];
@@ -270,6 +278,8 @@ public:
 
             }
         }
+        //new_file.close();
+        //exit(0);
     }
 
     void get_energy_SB(vector<Peptide>& all_sb, Peptide aa, map<char, int> res_id, Peptide& final_pep){
