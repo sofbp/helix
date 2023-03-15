@@ -41,6 +41,7 @@ public:
     vector< vector< vector< double > > > Charged;
     vector< vector< vector< double > > > Charged_B;
     double cte=1.0/(0.008314*310);
+    double cte2=0.008314*310;
     double e=2.718281828459045;
 
 
@@ -236,9 +237,9 @@ public:
                 prob_sum+=prob;
 
             }
-            G=-cte*log(prob_sum);
+            G=-cte2*log(prob_sum);
             G_all.push_back(G);
-            Gb=-cte*log(prob_sumB);
+            Gb=-cte2*log(prob_sumB);
             G_all_b.push_back(Gb);
 
             if(q==(depth-1)){
@@ -398,9 +399,9 @@ public:
                     prob_sum+=prob;
 
                 }
-                G=-cte*log(prob_sum);
+                G=-cte2*log(prob_sum);
                 G_all.push_back(G);
-                Gb=-cte*log(prob_sumB);
+                Gb=-cte2*log(prob_sumB);
                 G_all_b.push_back(Gb);
 
                 if(q==(depth-1)){
@@ -606,9 +607,9 @@ public:
                     prob_sum+=prob;
 
                 }
-                G=-cte*log(prob_sum);
+                G=-cte2*log(prob_sum);
                 G_all.push_back(G);
-                Gb=-cte*log(prob_sumB);
+                Gb=-cte2*log(prob_sumB);
                 G_all_b.push_back(Gb);
 
                 if(q==(depth-1)){
@@ -720,7 +721,7 @@ public:
                     //
                     // Move rotates and get E under peptide class
                     //
-                    for (int a=0;a<current.size();++a) { //move all beads
+                    for (int a=0;a<current.seq.size();++a) { //move all beads
 
                         Atom positions;
                         positions.x=current.seq[a].pos.x;
@@ -760,6 +761,7 @@ public:
 
 
         double G, Gb;
+        double total_p=0;
         for (int q=0;q<depth;q++) {
 
             for (int p=0;p<energies_h[q].size();p++) {
@@ -772,9 +774,10 @@ public:
                 prob_sum+=prob;
 
             }
-            G=-cte*log(prob_sum);
+            total_p+=prob_sum;
+            G=-cte2*log(prob_sum);
             G_all.push_back(G);
-            Gb=-cte*log(prob_sumB);
+            Gb=-cte2*log(prob_sumB);
             G_allB.push_back(Gb);
 
             if(q==(depth-1)){
