@@ -287,32 +287,36 @@ public:
         int interval=5;
         Atom axis_y=Atom(0,1,0);
         Atom axis_x=Atom(1,0,0);
-        vector<vector<double>>energies_h;
-        energies_h.resize(depth, vector<double> (rot_deg*tilt_deg/interval));
-        vector<vector<double>>energies_b;
-        energies_b.resize(depth, vector<double> (rot_deg*tilt_deg/interval));
-        vector<double>G_all;
-        vector<double>G_all_b;
+
         //axis_x.normalise();
         //axis_y.normalise();
         double min=999999;
         double minB=999999;
-        double total_B_en_h=0;
-        double total_B_en_b=0;
+
         double prob_sum=0;
         double prob_sumB=0;
         double shift=0;
         double shiftB=0;
 
-        double total_en_h;
-        double total_en_b;
 
         vector<vector<double>>newG_all;
         vector<vector<double>>newGb_all;
 
         for(int p=0;p<all_sb.size();++p){
+
+            vector<vector<double>>energies_h;
+            energies_h.resize(depth, vector<double> (rot_deg*tilt_deg/interval));
+            vector<vector<double>>energies_b;
+            energies_b.resize(depth, vector<double> (rot_deg*tilt_deg/interval));
+            vector<double>G_all;
+            vector<double>G_all_b;
+            double total_B_en_h=0;
+            double total_B_en_b=0;
+
+            double total_en_h;
+            double total_en_b;
+
             Peptide current = all_sb[p];
-            //cout<<current.name<<" "<<all_sb.size()<<endl;
 
             for (int k=0;k<depth;++k) {
                 double disp=k*0.1;
@@ -426,6 +430,9 @@ public:
             }
             newG_all.push_back(newG);
             newGb_all.push_back(newGb);
+
+            G_all.clear();
+            G_all_b.clear();
         }
 
         //
@@ -493,18 +500,11 @@ public:
         int interval=5;
         Atom axis_y=Atom(0,1,0);
         Atom axis_x=Atom(1,0,0);
-        vector<vector<double>>energies_h;
-        energies_h.resize(depth, vector<double> (rot_deg*tilt_deg/interval));
-        vector<vector<double>>energies_b;
-        energies_b.resize(depth, vector<double> (rot_deg*tilt_deg/interval));
-        vector<double>G_all;
-        vector<double>G_all_b;
         //axis_x.normalise();
         //axis_y.normalise();
         double min=999999;
         double minB=999999;
-        double total_B_en_h=0;
-        double total_B_en_b=0;
+
         double prob_sum=0;
         double prob_sumB=0;
         double shift=0;
@@ -513,14 +513,23 @@ public:
         string fileH=final_pep.name+"_GH-SB";
         string fileB=final_pep.name+"_GB-SB";
 
-        double total_en_h;
-        double total_en_b;
-
         vector<vector<double>>newG_all;
         vector<vector<double>>newGb_all;
 
         for(int p=0;p<all_sb.size();++p){
+            double total_en_h;
+            double total_en_b;
+            double total_B_en_h=0;
+            double total_B_en_b=0;
+            vector<double>G_all;
+            vector<double>G_all_b;
+            vector<vector<double>>energies_h;
+            energies_h.resize(depth, vector<double> (rot_deg*tilt_deg/interval));
+            vector<vector<double>>energies_b;
+            energies_b.resize(depth, vector<double> (rot_deg*tilt_deg/interval));
+
             Peptide current = all_sb[p];
+            cout<<current.name<<endl;
 
             for (int k=0;k<depth;++k) {
                 double disp=k*0.1;
@@ -634,8 +643,17 @@ public:
             }
             newG_all.push_back(newG);
             newGb_all.push_back(newGb);
+            cout<<newG_all.size()<<endl;
+
+            G_all.clear();
+            G_all_b.clear();
+            newG.clear();
+            newGb.clear();
         }
+
             vector<double>finalG, finalGb;
+            ofstream Gfile;
+            //Gfile.open("G1G2");
 
             for (int d=0;d<depth;++d){
                 double total=0;
@@ -644,10 +662,13 @@ public:
                 double propb=0;
                 double newE=0;
                 double newEb=0;
+
+                //Gfile<<d*0.1<<" "<<newG_all[0][d]<<" "<<newG_all[1][d]<<endl;
                 for(int p=0;p<newG_all.size();++p){
                     total=total + pow(e, -newG_all[p][d]*cte);
                     totalb=totalb + pow(e, -newGb_all[p][d]*cte);
                 }
+
                 for(int p=0;p<newG_all.size();++p){
                     prop=pow(e, -newG_all[p][d]*cte)/total;
                     newE=newE+prop*newG_all[p][d];
@@ -661,6 +682,8 @@ public:
                 finalG.push_back(newE);
                 finalGb.push_back(newEb);
             }
+            //Gfile.close();
+
 
             double z, zb;
 

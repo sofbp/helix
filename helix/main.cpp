@@ -221,7 +221,7 @@ bool aromatics(Peptide pep){
             AR=AR+1;
         }if((pep.name[i] == 'W' && pep.name[i+3] == 'Y') || (pep.name[i] == 'Y' && pep.name[i+3] == 'W')){
             AR=AR+1;
-        }else if((pep.name[i] == 'Y' && pep.name[i] == 'F') || (pep.name[i+3] == 'F' && pep.name[i+3] == 'Y')){
+        }else if((pep.name[i] == 'Y' && pep.name[i] == 'F') || (pep.name[i] == 'F' && pep.name[i+3] == 'Y')){
             AR=AR+1;
         }else{
             AR=AR+0;
@@ -252,6 +252,30 @@ bool find_overlapping_SB(string name){
             index2.push_back(i+3);
         }
         if(( name[i] == 'R' &&  name[i+3] == 'E') || (name[i] == 'E' && name[i+3] == 'R')){
+            index1.push_back(i);
+            index2.push_back(i+3);
+        }
+        if(name[i] == 'W' && name[i+3] == 'W'){
+            index1.push_back(i);
+            index2.push_back(i+3);
+        }
+        if(name[i] == 'F' && name[i+3] == 'F'){
+            index1.push_back(i);
+            index2.push_back(i+3);
+        }
+        if(name[i] == 'Y' && name[i+3] == 'Y'){
+            index1.push_back(i);
+            index2.push_back(i+3);
+        }
+        if((name[i] == 'W' &&  name[i+3] == 'F') || (name[i] == 'F' && name[i+3] == 'W')){
+            index1.push_back(i);
+            index2.push_back(i+3);
+        }
+        if((name[i] == 'W' && name[i+3] == 'Y' ) || (name[i] == 'Y' && name[i+3] == 'W')){
+            index1.push_back(i);
+            index2.push_back(i+3);
+        }
+        if(( name[i] == 'Y' &&  name[i+3] == 'F') || (name[i] == 'F' && name[i+3] == 'Y')){
             index1.push_back(i);
             index2.push_back(i+3);
         }
@@ -335,37 +359,102 @@ void detect_interactions(Peptide pep, std::vector<int>&index1, std::vector<int>&
 }
 
 
-void find_index_overlap(vector<int>&rmove_idx,vector<int>&rmove_idx2, std::vector<int>index1, std::vector<int>index2){
+void find_index_overlap(vector<int>&rmove_idx,vector<int>&rmove_idx2, std::vector<int>&index1, std::vector<int>&index2, vector<char>&SB_type, vector<char>&SB_type_overlap){
     for(int s=0;s<index1.size();++s){
         for(int t=0;t<index1.size();++t){
             if(index1[s]==index2[t]){
+                //cout<<"aqui "<<SB_type[s]<<" "<<SB_type[t]<<" "<<s<<" "<<t<<endl;
                 rmove_idx.push_back(s);
                 rmove_idx2.push_back(t);
+                SB_type_overlap.push_back(SB_type[t]);
+                SB_type_overlap.push_back(SB_type[s]);
+                SB_type.erase (SB_type.begin()+s);
+                SB_type.erase (SB_type.begin()+t);
             }
         }
     }
 }
 
-void make_subtitutions(Peptide prev_pep,  std::vector<int>index1, std::vector<int>index2, vector<char>SB_type,  Peptide& new_pep){
+void make_subtitutions(Peptide&prev_pep,  std::vector<int>index1, std::vector<int>index2, vector<char>SB_type,  Peptide& new_pep){
 
     int count=0;
     int p=0;
+    int r=0;
     new_pep.seq.resize(prev_pep.seq.size()-index1.size());
+
+    //Change residues positions
+
+    for(int k=0;k<prev_pep.name.size();++k){
+
+        if (std::find(index1.begin(), index1.end(), k) != index1.end()) {
+            new_pep.seq[p].pos = (prev_pep.seq[r].pos + prev_pep.seq[r+3].pos)/2;
+            p+=1;
+            r+=1;
+        }
+        else if((std::find(index2.begin(), index2.end(), k) != index2.end()) || (std::find(index1.begin(), index1.end(), k) != index1.end()) ){
+            r+=1;
+
+        }else if( prev_pep.name[k]=='X'){
+
+        }else{
+            new_pep.seq[p].pos=prev_pep.seq[r].pos;
+            p+=1;
+            r+=1;
+        }
+    }
+
+    //Change peptide name
 
     for(int k=0;k<prev_pep.name.size();++k){
 
         if (std::find(index1.begin(), index1.end(), k) != index1.end()) {
             new_pep.name.push_back(SB_type[count]);
-            new_pep.seq[p].pos = (prev_pep.seq[k].pos + prev_pep.seq[k+3].pos)/2;
             count+=1;
-            p+=1;
-
         }
         else if((std::find(index2.begin(), index2.end(), k) != index2.end()) || (std::find(index1.begin(), index1.end(), k) != index1.end())){
             new_pep.name.push_back('X');
 
         }else{
             new_pep.name.push_back(prev_pep.name[k]);
+        }
+    }
+}
+
+void make_substitutions_2(Peptide&prev_pep,  int n1, int n2, vector<char>SB_type,  Peptide& new_pep, int& count){
+
+    int p=0;
+    new_pep.seq.resize(prev_pep.seq.size()-1);
+
+    //Change peptide name
+
+    for(int k=0;k<prev_pep.name.size();++k){
+
+        if ( k == n1) {
+            new_pep.name.push_back(SB_type[count]);
+            count+=1;
+        }
+        else if( k == n2){
+            new_pep.name.push_back('X');
+
+        }else{
+            new_pep.name.push_back(prev_pep.name[k]);
+        }
+
+    }
+
+    //Change residues positions
+
+    for(int k=0;k<prev_pep.seq.size();++k){
+
+        if ( k == n1) {
+            new_pep.seq[p].pos = (prev_pep.seq[k].pos + prev_pep.seq[k+3].pos)/2;
+            p+=1;
+
+        }
+        else if( k == n2){
+
+
+        }else{
             new_pep.seq[p].pos=prev_pep.seq[k].pos;
             p+=1;
         }
@@ -389,6 +478,7 @@ void population_SB(  Peptide pep, vector<Peptide>&SB_all){
     vector<char>SB_type;
     std::vector<int>index1;
     std::vector<int>index2;
+    vector<char>SB_type_overlap;
 
     //Detect salt-bridges, store their position and type
     detect_interactions(pep,index1,index2,SB_type);
@@ -396,7 +486,7 @@ void population_SB(  Peptide pep, vector<Peptide>&SB_all){
     //Detect if salt-bridges overlap; if there is overlap, rmove_idx will be bigger than 0
     vector<int>rmove_idx;
     vector<int>rmove_idx2;
-    find_index_overlap(rmove_idx,rmove_idx2,index1,index2);
+    find_index_overlap(rmove_idx,rmove_idx2,index1,index2, SB_type,SB_type_overlap);
 
     //Create batch of possible SB interactions and change the COM of the SB
     if( rmove_idx.size() == 0 ){
@@ -410,69 +500,36 @@ void population_SB(  Peptide pep, vector<Peptide>&SB_all){
 
     }else{
 
-        cout<<"overlapping interactions: "<< pep.name<<endl;
-        exit(1);
-        vector<int>new_idx1;
-        vector<int>new_idx2;
-        for(int i=0;i<rmove_idx.size();++i){
-            cout<<rmove_idx[i]<<" "<<rmove_idx2[i]<<endl;
 
-        }
+        //cout<<"overlapping interactions: "<< pep.name<<endl;
 
-        /*for(int j=0;j<index1.size();++j){
-                //cout<<rmove_idx[i] <<" "<<j<<endl;
-                if ( ! (std::find(rmove_idx.begin(), rmove_idx.end(), j) != rmove_idx.end())){
-                    new_idx1.push_back(index1[j]);
-                    new_idx2.push_back(index2[j]);
-                }
-                //cout<<new_idx1.back()<<endl;
-                if ( ! (std::find(rmove_idx2.begin(), rmove_idx2.end(), j) != rmove_idx2.end()) ){
-                   /* if (new_idx1.size() == 0){
-                    new_idx1.push_back(index1[j]);
-                    new_idx2.push_back(index2[j]);
-                    }else{
-                        //if(new_idx1.back() != index1[j]){
-                            new_idx1.push_back(index1[j]);
-                            new_idx2.push_back(index2[j]);
-                        //}
-                    //}
-                }
+        Peptide pep2;
+        int ct=0;
+        make_substitutions_2(pep,index1[rmove_idx2[0]],index1[rmove_idx[0]],SB_type_overlap,pep2,ct);
+        Peptide pep3;
+        make_substitutions_2(pep,index2[rmove_idx2[0]],index2[rmove_idx[0]],SB_type_overlap,pep3,ct);
 
-        }*/
+        index1.erase(index1.begin()+rmove_idx[0]);
+        index1.erase(index1.begin()+rmove_idx2[0]);
+        index2.erase(index2.begin()+rmove_idx[0]);
+        index2.erase(index2.begin()+rmove_idx2[0]);
 
 
+        Peptide pep21;
+        Peptide pep31;
+        make_subtitutions(pep2,index1,index2,SB_type,pep21);
 
-            int count=0;
-            for(int a=0;a<new_idx1.size();++a){
-                //cout<<i<<endl;
-                Peptide new_pep;
+        rename(pep21);
+        SB_all.push_back(pep21);
 
-                int p=0;
-                new_pep.seq.resize(19);
-                for(int k=0;k<pep.name.size();++k){
+        make_subtitutions(pep3,index1,index2,SB_type,pep31);
+        rename(pep31);
+        SB_all.push_back(pep31);
 
-                    if (new_idx1[a] == k){
-                        //if (std::find(new_idx1.begin(), new_idx1.end(), k) != new_idx1.end()) {
-                        new_pep.name.push_back(SB_type[count]);
-                        new_pep.seq[p].pos = (pep.seq[k].pos + pep.seq[k+3].pos)/2;
-                        count+=1;
-                        p+=1;
+        //cout<<SB_all[0].name<<endl;
+        //cout<<SB_all[1].name<<endl;
 
-                    }else if (new_idx2[a] == k){
-                        new_pep.name.push_back('X');
-                    }else{
-                        new_pep.name.push_back(pep.name[k]);
-                        new_pep.seq[p].pos=pep.seq[k].pos;
-                        p+=1;
-                    }
-
-                }
-
-                cout<<"new_pep:" <<new_pep.name<<endl;
-                SB_all.push_back(new_pep);
-            }
     }
-
 }
 
 void mutation_linear(vector<string>& newpopulation,  string name, Peptide resids){
@@ -507,10 +564,62 @@ void mutation_linear(vector<string>& newpopulation,  string name, Peptide resids
 void mutation_NR(vector<string>& newpopulation,  string name, Peptide resids){
     srand (time(NULL));
     int mut_point=rand() %20;
-        for (int i=0;i<resids.size()-5;i++) {
+    int before=mut_point-3;
+    int before1=mut_point-6;
+    int after=mut_point+3;
+    int after1=mut_point+6;
+
+    if((name[before]=='K'||name[before]=='R') && (name[before1]=='E'||name[before1]=='D') && (name[after]=='R'||name[after]=='K')){
+        for (int i=0;i<resids.size()-11;i++) {
+            name[mut_point]=resids.name[i];
+            if(i!=1 && i!=13 ){
+                newpopulation.push_back(name);
+            }
+        }
+
+    }else if((name[before]=='E'||name[before]=='D') && (name[before1]=='K'||name[before1]=='R') && (name[after]=='E'||name[after]=='D')){
+        for (int i=0;i<resids.size()-11;i++) {
+            name[mut_point]=resids.name[i];
+            if( i!=2 && i!=4){
+                newpopulation.push_back(name);
+            }
+        }
+    }else if((name[before]=='E'||name[before]=='D') && (name[after]=='D'||name[after]=='E') && (name[after1]=='R'||name[after1]=='K')){
+        for (int i=0;i<resids.size()-11;i++) {
+            name[mut_point]=resids.name[i];
+            if( i!=2 && i!=4){
+                newpopulation.push_back(name);
+            }
+        }
+    }else if((name[before]=='R'||name[before]=='K') && (name[after]=='R'||name[after]=='K') && (name[after1]=='D'||name[after1]=='E')){
+        for (int i=0;i<resids.size()-11;i++) {
+            name[mut_point]=resids.name[i];
+            if( i!=1 && i!=13){
+                newpopulation.push_back(name);
+            }
+        }
+    }else if((name[before]=='W'||name[before]=='F'||name[before]=='Y') && (name[before1]=='W'||name[before1]=='F'||name[before1]=='Y') && (name[after]=='W'||name[after]=='F'||name[after]=='Y')){
+        for (int i=0;i<resids.size()-11;i++) {
+            name[mut_point]=resids.name[i];
+            if(i!=3 && i!=11 && i!=16 ){
+                newpopulation.push_back(name);
+            }
+        }
+
+    }else if((name[after]=='W'||name[after]=='F'||name[after]=='Y') && (name[after1]=='W'||name[after1]=='F'||name[after1]=='Y') && (name[before]=='W'||name[before]=='F'||name[before]=='Y')){
+        for (int i=0;i<resids.size()-11;i++) {
+            name[mut_point]=resids.name[i];
+            if(i!=3 && i!=11 && i!=16 ){
+                newpopulation.push_back(name);
+            }
+        }
+
+    }else{
+        for (int i=0;i<resids.size()-11;i++) {
             name[mut_point]=resids.name[i];
             newpopulation.push_back(name);
         }
+    }
 }
 
 void crossover(Peptide pep1, Peptide pep2, vector<string>& population){
@@ -716,11 +825,11 @@ int main()
 
     for (int k=0;k<start;++k) {
         //mutation_NR(pep.population, pep.population[k], resids);
-        //if (find_overlapping_SB(pep.population[k])){
+        if (find_overlapping_SB(pep.population[k])){
             mutation_3SB_avoid_overlap(pep.population, pep.population[k], resids);
-        /*}else {
+        }else {
                 mutation_NR(pep.population, pep.population[k], resids);
-        }*/
+        }
         //mutation_23SB(pep.population, pep.population[k], resids);
         //mutation_linear(pep.population, pep.population[k], resids);
     }
@@ -818,11 +927,11 @@ int main()
         int start2=newpep.population.size();
 
         for (int k=0;k<start2;++k){
-            //if (find_overlapping_SB(newpep.population[k])){
+            if (find_overlapping_SB(newpep.population[k])){
                 mutation_3SB_avoid_overlap(newpep.population, newpep.population[k], resids);
-            /*}else {
+            }else {
                 mutation_NR(newpep.population, newpep.population[k], resids);
-            }*/
+            }
         }
 
 
