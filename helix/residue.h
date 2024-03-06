@@ -140,14 +140,13 @@ public:
     inline double get_E_human(double z)
     {
 
-        if(z >= upper_bound) {
-            return 0.0;
-        }
-
         if(z < lower_bound) {
             z=z*-1;
         }
 
+        if(z >= upper_bound) {
+            return 0.0;
+        }
 
         int convert = int ((upper_bound-z) * inv_factor_Eh);
         //cout<<upper_bound<<" "<<lower_bound<< " "<<convert<<" "<<z<< " "<< int ((upper_bound-0) * inv_factor_Eh)<<endl;
@@ -157,9 +156,9 @@ public:
         //double proportional_remainder = fmod(z, factor_Eh) * inv_factor_Eh;
         //cout<<" "<<new_rem<<" "<<proportional_remainder<<endl;
         //exit(0);
-        if(convert >= 199){
+        if(convert >= 198){
             //cout<<"here"<<endl;
-            return (Eh[convert]);
+            return (Eh[199]);
         }else{
             //assert(convert <= 198);
             return  (1.0-proportional_remainder)*Eh[convert] + proportional_remainder*Eh[convert+1];
@@ -169,12 +168,12 @@ public:
 
     inline double get_E_bacteria(double z)
     {
-        if(z >= upper_bound) {
-            return 0.0;
-        }
-
         if(z < lower_bound) {
             z=z*-1;
+        }
+
+        if(z >= upper_bound) {
+            return 0.0;
         }
 
         int convert = int ((upper_bound-z) * inv_factor_Eb);
@@ -182,9 +181,9 @@ public:
         //double proportional_remainder = (z-(int(z*inv_factor_Eb) * factor_Eb))*inv_factor_Eb;
         double proportional_remainder = (z * inv_factor_Eb) - int(z *inv_factor_Eb);
         //double proportional_remainder = fmod(z, factor_Eb) * inv_factor_Eb;
-        if(convert >= 199){
+        if(convert >= 198){
             //cout<<"here"<<endl;
-            return (Eb[convert]);
+            return (Eb[199]);
         }else{
             //assert(convert <= 198);
             return  (1.0-proportional_remainder)*Eb[convert] + proportional_remainder*Eb[convert+1];
@@ -192,26 +191,6 @@ public:
         }
     }
 
-    inline double get_E_human(double z, vector< vector<double>>& Eh)
-    {
-
-        lower_bound=Eh[199][0];
-        upper_bound=Eh[0][0];
-        factor_Eh=(upper_bound-lower_bound)/199;
-
-        if(z >= upper_bound) {
-            return 0.0;
-        }
-
-        if(z < lower_bound) {
-            z=z*-1;
-        }
-
-        int convert = int ((upper_bound-z)/factor_Eh);
-        double proportional_remainder = fmod(z, factor_Eh) / factor_Eh;
-        //cout<<convert<<" "<<z<<" "<<Eh[convert][0]<<" "<<Eh[convert+1][0]<<endl;
-        return  (1.0-proportional_remainder)*Eh[convert][1] + proportional_remainder*Eh[convert+1][1];
-    }
 };
 
 

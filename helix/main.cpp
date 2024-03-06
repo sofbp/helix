@@ -291,6 +291,7 @@ bool find_overlapping_SB(string name){
         }
         //cout<<index1[s]<<" "<<index2[s]<<endl;
     }
+    //count=rmove_idx.size();
 
     if(rmove_idx.size()>0){
         index1.clear();
@@ -564,6 +565,8 @@ void mutation_linear(vector<string>& newpopulation,  string name, Peptide resids
 void mutation_NR(vector<string>& newpopulation,  string name, Peptide resids){
     srand (time(NULL));
     int mut_point=rand() %20;
+    int i=rand() %16;
+
     int before=mut_point-3;
     int before1=mut_point-6;
     int after=mut_point+3;
@@ -650,9 +653,23 @@ void crossover(Peptide pep1, Peptide pep2, vector<string>& population){
     }
     //cout<<cross_point1<<" "<<cross_point2<<endl;
     //cout<<new1.name<<" "<<new2.name<<endl;
-    population.push_back(new1.name);
-    population.push_back(new2.name);
+    vector<char>SB_type;
+    std::vector<int>index1;
+    std::vector<int>index2;
+    vector<char>SB_type_overlap;
 
+    //Detect salt-bridges, store their position and type
+    detect_interactions(new1,index1,index2,SB_type);
+
+    //Detect if salt-bridges overlap; if there is overlap, rmove_idx will be bigger than 0
+    vector<int>rmove_idx;
+    vector<int>rmove_idx2;
+    find_index_overlap(rmove_idx,rmove_idx2,index1,index2, SB_type,SB_type_overlap);
+    if (rmove_idx.size()<2){
+        population.push_back(new1.name);
+    }
+
+        //population.push_back(new2.name);
 }
 
 
@@ -804,8 +821,8 @@ int main()
         //pep.seq.clear();
         pep.name=pep.population[a];
 
-        pep.seq.resize(20);
-        pep.initial_pos("init_pos20", resids, res_id);
+        pep.seq.resize(21);
+        pep.initial_pos("init_pos21", resids, res_id);
         //pep.linear_pos();
         if(salt_bridges(pep) || aromatics(pep)){
 
@@ -813,11 +830,16 @@ int main()
 
             population_SB(pep, SB_all);
             calc.print_Gplot_SB(SB_all,resids,res_id, pep);
-            calc.print_Gplot(pep, resids, res_id, pep.name);
-           // calc.print_Emap(SB_all[0], resids, res_id, SB_all[0].name);
+           calc.print_Emap(SB_all[0], resids, res_id, SB_all[0].name);
+            calc.get_energy_SB(SB_all,resids,res_id, pep);
+            cout<<"SB "<<pep.name<<" "<<pep.energy_h<<" "<<pep.energy_b<<" "<<pep.energy_h-pep.energy_b<<" "<<pep.depth_h<<" "<<pep.depth_b<<endl;
+
         }else{
             calc.print_Emap(pep, resids, res_id, pep.name);
             calc.print_Gplot(pep, resids, res_id, pep.name);
+            calc.get_energy_total(pep, resids, res_id);
+
+            cout<<pep.name<<" "<< pep.energy_h<<" "<<pep.energy_b<<" "<<pep.energy_h-pep.energy_b<<" "<<pep.depth_h<<" "<<pep.depth_b<<endl;
         }
 
     }
@@ -825,6 +847,8 @@ int main()
 
     for (int k=0;k<start;++k) {
         //mutation_NR(pep.population, pep.population[k], resids);
+        //int count0=0;
+        //find_overlapping_SB(pep.population[k]);
         if (find_overlapping_SB(pep.population[k])){
             mutation_3SB_avoid_overlap(pep.population, pep.population[k], resids);
         }else {
@@ -835,12 +859,15 @@ int main()
     }
 
     for (int i=0;i<pep.population.size();i++) {
-        pep.seq.clear();
+        //pep.seq.clear();
         pep.name=pep.population[i];
         //
         // Load amino acid coordinates --> alpha helix of 20 aa
         //
         pep.seq.resize(20);
+        /*for (int p=0;p<pep.seq.size();++p){
+            cout<<pep.seq[p].pos.x<<" "<<pep.seq[p].pos.y<<" "<<pep.seq[p].pos.z<<endl;
+        }*/
         pep.initial_pos("init_pos20", resids, res_id);
         //pep.linear_pos();
 
@@ -863,13 +890,15 @@ int main()
             calc.get_energy_total(pep, resids, res_id);
 
             cout<<pep.name<<" "<< pep.energy_h<<" "<<pep.energy_b<<" "<<pep.energy_h-pep.energy_b<<" "<<pep.depth_h<<" "<<pep.depth_b<<endl;
+
         }
 
         //Selectivity criteria with both membranes --> maximize variable has to be max
 
         double maximize=pep.energy_h-pep.energy_b;
-
+        double max_z=pep.depth_h-pep.depth_b;
         double score=maximize;
+        //double score=1000*max_z+0.1*maximize;
         /*if(pep.depth_b>1 && pep.depth_b<3 && pep.depth_h>1 && pep.depth_h<3){
             score=score*4;
         }
@@ -918,8 +947,8 @@ int main()
 
         Peptide newpep;
 
-            //crossover(fittest_pep,second_fittest, newpep.population);
-            //crossover(third_fittest,fourth_fittest, newpep.population);
+        crossover(fittest_pep,second_fittest, newpep.population);
+        crossover(third_fittest,fourth_fittest, newpep.population);
         newpep.population.push_back(fittest_pep.name);
         newpep.population.push_back(second_fittest.name);
         newpep.population.push_back(third_fittest.name);
@@ -927,6 +956,8 @@ int main()
         int start2=newpep.population.size();
 
         for (int k=0;k<start2;++k){
+            //int count=0;
+            //find_overlapping_SB(newpep.population[k], count);
             if (find_overlapping_SB(newpep.population[k])){
                 mutation_3SB_avoid_overlap(newpep.population, newpep.population[k], resids);
             }else {
@@ -936,7 +967,8 @@ int main()
 
 
         for (int i=0;i<newpep.population.size();i++) {
-            newpep.seq.clear();
+            //newpep.seq.clear();
+
             newpep.name=newpep.population[i];
             newpep.seq.resize(20);
             newpep.initial_pos("init_pos20", resids, res_id);
@@ -958,8 +990,9 @@ int main()
             // selectivity criteria
 
                 double maximize=newpep.energy_h-newpep.energy_b;
-
-                double score=maximize;
+                double max_z=newpep.depth_h-newpep.depth_b;
+		double score=maximize;
+                //double score=1000*max_z+0.1*maximize;
                 /*if(pep.depth_b>1 && pep.depth_b<3 && pep.depth_h>1 && pep.depth_h<3){
                     score=score*4;
                 }
@@ -1016,6 +1049,7 @@ int main()
         peptide0.clear();
 
     }
+
     file1.close();
     file2.close();
 

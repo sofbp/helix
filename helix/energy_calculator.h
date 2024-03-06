@@ -266,7 +266,7 @@ public:
             zb=r*0.1;
             if(newG[r]<min){
                 min=newG[r];
-
+//cout<<min<<endl;
                 current.energy_h=min;
                 current.depth_h=z;
             }
@@ -529,9 +529,9 @@ public:
             energies_b.resize(depth, vector<double> (rot_deg*tilt_deg/interval));
 
             Peptide current = all_sb[p];
-            cout<<current.name<<endl;
+            //cout<<current.name<<endl;
 
-            for (int k=0;k<depth;++k) {
+            for (int k=0;k<depth;k++) {
                 double disp=k*0.1;
                 for (int i=0;i<rot_deg;i=i+interval) {
                     double deg_rot=i*degToRad;
@@ -643,7 +643,7 @@ public:
             }
             newG_all.push_back(newG);
             newGb_all.push_back(newGb);
-            cout<<newG_all.size()<<endl;
+            //cout<<newG_all.size()<<endl;
 
             G_all.clear();
             G_all_b.clear();
@@ -708,10 +708,12 @@ public:
     void print_Gplot(Peptide& current, Peptide aa, map<char, int> res_id, string name){
         Atom axis_y=Atom(0,1,0);
         Atom axis_x=Atom(1,0,0);
+        int winds=40; //200-250
+        double width=1; //0.155
         vector<vector<double>>energies_h;
-        energies_h.resize(depth, vector<double> (rot_deg*tilt_deg/5));
+        energies_h.resize(winds, vector<double> (rot_deg*tilt_deg/5));
         vector<vector<double>>energies_b;
-        energies_b.resize(depth, vector<double> (rot_deg*tilt_deg/5));
+        energies_b.resize(winds, vector<double> (rot_deg*tilt_deg/5));
         vector<double>G_all;
         vector<double>G_allB;
         //axis_x.normalise();
@@ -729,8 +731,10 @@ public:
 
         double total_en_h=0;
         double total_en_b=0;
-        for (int k=0;k<depth;++k) {
-            double disp=k*0.1;
+        for (int k=0;k<winds;k++) {
+            //cout<<k<<endl;
+            double disp=k*0.1*width;
+            //cout<<disp<<endl;
             for (int i=0;i<rot_deg;i=i+5) {
                 double deg_rot=i*degToRad;
 
@@ -785,7 +789,7 @@ public:
 
         double G, Gb;
         double total_p=0;
-        for (int q=0;q<depth;q++) {
+        for (int q=0;q<winds;q++) {
 
             for (int p=0;p<energies_h[q].size();p++) {
 
@@ -803,7 +807,7 @@ public:
             Gb=-cte2*log(prob_sumB);
             G_allB.push_back(Gb);
 
-            if(q==(depth-1)){
+            if(q==(winds-1)){
                 shift=G;
                 shiftB=Gb;
             }
@@ -818,8 +822,8 @@ public:
         ofstream myfile3;
         myfile3.open (fileB);
 
-        for (int r=0;r<depth;r++) {
-            z=r*0.1;
+        for (int r=0;r<winds;r++) {
+            z=r*0.1*width;
             myfile2<<z<<" "<<(G_all[r]-shift)<<endl;
             myfile3<<z<<" "<<(G_allB[r]-shiftB)<<endl;
 
@@ -866,10 +870,10 @@ public:
         //myfile4<<endl;
         double total_en_h=0;
         double total_en_b=0;
-            for (int i=0;i<rot_deg;i=i+5) {
+            for (int i=0;i<rot_deg;i=i+15) {
                 double deg_rot=i*degToRad;
 
-                for (int j=0;j<tilt_deg;j=j+5) {
+                for (int j=0;j<tilt_deg;j=j+15) {
                     double deg_tilt=j*degToRad;
                     //printf ("%d%03d ", j, i);
 
