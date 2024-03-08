@@ -814,6 +814,11 @@ int main()
     double max3dG=-9999999;
     double max4dG=-9999999;
 
+    double mindG=9999999;
+    double min2dG=9999999;
+    double min3dG=9999999;
+    double min4dG=9999999;
+
     Peptide fittest_pep, second_fittest, third_fittest, fourth_fittest;
     int start=pep.population.size();
 
@@ -894,7 +899,7 @@ int main()
         }
 
         //Selectivity criteria with both membranes --> maximize variable has to be max
-
+        //double minimize=pep.energy_h;
         double maximize=pep.energy_h-pep.energy_b;
         double max_z=pep.depth_h-pep.depth_b;
         double score=maximize;
@@ -923,10 +928,29 @@ int main()
             third_fittest=pep;
         }
 
-        if(score>max4dG && score<max2dG){
+        if(score>max4dG && score<max3dG){
             max4dG=score;
             fourth_fittest=pep;
         }
+        /*if (pep.depth_h>0.5 && pep.depth_h<1.5 && minimize<mindG){
+            mindG=minimize;
+            fittest_pep=pep;
+        }
+
+        if(pep.depth_h>0.5 && pep.depth_h<1.5 && minimize<min2dG && minimize>mindG){
+            min2dG=minimize;
+            second_fittest=pep;
+        }
+
+        if(pep.depth_h>0.5 && pep.depth_h<1.5 && minimize<min3dG && minimize>min2dG){
+            min3dG=minimize;
+            third_fittest=pep;
+        }
+
+        if(pep.depth_h>0.5 && pep.depth_h<1.5 && minimize<min4dG && minimize>min3dG){
+            min4dG=minimize;
+            fourth_fittest=pep;
+        }*/
 
     }
 
@@ -988,10 +1012,10 @@ int main()
             }
 
             // selectivity criteria
-
+                //double minimize=newpep.energy_h;
                 double maximize=newpep.energy_h-newpep.energy_b;
                 double max_z=newpep.depth_h-newpep.depth_b;
-		double score=maximize;
+                double score=maximize;
                 //double score=1000*max_z+0.1*maximize;
                 /*if(pep.depth_b>1 && pep.depth_b<3 && pep.depth_h>1 && pep.depth_h<3){
                     score=score*4;
@@ -1018,10 +1042,29 @@ int main()
                     third_fittest=newpep;
                 }
 
-                if(score>max4dG && score<max2dG){
+                if(score>max4dG && score<max3dG){
                     max4dG=score;
                     fourth_fittest=newpep;
                 }
+        /*if (newpep.depth_h>0.5 && newpep.depth_h<1.5 && minimize<mindG){
+            mindG=minimize;
+            fittest_pep=newpep;
+        }
+
+        if(newpep.depth_h>0.5 && newpep.depth_h<1.5 && minimize<min2dG && minimize>mindG){
+            min2dG=minimize;
+            second_fittest=newpep;
+        }
+
+        if(newpep.depth_h>0.5 && newpep.depth_h<1.5 && minimize<min3dG && minimize>min2dG){
+            min3dG=minimize;
+            third_fittest=newpep;
+        }
+
+        if(newpep.depth_h>0.5 && newpep.depth_h<1.5 && minimize<min4dG && minimize>min3dG){
+            min4dG=minimize;
+            fourth_fittest=newpep;
+        }*/
 
             //cout<<newpep.name<<" "<<newpep.energy_h<<" "<<newpep.energy_b<<" " <<newpep.energy_h-newpep.energy_b<<endl;
 
@@ -1035,7 +1078,7 @@ int main()
         }else{
             rep=0;
         }
-
+        cout<<fittest_pep.name<<" "<<second_fittest.name<<" "<<third_fittest.name<<" "<<fourth_fittest.name<<endl;
         cout<<fittest_pep.name<<" "<<rep<<" "<<fittest_pep.energy_h<<" "<<fittest_pep.energy_b<<" "<<fittest_pep.energy_h-fittest_pep.energy_b<<" "<<fittest_pep.depth_h<<" "<<fittest_pep.depth_b<<endl;
 
         if(rep==0 && fittest_pep.energy_h-fittest_pep.energy_b > 50){
