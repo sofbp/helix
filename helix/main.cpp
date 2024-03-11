@@ -565,61 +565,45 @@ void mutation_linear(vector<string>& newpopulation,  string name, Peptide resids
 void mutation_NR(vector<string>& newpopulation,  string name, Peptide resids){
     srand (time(NULL));
     int mut_point=rand() %20;
-    int i=rand() %16;
+    //int i=rand() %16;
 
     int before=mut_point-3;
     int before1=mut_point-6;
     int after=mut_point+3;
     int after1=mut_point+6;
+    for (int i=0;i<resids.size()-11;i++) {
+        name[mut_point]=resids.name[i];
 
-    if((name[before]=='K'||name[before]=='R') && (name[before1]=='E'||name[before1]=='D') && (name[after]=='R'||name[after]=='K')){
-        for (int i=0;i<resids.size()-11;i++) {
-            name[mut_point]=resids.name[i];
-            if(i!=1 && i!=13 ){
-                newpopulation.push_back(name);
-            }
-        }
+        if((name[before]=='K'||name[before]=='R') && (name[before1]=='E'||name[before1]=='D') && (name[after]=='R'||name[after]=='K')){
+                if(i!=1 && i!=13 ){
+                    newpopulation.push_back(name);
+                }
+        }else if((name[before]=='E'||name[before]=='D') && (name[before1]=='K'||name[before1]=='R') && (name[after]=='E'||name[after]=='D')){
+                if( i!=2 && i!=4){
+                    newpopulation.push_back(name);
+                }
 
-    }else if((name[before]=='E'||name[before]=='D') && (name[before1]=='K'||name[before1]=='R') && (name[after]=='E'||name[after]=='D')){
-        for (int i=0;i<resids.size()-11;i++) {
-            name[mut_point]=resids.name[i];
-            if( i!=2 && i!=4){
-                newpopulation.push_back(name);
-            }
-        }
-    }else if((name[before]=='E'||name[before]=='D') && (name[after]=='D'||name[after]=='E') && (name[after1]=='R'||name[after1]=='K')){
-        for (int i=0;i<resids.size()-11;i++) {
-            name[mut_point]=resids.name[i];
-            if( i!=2 && i!=4){
-                newpopulation.push_back(name);
-            }
-        }
-    }else if((name[before]=='R'||name[before]=='K') && (name[after]=='R'||name[after]=='K') && (name[after1]=='D'||name[after1]=='E')){
-        for (int i=0;i<resids.size()-11;i++) {
-            name[mut_point]=resids.name[i];
-            if( i!=1 && i!=13){
-                newpopulation.push_back(name);
-            }
-        }
-    }else if((name[before]=='W'||name[before]=='F'||name[before]=='Y') && (name[before1]=='W'||name[before1]=='F'||name[before1]=='Y') && (name[after]=='W'||name[after]=='F'||name[after]=='Y')){
-        for (int i=0;i<resids.size()-11;i++) {
-            name[mut_point]=resids.name[i];
-            if(i!=3 && i!=11 && i!=16 ){
-                newpopulation.push_back(name);
-            }
-        }
+        }else if((name[before]=='E'||name[before]=='D') && (name[after]=='D'||name[after]=='E') && (name[after1]=='R'||name[after1]=='K')){
+                if( i!=2 && i!=4){
+                    newpopulation.push_back(name);
+                }
 
-    }else if((name[after]=='W'||name[after]=='F'||name[after]=='Y') && (name[after1]=='W'||name[after1]=='F'||name[after1]=='Y') && (name[before]=='W'||name[before]=='F'||name[before]=='Y')){
-        for (int i=0;i<resids.size()-11;i++) {
-            name[mut_point]=resids.name[i];
-            if(i!=3 && i!=11 && i!=16 ){
-                newpopulation.push_back(name);
-            }
-        }
+        }else if((name[before]=='R'||name[before]=='K') && (name[after]=='R'||name[after]=='K') && (name[after1]=='D'||name[after1]=='E')){
+                if( i!=1 && i!=13){
+                    newpopulation.push_back(name);
+                }
 
-    }else{
-        for (int i=0;i<resids.size()-11;i++) {
-            name[mut_point]=resids.name[i];
+        }else if((name[before]=='W'||name[before]=='F'||name[before]=='Y') && (name[before1]=='W'||name[before1]=='F'||name[before1]=='Y') && (name[after]=='W'||name[after]=='F'||name[after]=='Y')){
+
+                if(i!=3 && i!=11 && i!=16 ){
+                    newpopulation.push_back(name);
+                }
+        }else if((name[after]=='W'||name[after]=='F'||name[after]=='Y') && (name[after1]=='W'||name[after1]=='F'||name[after1]=='Y') && (name[before]=='W'||name[before]=='F'||name[before]=='Y')){
+                if(i!=3 && i!=11 && i!=16 ){
+                    newpopulation.push_back(name);
+                }
+        }else{
+
             newpopulation.push_back(name);
         }
     }
@@ -819,7 +803,7 @@ int main()
     double min3dG=9999999;
     double min4dG=9999999;
 
-    Peptide fittest_pep, second_fittest, third_fittest, fourth_fittest;
+
     int start=pep.population.size();
 
     /*for (int a=0;a<pep.population.size();a++) {
@@ -850,19 +834,14 @@ int main()
     }
     exit(0);*/
 
-    for (int k=0;k<start;++k) {
-        //mutation_NR(pep.population, pep.population[k], resids);
-        //int count0=0;
-        //find_overlapping_SB(pep.population[k]);
+    /*for (int k=0;k<start;++k) {
         if (find_overlapping_SB(pep.population[k])){
             mutation_3SB_avoid_overlap(pep.population, pep.population[k], resids);
         }else {
                 mutation_NR(pep.population, pep.population[k], resids);
         }
-        //mutation_23SB(pep.population, pep.population[k], resids);
-        //mutation_linear(pep.population, pep.population[k], resids);
-    }
-
+    }*/
+    Peptide fittest_pep, second_fittest, third_fittest, fourth_fittest;
     for (int i=0;i<pep.population.size();i++) {
         //pep.seq.clear();
         pep.name=pep.population[i];
@@ -870,11 +849,7 @@ int main()
         // Load amino acid coordinates --> alpha helix of 20 aa
         //
         pep.seq.resize(20);
-        /*for (int p=0;p<pep.seq.size();++p){
-            cout<<pep.seq[p].pos.x<<" "<<pep.seq[p].pos.y<<" "<<pep.seq[p].pos.z<<endl;
-        }*/
         pep.initial_pos("init_pos20", resids, res_id);
-        //pep.linear_pos();
 
         //
         // Calculate Emin for human and bacterial membrane --> stored in energy_h, energy_b
@@ -915,16 +890,23 @@ int main()
         }*/
         if (score>maxdG){
             maxdG=score;
+            fourth_fittest=third_fittest;
+            third_fittest=second_fittest;
+            second_fittest=fittest_pep;
             fittest_pep=pep;
+
         }
 
         if(score>max2dG && score<maxdG){
             max2dG=score;
+            fourth_fittest=third_fittest;
+            third_fittest=second_fittest;
             second_fittest=pep;
         }
 
         if(score>max3dG && score<max2dG){
             max3dG=score;
+            fourth_fittest=third_fittest;
             third_fittest=pep;
         }
 
@@ -970,26 +952,94 @@ int main()
     while(rep<10000) {  // Mutate sequences until 100 loops happen without finding a better fit
 
         Peptide newpep;
+        Peptide temppep;
 
-        crossover(fittest_pep,second_fittest, newpep.population);
-        crossover(third_fittest,fourth_fittest, newpep.population);
-        newpep.population.push_back(fittest_pep.name);
-        newpep.population.push_back(second_fittest.name);
-        newpep.population.push_back(third_fittest.name);
-        newpep.population.push_back(fourth_fittest.name);
-        int start2=newpep.population.size();
+        cout<<fittest_pep.name<<" "<<second_fittest.name<<" "<<third_fittest.name<<" "<<fourth_fittest.name<<endl;
+
+        crossover(fittest_pep,fourth_fittest, temppep.population);
+        crossover(second_fittest,third_fittest, temppep.population);
+        temppep.population.push_back(fittest_pep.name);
+        temppep.population.push_back(second_fittest.name);
+        temppep.population.push_back(third_fittest.name);
+        temppep.population.push_back(fourth_fittest.name);
+        int start2=temppep.population.size();
+        maxdG=-9999999;
+        max2dG=-9999999;
+        max3dG=-9999999;
+        max4dG=-9999999;
 
         for (int k=0;k<start2;++k){
-            //int count=0;
-            //find_overlapping_SB(newpep.population[k], count);
-            if (find_overlapping_SB(newpep.population[k])){
-                mutation_3SB_avoid_overlap(newpep.population, newpep.population[k], resids);
+
+            if (find_overlapping_SB(temppep.population[k])){
+                Peptide mutations;
+                Peptide fittest_mut;
+                mutation_3SB_avoid_overlap(mutations.population, temppep.population[k], resids);
+                double mx=-999999;
+                for (int i=0;i<mutations.population.size();i++) {
+
+                    mutations.name=mutations.population[i];
+                    mutations.seq.resize(20);
+                    mutations.initial_pos("init_pos20", resids, res_id);
+
+                    if(salt_bridges(mutations) || aromatics(mutations)){
+
+                        vector<Peptide>SB_all;
+
+                        population_SB(  mutations, SB_all);
+                        calc.get_energy_SB(SB_all,resids,res_id, mutations);
+
+                    }else{
+
+                        calc.get_energy_total(mutations, resids, res_id);
+
+                    }
+
+                        double maximize=mutations.energy_h-mutations.energy_b;
+                        double score=maximize;
+
+                        if (score>mx){
+                            mx=score;
+                            fittest_mut=mutations;
+                        }
+                }
+                newpep.population.push_back(fittest_mut.name);
             }else {
-                mutation_NR(newpep.population, newpep.population[k], resids);
+                Peptide mutations;
+                Peptide fittest_mut;
+                mutation_NR(mutations.population, temppep.population[k], resids);
+                double mx=-999999;
+                for (int i=0;i<mutations.population.size();i++) {
+
+                    mutations.name=mutations.population[i];
+                    mutations.seq.resize(20);
+                    mutations.initial_pos("init_pos20", resids, res_id);
+
+                    if(salt_bridges(mutations) || aromatics(mutations)){
+
+                        vector<Peptide>SB_all;
+
+                        population_SB(  mutations, SB_all);
+                        calc.get_energy_SB(SB_all,resids,res_id, mutations);
+
+                    }else{
+
+                        calc.get_energy_total(mutations, resids, res_id);
+
+                    }
+
+                        double maximize=mutations.energy_h-mutations.energy_b;
+                        double score=maximize;
+
+                        if (score>mx){
+                            mx=score;
+                            fittest_mut=mutations;
+                        }
+                }
+                newpep.population.push_back(fittest_mut.name);
             }
         }
 
-
+        Peptide one, two, three, four;
         for (int i=0;i<newpep.population.size();i++) {
             //newpep.seq.clear();
 
@@ -1029,22 +1079,29 @@ int main()
 
                 if (score>maxdG){
                     maxdG=score;
-                    fittest_pep=newpep;
+                    four=three;
+                    three=two;
+                    two=one;
+                    one=newpep;
+
                 }
 
                 if(score>max2dG && score<maxdG){
                     max2dG=score;
-                    second_fittest=newpep;
+                    four=three;
+                    three=two;
+                    two=newpep;
                 }
 
                 if(score>max3dG && score<max2dG){
                     max3dG=score;
-                    third_fittest=newpep;
+                    four=three;
+                    three=newpep;
                 }
 
                 if(score>max4dG && score<max3dG){
                     max4dG=score;
-                    fourth_fittest=newpep;
+                    four=newpep;
                 }
         /*if (newpep.depth_h>0.5 && newpep.depth_h<1.5 && minimize<mindG){
             mindG=minimize;
@@ -1069,6 +1126,10 @@ int main()
             //cout<<newpep.name<<" "<<newpep.energy_h<<" "<<newpep.energy_b<<" " <<newpep.energy_h-newpep.energy_b<<endl;
 
         }
+        fittest_pep=one;
+        second_fittest=two;
+        third_fittest=three;
+        fourth_fittest=four;
 
         string peptide0=fittest_pep.name;
 
@@ -1078,7 +1139,6 @@ int main()
         }else{
             rep=0;
         }
-        cout<<fittest_pep.name<<" "<<second_fittest.name<<" "<<third_fittest.name<<" "<<fourth_fittest.name<<endl;
         cout<<fittest_pep.name<<" "<<rep<<" "<<fittest_pep.energy_h<<" "<<fittest_pep.energy_b<<" "<<fittest_pep.energy_h-fittest_pep.energy_b<<" "<<fittest_pep.depth_h<<" "<<fittest_pep.depth_b<<endl;
 
         if(rep==0 && fittest_pep.energy_h-fittest_pep.energy_b > 50){
