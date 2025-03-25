@@ -22,6 +22,7 @@ public:
     double energy_h;
     double energy_b;
     double dG;
+    int reps;
     string name;
     double totalP_h, totalP_b;
 
@@ -70,12 +71,12 @@ public:
 
             seq[j].pos = seq[j].pos-cm;
 
-            Atom rest;
+         /*   Atom rest;
             rest.y=resids.seq[res_id[name[j]]].com.y;//-seq[j].pos.y;
             rest.z=resids.seq[res_id[name[j]]].com.z;//-seq[j].pos.z;
 
             seq[j].pos.y=seq[j].pos.y*(1+rest.y);
-            seq[j].pos.z=seq[j].pos.z*(1+rest.z);
+            seq[j].pos.z=seq[j].pos.z*(1+rest.z);*/
         }
     }
 

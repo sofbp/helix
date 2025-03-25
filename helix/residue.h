@@ -40,8 +40,10 @@ public:
     double offset_Eh, offset_Eb;
     double factor_Eh, factor_Eb;
     double inv_factor_Eh, inv_factor_Eb;
-    double upper_bound;
-    double lower_bound;
+    double upper_bound_h;
+    double lower_bound_h;
+    double upper_bound_b;
+    double lower_bound_b;
     vector<double> Eh;
     vector<double> Eb;
     double cte=1.0/(0.008314*310);
@@ -51,17 +53,17 @@ public:
     {
 
         if(type==1){
-            lower_bound=Ehh[199][0];
-            upper_bound=Ehh[0][0];
-            factor_Eh=(upper_bound-lower_bound)/199;
+            lower_bound_h=Ehh[199][0];
+            upper_bound_h=Ehh[0][0];
+            factor_Eh=(upper_bound_h-lower_bound_h)/199;
             inv_factor_Eh=1.0/factor_Eh;
             for (int i=0; i<200; ++i) {
                 this->Eh[i] = Ehh[i][1];
             }
         }else{
-            lower_bound=Ehh[199][0];
-            upper_bound=Ehh[0][0];
-            factor_Eb=(upper_bound-lower_bound)/199;
+            lower_bound_b=Ehh[199][0];
+            upper_bound_b=Ehh[0][0];
+            factor_Eb=(upper_bound_b-lower_bound_b)/199;
             inv_factor_Eb=1.0/factor_Eb;
             for (int i=0; i<200; ++i) {
                 this->Eb[i] = Ehh[i][1];
@@ -76,11 +78,11 @@ public:
             double newE, Gch, Gn;
             for (int i=0;i<200;i++) {
                 double z=(199-i)*factor_Eh;
-                if(z>upper_bound){
+                if(z>upper_bound_h){
                     newE=0;
                 }else{
-                    int convert0 = int ((upper_bound-z) * inv_factor_Eh);
-                    int convert1 = int ((b.upper_bound-z) * b.inv_factor_Eh);
+                    int convert0 = int ((upper_bound_h-z) * inv_factor_Eh);
+                    int convert1 = int ((b.upper_bound_h-z) * b.inv_factor_Eh);
 
 
                     //double proportional_remainder0 = fmod(z, factor_Eh) * inv_factor_Eh;
@@ -107,11 +109,11 @@ public:
             double newE, Gch, Gn;
             for (int i=0;i<200;i++) {
                 double z=(199-i)*factor_Eb;
-                if(z>upper_bound){
+                if(z>upper_bound_b){
                     newE=0;
                 }else{
-                    int convert0 = int ((upper_bound-z) * inv_factor_Eb);
-                    int convert1 = int ((b.upper_bound-z) * b.inv_factor_Eb);
+                    int convert0 = int ((upper_bound_b-z) * inv_factor_Eb);
+                    int convert1 = int ((b.upper_bound_b-z) * b.inv_factor_Eb);
 
 
                     //double proportional_remainder0 = fmod(z, factor_Eb) * inv_factor_Eb;
@@ -140,15 +142,15 @@ public:
     inline double get_E_human(double z)
     {
 
-        if(z < lower_bound) {
+        if(z < lower_bound_h) {
             z=z*-1;
         }
 
-        if(z >= upper_bound) {
+        if(z >= upper_bound_h) {
             return 0.0;
         }
 
-        int convert = int ((upper_bound-z) * inv_factor_Eh);
+        int convert = int ((upper_bound_h-z) * inv_factor_Eh);
         //cout<<upper_bound<<" "<<lower_bound<< " "<<convert<<" "<<z<< " "<< int ((upper_bound-0) * inv_factor_Eh)<<endl;
         //assert(convert <= 198);
         //double proportional_remainder = (z-(int(z*inv_factor_Eh) * factor_Eh))*inv_factor_Eh;
@@ -168,15 +170,15 @@ public:
 
     inline double get_E_bacteria(double z)
     {
-        if(z < lower_bound) {
+        if(z < lower_bound_b) {
             z=z*-1;
         }
 
-        if(z >= upper_bound) {
+        if(z >= upper_bound_b) {
             return 0.0;
         }
 
-        int convert = int ((upper_bound-z) * inv_factor_Eb);
+        int convert = int ((upper_bound_b-z) * inv_factor_Eb);
         //assert(convert <= 198);
         //double proportional_remainder = (z-(int(z*inv_factor_Eb) * factor_Eb))*inv_factor_Eb;
         double proportional_remainder = (z * inv_factor_Eb) - int(z *inv_factor_Eb);

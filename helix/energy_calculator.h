@@ -279,6 +279,10 @@ public:
 
             }
         }
+       //if(current.depth_h > 3.0){
+            //current.depth_h=current.depth_b;
+        //    current.energy_h=newG[current.depth_b*10];
+        //}
         //new_file.close();
         //exit(0);
     }
@@ -494,12 +498,18 @@ public:
 
                 }
             }
+           //if(final_pep.depth_h > 3.0){
+               // final_pep.depth_h=final_pep.depth_b;
+           //     final_pep.energy_h=newfinalG[final_pep.depth_b*10];
+            //}
     }
 
     void print_Gplot_SB(vector<Peptide>& all_sb, Peptide aa, map<char, int> res_id, Peptide& final_pep){
         int interval=5;
         Atom axis_y=Atom(0,1,0);
         Atom axis_x=Atom(1,0,0);
+        int winds=200; //-250 //40
+        double width=0.155; //0.155 //1
         //axis_x.normalise();
         //axis_y.normalise();
         double min=999999;
@@ -524,15 +534,15 @@ public:
             vector<double>G_all;
             vector<double>G_all_b;
             vector<vector<double>>energies_h;
-            energies_h.resize(depth, vector<double> (rot_deg*tilt_deg/interval));
+            energies_h.resize(winds, vector<double> (rot_deg*tilt_deg/interval));
             vector<vector<double>>energies_b;
-            energies_b.resize(depth, vector<double> (rot_deg*tilt_deg/interval));
+            energies_b.resize(winds, vector<double> (rot_deg*tilt_deg/interval));
 
             Peptide current = all_sb[p];
             //cout<<current.name<<endl;
 
-            for (int k=0;k<depth;k++) {
-                double disp=k*0.1;
+            for (int k=0;k<winds;++k) {
+                double disp=k*0.1*width;
                 for (int i=0;i<rot_deg;i=i+interval) {
                     double deg_rot=i*degToRad;
 
@@ -604,7 +614,7 @@ public:
             // G(x) = -kT*ln(P(x))
             //
             double G, Gb;
-            for (int q=0;q<depth;q++) {
+            for (int q=0;q<winds;q++) {
 
                 for (int p=0;p<energies_h[q].size();p++) {
 
@@ -621,7 +631,7 @@ public:
                 Gb=-cte2*log(prob_sumB);
                 G_all_b.push_back(Gb);
 
-                if(q==(depth-1)){
+                if(q==(winds-1)){
                     shift=G;
                     shiftB=Gb;
                 }
@@ -637,7 +647,7 @@ public:
 
             vector<double> newG, newGb;
 
-            for (int r=0;r<depth;r++) {
+            for (int r=0;r<winds;r++) {
                 newG.push_back(G_all[r]-shift);
                 newGb.push_back(G_all_b[r]-shiftB);
             }
@@ -655,7 +665,7 @@ public:
             ofstream Gfile;
             //Gfile.open("G1G2");
 
-            for (int d=0;d<depth;++d){
+            for (int d=0;d<winds;++d){
                 double total=0;
                 double totalb=0;
                 double prop=0;
@@ -675,7 +685,7 @@ public:
                     propb=pow(e, -newGb_all[p][d]*cte)/totalb;
                     newEb=newEb+propb*newGb_all[p][d];
                 }
-                if(d==(depth-1)){
+                if(d==(winds-1)){
                     shift=newE;
                     shiftB=newEb;
                 }
@@ -692,10 +702,10 @@ public:
             ofstream myfile3;
             myfile3.open (fileB);
 
-            for (int r=0;r<depth;++r){
+            for (int r=0;r<winds;++r){
 
-                z=r*0.1;
-                zb=r*0.1;
+                z=r*0.1*width;
+                zb=r*0.1*width;
 
                 myfile2<<z<<" "<<finalG[r]-shift<<endl;
                 myfile3<<zb<<" "<<finalGb[r]-shiftB<<endl;
@@ -708,8 +718,8 @@ public:
     void print_Gplot(Peptide& current, Peptide aa, map<char, int> res_id, string name){
         Atom axis_y=Atom(0,1,0);
         Atom axis_x=Atom(1,0,0);
-        int winds=40; //200-250
-        double width=1; //0.155
+        int winds=40; //200-250 //40
+        double width=1; //0.155 //1
         vector<vector<double>>energies_h;
         energies_h.resize(winds, vector<double> (rot_deg*tilt_deg/5));
         vector<vector<double>>energies_b;
